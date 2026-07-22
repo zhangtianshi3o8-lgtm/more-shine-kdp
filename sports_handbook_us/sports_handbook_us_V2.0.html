@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Youth Sports Development Handbook — V2.0</title>
+<style>
+
+@page { size: 8.5in 11in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2C2C2C;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 8.5in; height: 11in;
+  padding: 0.65in 0.875in 0.55in 0.875in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 10px auto; } }
+@media print  { .page { border: none; margin: 0; } }
+
+/* ---- Header & Footer ---- */
+.page-header {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 8pt; color: #999;
+  padding-bottom: 5px; border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 18px;
+}
+.page-header .part-tag { font-weight: 700; letter-spacing: 0.5pt; }
+.page-header .topic-tag { color: #bbb; font-style: italic; }
+
+.page-footer {
+  position: absolute;
+  bottom: 0.32in; left: 0.875in; right: 0.875in;
+  font-size: 7.5pt; color: #bbb;
+  display: flex; justify-content: space-between;
+  border-top: 1px solid #eee; padding-top: 4px;
+}
+
+/* ---- Title Page ---- */
+.title-page {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  height: 100%;
+  padding-top: 0;
+}
+.title-page .title-main {
+  font-size: 34pt; font-weight: 700; color: #1B4D89;
+  line-height: 1.2; margin-bottom: 8px;
+  letter-spacing: -0.5pt;
+}
+.title-page .title-bar {
+  width: 180px; height: 3px; background: #C25E1C;
+  margin: 14px auto 20px;
+}
+.title-page .title-sub {
+  font-size: 13pt; color: #555; font-style: italic;
+  line-height: 1.6; max-width: 5in; margin-bottom: 30px;
+}
+.title-page .title-purpose {
+  font-size: 9.5pt; color: #777; line-height: 1.8;
+  max-width: 4.5in;
+}
+.title-page .title-pur-label {
+  font-size: 8pt; font-weight: 700; color: #1B4D89;
+  letter-spacing: 1.5pt; margin-bottom: 10px;
+}
+
+/* ---- Table of Contents ---- */
+.toc-title {
+  font-size: 22pt; font-weight: 700; color: #1B4D89;
+  margin-bottom: 4px;
+}
+.toc-subtitle {
+  font-size: 10pt; color: #aaa; font-style: italic;
+  margin-bottom: 20px;
+  padding-bottom: 12px; border-bottom: 2px solid #1B4D89;
+}
+.toc-section { margin-bottom: 16px; }
+.toc-section-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 10pt; font-weight: 700;
+  margin-bottom: 4px;
+}
+.toc-section-header .sec-name { letter-spacing: 0.5pt; }
+.toc-section-header .sec-page { font-size: 8.5pt; color: #999; font-weight: 400; }
+.toc-item {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 9pt; color: #555;
+  padding: 2px 0 2px 12px;
+}
+.toc-item .toc-name { }
+.toc-item .toc-dots {
+  flex: 1; border-bottom: 1px dotted #ccc; margin: 0 6px 3px;
+}
+.toc-item .toc-page { color: #888; font-size: 8.5pt; }
+.toc-tools-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 10pt; font-weight: 700; color: #333;
+  margin-top: 8px; margin-bottom: 4px;
+}
+
+/* ---- Section Divider ---- */
+.divider-content {
+  color: white;
+  padding: 1.6in 1.2in;
+  margin-top: 0.2in;
+  min-height: 8.5in;
+  position: relative;
+}
+.divider-part-label {
+  font-size: 10pt; opacity: 0.7; margin-bottom: 8px;
+  letter-spacing: 2pt; text-transform: uppercase;
+}
+.divider-title {
+  font-size: 32pt; font-weight: 700; margin-bottom: 4px;
+  line-height: 1.15;
+}
+.divider-subtitle {
+  font-size: 12pt; opacity: 0.6; font-style: italic;
+  margin-bottom: 24px;
+}
+.divider-desc {
+  font-size: 10pt; line-height: 1.85; opacity: 0.85;
+  max-width: 5.5in; margin-bottom: 24px;
+}
+.divider-topics {
+  font-size: 9pt; line-height: 1.8; opacity: 0.75;
+  max-width: 5in;
+}
+.divider-topic-num {
+  display: inline-block; width: 22px; opacity: 0.6;
+}
+
+/* ---- Topic Page (Parts 1, 2, 4) ---- */
+.topic-title {
+  font-size: 20pt; font-weight: 700;
+  margin-bottom: 2px; line-height: 1.25;
+}
+.topic-subtitle {
+  font-size: 10pt; color: #aaa; font-style: italic;
+  margin-bottom: 16px;
+}
+
+/* ---- Sport Page (Part 3) ---- */
+.sport-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 4px;
+}
+.sport-title {
+  font-size: 20pt; font-weight: 700;
+  line-height: 1.25;
+}
+.sport-age {
+  font-size: 8.5pt; color: #888; font-style: italic;
+  text-align: right; max-width: 2.2in;
+  padding-bottom: 3px;
+}
+
+/* ---- Info Boxes ---- */
+.info-box {
+  padding: 10px 14px; margin-bottom: 10px;
+}
+.box-label {
+  font-size: 8pt; font-weight: 700; letter-spacing: 1pt;
+  margin-bottom: 6px; display: block;
+  text-transform: uppercase;
+}
+.info-item {
+  position: relative; padding-left: 14px;
+  margin-bottom: 4px; font-size: 9.5pt; line-height: 1.55;
+}
+.info-item:last-child { margin-bottom: 0; }
+.info-item::before {
+  content: ''; position: absolute; left: 0; top: 7px;
+  width: 4px; height: 4px; border-radius: 50%;
+}
+.info-item-dash::before {
+  content: ''; position: absolute; left: 0; top: 9px;
+  width: 7px; height: 2px; border-radius: 0;
+}
+
+/* ---- Equipment line ---- */
+.equipment-line {
+  font-size: 8.5pt; color: #777;
+  padding: 8px 14px; margin-bottom: 10px;
+  border: 1px solid #ddd; border-radius: 3px;
+  line-height: 1.5;
+}
+.equipment-line .equip-label {
+  font-weight: 700; letter-spacing: 0.5pt;
+}
+
+/* ---- Note Area ---- */
+.note-section { margin-top: 6px; }
+.note-label {
+  font-size: 8pt; font-weight: 700;
+  margin-bottom: 8px; letter-spacing: 0.5pt;
+  text-transform: uppercase;
+}
+.note-line {
+  height: 20px; border-bottom: 1px solid #BFBFBF;
+}
+
+/* ---- Tool Pages ---- */
+.tool-title {
+  font-size: 18pt; font-weight: 700;
+  margin-bottom: 4px;
+}
+.tool-desc {
+  font-size: 9pt; color: #888; font-style: italic;
+  margin-bottom: 14px;
+}
+.tool-field {
+  display: flex; align-items: baseline; margin-bottom: 8px;
+  font-size: 9.5pt;
+}
+.tool-field-label {
+  font-weight: 700; min-width: 80px;
+}
+.tool-field-line {
+  flex: 1; border-bottom: 1px solid #ccc; height: 16px;
+}
+.tool-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 8.5pt; margin-bottom: 12px;
+}
+.tool-table th {
+  background: #f0f0f0; padding: 5px 6px; text-align: left;
+  font-weight: 700; border: 1px solid #ccc;
+  font-size: 8pt;
+}
+.tool-table td {
+  padding: 5px 6px; border: 1px solid #ccc;
+  height: 22px;
+}
+.tool-table td.td-blank { background: #fafafa; }
+
+/* ---- Generic note page ---- */
+.note-page-title {
+  font-size: 14pt; font-weight: 700; color: #999;
+  margin-bottom: 20px; text-align: center;
+  letter-spacing: 2pt; text-transform: uppercase;
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="title-page">
+    <div class="title-main">Youth Sports Development Handbook</div>
+    <div class="title-bar"></div>
+    <div class="title-sub">A Parent&#x27;s Guide to Training and Discovering Your Child&#x27;s Athletic Potential</div>
+    <div class="title-pur-label">A PRACTICAL GUIDE FOR PARENTS</div>
+    <div class="title-purpose">
+      Train fundamental athletic skills. Explore nine of America's most popular
+      youth sports. Discover where your child's natural talents lie.
+      This handbook gives you the knowledge, drills, and tools to support
+      your young athlete's journey from the backyard to the field.
+    </div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 1</span></div>
+</div><div class="page">
+  <div class="toc-title">Contents</div>
+  <div class="toc-subtitle">Your roadmap to developing young athletes</div>
+  <div class="toc-section">
+      <div class="toc-section-header">
+        <span class="sec-name" style="color:#1B4D89">Part One &middot; Building the Foundation</span>
+        <span class="sec-page">Page 3</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-name">Understanding Athletic Development</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">4</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Dynamic Warm-Up Techniques</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">5</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Stretching and Flexibility</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">6</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Sports Nutrition for Young Athletes</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">7</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Hydration and Recovery</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">8</span>
+      </div>
+    </div><div class="toc-section">
+      <div class="toc-section-header">
+        <span class="sec-name" style="color:#C25E1C">Part Two &middot; Core Athletic Skills</span>
+        <span class="sec-page">Page 9</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-name">Speed and Sprint Development</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">10</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Strength and Power Training</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">11</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Agility and Quickness</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">12</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Balance and Coordination</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">13</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Endurance and Stamina</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">14</span>
+      </div>
+    </div><div class="toc-section">
+      <div class="toc-section-header">
+        <span class="sec-name" style="color:#1B6E50">Part Three &middot; American Sports Guide</span>
+        <span class="sec-page">Page 15</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-name">Basketball</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">16</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Baseball and Softball</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">17</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Football</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">18</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Soccer</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">19</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Swimming</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">20</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Tennis</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">21</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Track and Field</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">22</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Volleyball</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">23</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Golf</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">24</span>
+      </div>
+    </div><div class="toc-section">
+      <div class="toc-section-header">
+        <span class="sec-name" style="color:#8B2A3A">Part Four &middot; Safety and Health</span>
+        <span class="sec-page">Page 25</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-name">Injury Prevention Strategies</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">26</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Common Youth Sports Injuries</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">27</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Recovery and Return to Play</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">28</span>
+      </div>
+    </div><div class="toc-section">
+      <div class="toc-tools-header">
+        <span>Tools &amp; Resources</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-name">Season Training Planner</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">29</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Weekly Practice Log</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">30</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Skill Assessment Tracker</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">31</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Talent Discovery Journal</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">32</span>
+      </div><div class="toc-item">
+        <span class="toc-name">Notes</span>
+        <span class="toc-dots"></span>
+        <span class="toc-page">33</span>
+      </div>
+    </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 2</span></div>
+</div><div class="page">
+  <div class="divider-content" style="background:#1B4D89">
+    <div class="divider-part-label">Part One</div>
+    <div class="divider-title">Building the Foundation</div>
+    <div class="divider-subtitle">Sports Fundamentals</div>
+    <div class="divider-desc">Before your child picks up a ball or steps on a field, they need the building blocks of athletic development. This section covers the science of how young bodies grow, proper warm-up routines, flexibility training, nutrition that fuels performance, and hydration essentials. Understanding these fundamentals helps parents create a safe, supportive environment where athletic talent can flourish naturally.</div>
+    <div class="divider-topics"><div><span class="divider-topic-num">01</span>Understanding Athletic Development</div><div><span class="divider-topic-num">02</span>Dynamic Warm-Up Techniques</div><div><span class="divider-topic-num">03</span>Stretching and Flexibility</div><div><span class="divider-topic-num">04</span>Sports Nutrition for Young Athletes</div><div><span class="divider-topic-num">05</span>Hydration and Recovery</div></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 3</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part One &amp;middot; Building the Foundation</span>
+      <span class="topic-tag">Understanding Athletic Development</span>
+    </div>
+    <div class="topic-title" style="color:#1B4D89">Understanding Athletic Development</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#E5EDF5;border-left:4px solid #1B4D89">
+    <span class="box-label" style="color:#1B4D89">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Ages 6-9: Focus on fundamental movement skills (running, jumping, throwing) through fun games and play</div><div class="info-item" style="color:#333">Ages 10-12: Window for speed and agility development — nervous system is highly adaptable</div><div class="info-item" style="color:#333">Ages 13-15: Strength development becomes effective as hormones shift; prioritize form over weight</div><div class="info-item" style="color:#333">Ages 16+: Sport-specific training and competitive skills can be fully developed</div><div class="info-item" style="color:#333">Early specialization in one sport before age 12 increases burnout and injury risk</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Let your child try multiple sports — cross-training builds better overall athleticism</div><div class="info-item info-item-dash" style="color:#555">Watch for natural coordination patterns: some kids excel at power movements, others at endurance</div><div class="info-item info-item-dash" style="color:#555">Keep practice sessions short and positive — 30 minutes of focused activity beats 2 hours of drills</div><div class="info-item info-item-dash" style="color:#555">Celebrate effort and improvement, not just wins and scores</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B4D89">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 4</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part One &amp;middot; Building the Foundation</span>
+      <span class="topic-tag">Dynamic Warm-Up Techniques</span>
+    </div>
+    <div class="topic-title" style="color:#1B4D89">Dynamic Warm-Up Techniques</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#E5EDF5;border-left:4px solid #1B4D89">
+    <span class="box-label" style="color:#1B4D89">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Dynamic stretching before activity prepares muscles and joints for movement</div><div class="info-item" style="color:#333">A proper warm-up takes 8-12 minutes and raises heart rate gradually</div><div class="info-item" style="color:#333">Walking lunges, high knees, butt kicks, and arm circles are effective warm-up movements</div><div class="info-item" style="color:#333">Warm-ups should mimic the movements of the upcoming sport</div><div class="info-item" style="color:#333">Cold muscles are more prone to strains and tears</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Make warm-ups a consistent routine before every practice and game</div><div class="info-item info-item-dash" style="color:#555">Use a timer or count repetitions to keep warm-ups structured</div><div class="info-item info-item-dash" style="color:#555">Lead by example — warm up alongside your child</div><div class="info-item info-item-dash" style="color:#555">Keep it fun: turn warm-up exercises into a game or challenge</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B4D89">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 5</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part One &amp;middot; Building the Foundation</span>
+      <span class="topic-tag">Stretching and Flexibility</span>
+    </div>
+    <div class="topic-title" style="color:#1B4D89">Stretching and Flexibility</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#E5EDF5;border-left:4px solid #1B4D89">
+    <span class="box-label" style="color:#1B4D89">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Static stretching is best done after activity when muscles are warm</div><div class="info-item" style="color:#333">Hold each stretch for 20-30 seconds without bouncing</div><div class="info-item" style="color:#333">Major muscle groups to stretch: hamstrings, quadriceps, calves, shoulders, and back</div><div class="info-item" style="color:#333">Improved flexibility reduces injury risk and enhances range of motion</div><div class="info-item" style="color:#333">Children are naturally flexible but lose flexibility during growth spurts</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Create a post-activity cool-down routine that includes 5-10 minutes of stretching</div><div class="info-item info-item-dash" style="color:#555">Never force a stretch beyond mild discomfort — pain means stop</div><div class="info-item info-item-dash" style="color:#555">Stretch both sides of the body equally</div><div class="info-item info-item-dash" style="color:#555">Encourage breathing deeply during each stretch to help muscles relax</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B4D89">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 6</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part One &amp;middot; Building the Foundation</span>
+      <span class="topic-tag">Sports Nutrition for Young Athletes</span>
+    </div>
+    <div class="topic-title" style="color:#1B4D89">Sports Nutrition for Young Athletes</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#E5EDF5;border-left:4px solid #1B4D89">
+    <span class="box-label" style="color:#1B4D89">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Carbohydrates are the primary fuel for active muscles — whole grains, fruits, and vegetables</div><div class="info-item" style="color:#333">Protein supports muscle repair and growth — aim for lean sources with each meal</div><div class="info-item" style="color:#333">Healthy fats from nuts, avocados, and olive oil provide sustained energy</div><div class="info-item" style="color:#333">Eat a balanced meal 2-3 hours before activity; light snack 30-60 minutes before</div><div class="info-item" style="color:#333">Post-exercise recovery snack within 30 minutes helps replenish energy stores</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Plan pre-game meals around easily digestible foods like pasta, rice, or sandwiches</div><div class="info-item info-item-dash" style="color:#555">Keep healthy snacks in your sports bag: fruit, granola bars, or trail mix</div><div class="info-item info-item-dash" style="color:#555">Avoid sugary drinks and processed foods before activity — they cause energy crashes</div><div class="info-item info-item-dash" style="color:#555">Teach your child to recognize hunger cues and eat regular meals</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B4D89">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 7</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part One &amp;middot; Building the Foundation</span>
+      <span class="topic-tag">Hydration and Recovery</span>
+    </div>
+    <div class="topic-title" style="color:#1B4D89">Hydration and Recovery</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#E5EDF5;border-left:4px solid #1B4D89">
+    <span class="box-label" style="color:#1B4D89">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Young athletes should drink water before, during, and after activity</div><div class="info-item" style="color:#333">Drink 8-16 ounces of water 30 minutes before exercise</div><div class="info-item" style="color:#333">During activity, drink 4-8 ounces every 15-20 minutes</div><div class="info-item" style="color:#333">Electrolyte drinks are only needed for activities lasting over 60 minutes in heat</div><div class="info-item" style="color:#333">Signs of dehydration include headache, fatigue, dizziness, and dark urine</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Send your child to practice with a full water bottle every time</div><div class="info-item info-item-dash" style="color:#555">Encourage drinking even when not thirsty — thirst is a late indicator</div><div class="info-item info-item-dash" style="color:#555">Monitor urine color as a simple hydration check — pale yellow is ideal</div><div class="info-item info-item-dash" style="color:#555">Ensure 8-10 hours of sleep per night for proper recovery and growth</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B4D89">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 8</span></div>
+</div><div class="page">
+  <div class="divider-content" style="background:#C25E1C">
+    <div class="divider-part-label">Part Two</div>
+    <div class="divider-title">Core Athletic Skills</div>
+    <div class="divider-subtitle">Speed, Strength, Agility</div>
+    <div class="divider-desc">Every sport demands a foundation of athletic skills. Whether your child dreams of scoring touchdowns or sinking three-pointers, the abilities in this section — speed, strength, agility, coordination, and endurance — form the bedrock of all athletic performance. Parents can develop these skills through simple, fun activities at home or in the backyard, no expensive equipment required.</div>
+    <div class="divider-topics"><div><span class="divider-topic-num">01</span>Speed and Sprint Development</div><div><span class="divider-topic-num">02</span>Strength and Power Training</div><div><span class="divider-topic-num">03</span>Agility and Quickness</div><div><span class="divider-topic-num">04</span>Balance and Coordination</div><div><span class="divider-topic-num">05</span>Endurance and Stamina</div></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 9</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Two &amp;middot; Core Athletic Skills</span>
+      <span class="topic-tag">Speed and Sprint Development</span>
+    </div>
+    <div class="topic-title" style="color:#C25E1C">Speed and Sprint Development</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#FBF0E5;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Sprint speed comes from two factors: stride length and stride frequency</div><div class="info-item" style="color:#333">Proper arm action drives leg speed — arms should swing forward and back, not across the body</div><div class="info-item" style="color:#333">Forward lean from the ankles (not the waist) accelerates the first 10 yards</div><div class="info-item" style="color:#333">Relaxation is key — tight muscles are slow muscles</div><div class="info-item" style="color:#333">Speed can be trained at any age through short, high-intensity bursts</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Set up 10-20 yard sprint races in the backyard or park</div><div class="info-item info-item-dash" style="color:#555">Use visual targets like cones or chalk marks to give your child something to run toward</div><div class="info-item info-item-dash" style="color:#555">Keep speed work short: 5-10 second sprints with full recovery between reps</div><div class="info-item info-item-dash" style="color:#555">Film your child running in slow motion to help them see their form</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#C25E1C">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 10</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Two &amp;middot; Core Athletic Skills</span>
+      <span class="topic-tag">Strength and Power Training</span>
+    </div>
+    <div class="topic-title" style="color:#C25E1C">Strength and Power Training</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#FBF0E5;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Bodyweight exercises are safe and effective for children of all ages</div><div class="info-item" style="color:#333">Push-ups, squats, lunges, and planks build functional strength</div><div class="info-item" style="color:#333">Plyometric exercises (jumping, bounding) develop explosive power</div><div class="info-item" style="color:#333">Core strength supports every athletic movement and protects the spine</div><div class="info-item" style="color:#333">Proper form always comes before adding resistance or repetitions</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Create a simple circuit: 10 push-ups, 10 squats, 20-second plank, repeat 3 times</div><div class="info-item info-item-dash" style="color:#555">Use household items as light weights: water bottles, canned goods</div><div class="info-item info-item-dash" style="color:#555">Make strength training a game: who can hold a plank the longest?</div><div class="info-item info-item-dash" style="color:#555">Focus on quality over quantity — 5 perfect push-ups beat 15 sloppy ones</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#C25E1C">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 11</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Two &amp;middot; Core Athletic Skills</span>
+      <span class="topic-tag">Agility and Quickness</span>
+    </div>
+    <div class="topic-title" style="color:#C25E1C">Agility and Quickness</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#FBF0E5;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Agility is the ability to change direction quickly while maintaining balance</div><div class="info-item" style="color:#333">Cone drills, ladder drills, and shuttle runs develop footwork and reaction time</div><div class="info-item" style="color:#333">Lateral movement is often neglected but critical in most sports</div><div class="info-item" style="color:#333">Quick first steps come from staying on the balls of the feet</div><div class="info-item" style="color:#333">Agility training improves both offensive and defensive performance</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Set up a simple cone course in the yard — zig-zags, circles, and stop-and-go patterns</div><div class="info-item info-item-dash" style="color:#555">Call out directions (left, right, forward, back) and have your child react instantly</div><div class="info-item info-item-dash" style="color:#555">Use sidewalk chalk to draw a footwork ladder on the driveway</div><div class="info-item info-item-dash" style="color:#555">Time the drills and track improvement over weeks to show progress</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#C25E1C">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 12</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Two &amp;middot; Core Athletic Skills</span>
+      <span class="topic-tag">Balance and Coordination</span>
+    </div>
+    <div class="topic-title" style="color:#C25E1C">Balance and Coordination</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#FBF0E5;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Balance is the foundation of all skilled movement</div><div class="info-item" style="color:#333">Single-leg exercises improve stability and proprioception (body awareness)</div><div class="info-item" style="color:#333">Hand-eye coordination develops through catching, throwing, and striking activities</div><div class="info-item" style="color:#333">Balance training helps prevent ankle and knee injuries</div><div class="info-item" style="color:#333">Coordination skills peak in adaptability during ages 8-12</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Challenge balance: stand on one foot with eyes closed for 30 seconds</div><div class="info-item info-item-dash" style="color:#555">Play catch with different sized balls to develop hand-eye coordination</div><div class="info-item info-item-dash" style="color:#555">Use a balance beam or draw a line on the ground for walking exercises</div><div class="info-item info-item-dash" style="color:#555">Jump rope is one of the best coordination tools — start with basic bouncing</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#C25E1C">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 13</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Two &amp;middot; Core Athletic Skills</span>
+      <span class="topic-tag">Endurance and Stamina</span>
+    </div>
+    <div class="topic-title" style="color:#C25E1C">Endurance and Stamina</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#FBF0E5;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Aerobic endurance allows sustained activity without fatigue</div><div class="info-item" style="color:#333">Interval training (alternating hard and easy efforts) builds both speed and stamina</div><div class="info-item" style="color:#333">A strong cardiovascular base supports recovery between plays</div><div class="info-item" style="color:#333">Endurance is sport-specific: a soccer player needs different stamina than a baseball player</div><div class="info-item" style="color:#333">Gradual progression prevents overuse injuries — increase volume by no more than 10% per week</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Start with 15-20 minutes of continuous activity and build gradually</div><div class="info-item info-item-dash" style="color:#555">Mix running with games: tag, capture the flag, or relay races</div><div class="info-item info-item-dash" style="color:#555">Use the talk test: your child should be able to speak in short sentences during easy pace</div><div class="info-item info-item-dash" style="color:#555">Track weekly activity to ensure steady, safe progression</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#C25E1C">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 14</span></div>
+</div><div class="page">
+  <div class="divider-content" style="background:#1B6E50">
+    <div class="divider-part-label">Part Three</div>
+    <div class="divider-title">American Sports Guide</div>
+    <div class="divider-subtitle">Skills, Drills, and Talent Indicators</div>
+    <div class="divider-desc">This section covers the nine most popular youth sports in America. For each sport, you will find the ideal starting age, key skills to develop, simple drills you can do together, basic equipment needs, and most importantly, talent indicators — the signs that your child may have a natural aptitude worth nurturing. Use this guide to help your child explore different sports and discover where they shine.</div>
+    <div class="divider-topics"><div><span class="divider-topic-num">01</span>Basketball</div><div><span class="divider-topic-num">02</span>Baseball and Softball</div><div><span class="divider-topic-num">03</span>Football</div><div><span class="divider-topic-num">04</span>Soccer</div><div><span class="divider-topic-num">05</span>Swimming</div><div><span class="divider-topic-num">06</span>Tennis</div><div><span class="divider-topic-num">07</span>Track and Field</div><div><span class="divider-topic-num">08</span>Volleyball</div><div><span class="divider-topic-num">09</span>Golf</div></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 15</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Basketball</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Basketball</div>
+      <div class="sport-age">Ages 5-6 to start; competitive play begins around age 8</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Ball handling: dribbling with both hands without looking down at the ball</div><div class="info-item" style="color:#333">Shooting form: squared shoulders, eyes on the rim, follow through with the wrist</div><div class="info-item" style="color:#333">Court vision: awareness of teammates, opponents, and open space</div><div class="info-item" style="color:#333">Defensive stance: wide base, active hands, lateral quickness</div><div class="info-item" style="color:#333">Passing: chest passes, bounce passes, and overhead passes with accuracy</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Natural height or long wingspan relative to peers</div><div class="info-item info-item-dash" style="color:#555">Quick first step and ability to change direction while dribbling</div><div class="info-item info-item-dash" style="color:#555">Good hand-eye coordination — catches passes cleanly</div><div class="info-item info-item-dash" style="color:#555">Competitive instinct and willingness to take important shots</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Wall dribbling: dribble against a wall with each hand for 1 minute</div><div class="info-item info-item-dash" style="color:#555">Form shooting: practice shooting motion lying on the back, rolling ball straight up</div><div class="info-item info-item-dash" style="color:#555">Cone dribbling: set up 5 cones and dribble through them switching hands</div><div class="info-item info-item-dash" style="color:#555">Defensive slides: shuffle laterally between two points, staying low</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Basketball (size appropriate for age), hoop at adjustable height, flat surface for dribbling
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 16</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Baseball and Softball</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Baseball and Softball</div>
+      <div class="sport-age">Ages 4-6 (T-ball); ages 7-8 (coach pitch); ages 9+ (player pitch)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Hitting fundamentals: stance, grip, weight transfer, and hip rotation</div><div class="info-item" style="color:#333">Throwing mechanics: four-seam grip, elbow above shoulder, follow through across body</div><div class="info-item" style="color:#333">Fielding: ready position, two hands for ground balls, tracking fly balls</div><div class="info-item" style="color:#333">Base running: explosive first step, proper turn at bases, sliding technique</div><div class="info-item" style="color:#333">Game awareness: knowing the situation, pitch count, and defensive positioning</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Natural hand-eye coordination — makes consistent contact with the ball</div><div class="info-item info-item-dash" style="color:#555">Strong, accurate throwing arm for their age</div><div class="info-item info-item-dash" style="color:#555">Quick reflexes when fielding grounders or line drives</div><div class="info-item info-item-dash" style="color:#555">Left-handed hitting or throwing can be an advantage at higher levels</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Tee work: hit off a batting tee into a net or fence, focusing on form</div><div class="info-item info-item-dash" style="color:#555">Soft toss: toss balls from the side and have your child hit into a fence</div><div class="info-item info-item-dash" style="color:#555">Wall ball: throw against a wall and field the rebound — improves both throwing and fielding</div><div class="info-item info-item-dash" style="color:#555">Base running: time 30-yard dashes from home to first base</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Glove, bat (correct length and weight), batting helmet, baseballs or softballs, batting tee
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 17</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Football</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Football</div>
+      <div class="sport-age">Ages 5-7 (flag football); ages 8+ (tackle football with proper coaching)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Catching: hands form a diamond or basket, secure the ball before running</div><div class="info-item" style="color:#333">Route running: crisp cuts, proper depth, and selling the route</div><div class="info-item" style="color:#333">Tackling form: head up, wrap arms, drive through the ball carrier (tackle football)</div><div class="info-item" style="color:#333">Footwork: three-point stance, first-step explosion, and change of direction</div><div class="info-item" style="color:#333">Field awareness: understanding positions, assignments, and reading the play</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Explosive acceleration and short-area quickness</div><div class="info-item info-item-dash" style="color:#555">Physical toughness and willingness to make or absorb contact</div><div class="info-item info-item-dash" style="color:#555">Good hands — catches the ball naturally away from the body</div><div class="info-item info-item-dash" style="color:#555">Strong spatial awareness and ability to react to moving plays</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Passing tree: run and catch each route pattern (slant, out, curl, go)</div><div class="info-item info-item-dash" style="color:#555">Cone footwork: explosive 5-yard bursts with sharp direction changes</div><div class="info-item info-item-dash" style="color:#555">Ball security: hold a ball while a parent tries to strip it away</div><div class="info-item info-item-dash" style="color:#555">Agility ladder: rapid footwork through ladder patterns on the ground</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Football (youth size), cones, flag belts (for flag football), cleats, mouthguard
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 18</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Soccer</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Soccer</div>
+      <div class="sport-age">Ages 3-5 (introductory programs); ages 6+ (organized leagues)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Dribbling: close ball control using the inside and outside of the foot</div><div class="info-item" style="color:#333">Passing: accurate ground passes using the instep (shoelaces) and inside foot</div><div class="info-item" style="color:#333">First touch: receiving the ball cleanly and preparing it for the next action</div><div class="info-item" style="color:#333">Shooting: power with the laces, placement with the inside of the foot</div><div class="info-item" style="color:#333">Spatial awareness: moving to open space, both with and without the ball</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Natural comfort with the ball at their feet — dribbles without panic under pressure</div><div class="info-item info-item-dash" style="color:#555">Quick, agile footwork and ability to change pace suddenly</div><div class="info-item info-item-dash" style="color:#555">Good vision — sees and delivers passes before defenders react</div><div class="info-item info-item-dash" style="color:#555">Endurance and willingness to run throughout the game</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Cone dribbling: weave through cones using both feet, inside and outside touches</div><div class="info-item info-item-dash" style="color:#555">Wall passing: pass against a wall and control the return with one touch</div><div class="info-item info-item-dash" style="color:#555">Juggling: keep the ball in the air using feet, thighs, and head — count consecutive touches</div><div class="info-item info-item-dash" style="color:#555">Target shooting: place targets in the goal and practice hitting them from various angles</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Soccer ball (size 3 for under 8, size 4 for 8-12, size 5 for 13+), cleats, shin guards, cones
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 19</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Swimming</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Swimming</div>
+      <div class="sport-age">Ages 1-3 (water familiarization); ages 4-5 (basic strokes); ages 6+ (competitive)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Water safety: comfort in water, floating, and breathing control come first</div><div class="info-item" style="color:#333">Freestyle: alternating arm pulls with flutter kick and side breathing</div><div class="info-item" style="color:#333">Backstroke: steady flutter kick with alternating arm recovery</div><div class="info-item" style="color:#333">Breaststroke: frog kick with simultaneous arm pull and glide</div><div class="info-item" style="color:#333">Flip turns and streamline push-offs for competitive swimming</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Natural buoyancy and comfort in water from an early age</div><div class="info-item info-item-dash" style="color:#555">Long limbs and flexible ankles for efficient kicking</div><div class="info-item info-item-dash" style="color:#555">Good lung capacity and ability to hold breath comfortably</div><div class="info-item info-item-dash" style="color:#555">Competitive drive — enjoys racing and beating personal times</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Dry-land kicking: lie on the floor and practice flutter kick and breaststroke kick</div><div class="info-item info-item-dash" style="color:#555">Arm circles: practice arm recovery motion standing in front of a mirror</div><div class="info-item info-item-dash" style="color:#555">Breathing drills: practice rhythmic exhaling underwater in the bathtub or pool</div><div class="info-item info-item-dash" style="color:#555">Core strength: planks and sit-ups build the stability needed for all strokes</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Swimsuit, goggles, swim cap (for long hair), access to a pool, kickboard
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 20</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Tennis</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Tennis</div>
+      <div class="sport-age">Ages 4-5 (with smaller rackets and red balls); ages 7+ (standard progression)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Forehand: eastern or semi-western grip, unit turn, contact in front of the body</div><div class="info-item" style="color:#333">Backhand: one-handed or two-handed, with proper shoulder rotation</div><div class="info-item" style="color:#333">Serve: continental grip, ball toss, kinetic chain from legs to arm</div><div class="info-item" style="color:#333">Footwork: split step, recovery steps, and positioning for each shot</div><div class="info-item" style="color:#333">Court positioning: baseline for groundstrokes, approach for volleys, net for finishing</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Excellent hand-eye coordination — tracks and times the ball well</div><div class="info-item info-item-dash" style="color:#555">Quick first step and ability to change direction instantly</div><div class="info-item info-item-dash" style="color:#555">Patience and focus — can sustain concentration through long points</div><div class="info-item info-item-dash" style="color:#555">Competitive temperament — thrives under pressure and adapts to opponents</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Wall practice: hit against a wall, focusing on consistent form and rhythm</div><div class="info-item info-item-dash" style="color:#555">Shadow swings: practice stroke motion without a ball, checking form in a mirror</div><div class="info-item info-item-dash" style="color:#555">Ball toss: practice serving toss — the ball should go straight up and come back down</div><div class="info-item info-item-dash" style="color:#555">Agility: cone drills for quick direction changes and split-step practice</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Tennis racket (size appropriate for age and height), tennis balls, court access, proper shoes
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 21</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Track and Field</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Track and Field</div>
+      <div class="sport-age">Ages 6-8 (basic running and jumping); ages 9+ (event-specific training)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Sprinting: explosive start, drive phase at 70% body lean, maximum velocity mechanics</div><div class="info-item" style="color:#333">Distance running: relaxed posture, efficient stride, controlled breathing</div><div class="info-item" style="color:#333">Jumping events: approach speed, takeoff, flight technique, and landing</div><div class="info-item" style="color:#333">Throwing events: rotational or linear technique, core power, and release angle</div><div class="info-item" style="color:#333">Relays: baton exchange technique and team coordination</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Natural speed — consistently fastest in their peer group over short distances</div><div class="info-item info-item-dash" style="color:#555">Explosive jumping ability — can jump high or far relative to body size</div><div class="info-item info-item-dash" style="color:#555">High pain tolerance and mental toughness for distance events</div><div class="info-item info-item-dash" style="color:#555">Rhythmic coordination for hurdling and jumping events</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Sprint intervals: 30-meter sprints with full recovery, focusing on form</div><div class="info-item info-item-dash" style="color:#555">Standing long jump: measure distance and track improvement over time</div><div class="info-item info-item-dash" style="color:#555">Medicine ball tosses (or weighted ball) for throwing power development</div><div class="info-item info-item-dash" style="color:#555">Running form drills: high knees, butt kicks, and A-skips for 20 meters each</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Running shoes, stopwatch, measuring tape, cones, access to a track or open field
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 22</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Volleyball</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Volleyball</div>
+      <div class="sport-age">Ages 7-9 (modified games with lighter balls); ages 10+ (standard rules)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Passing (bump): platform with forearms, legs generate power, absorb and direct the ball</div><div class="info-item" style="color:#333">Setting: fingertip contact, quick release, push the ball to the target</div><div class="info-item" style="color:#333">Serving: underhand for beginners, overhand with toss for advanced players</div><div class="info-item" style="color:#333">Hitting (spike): approach footwork, jump timing, and arm swing contact</div><div class="info-item" style="color:#333">Blocking: timing the jump, penetrating the net plane with hands</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Good vertical jump and explosive leg power</div><div class="info-item info-item-dash" style="color:#555">Quick reflexes and ability to read the hitter&#x27;s approach</div><div class="info-item info-item-dash" style="color:#555">Height advantage, particularly for hitting and blocking positions</div><div class="info-item info-item-dash" style="color:#555">Strong hand-eye coordination for setting and digging</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Wall passing: pass against a wall continuously, maintaining a platform</div><div class="info-item info-item-dash" style="color:#555">Setting to self: set the ball overhead repeatedly without letting it drop</div><div class="info-item info-item-dash" style="color:#555">Serving practice: serve against a wall or over a line, focusing on consistent contact</div><div class="info-item info-item-dash" style="color:#555">Approach footwork: practice the three-step hitting approach without a ball</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Volleyball (lighter weight for beginners), net (or rope at appropriate height), knee pads
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 23</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Three &amp;middot; American Sports Guide</span>
+      <span class="topic-tag">Golf</span>
+    </div>
+    <div class="sport-header">
+      <div class="sport-title" style="color:#1B6E50">Golf</div>
+      <div class="sport-age">Ages 4-6 (SNAG or plastic clubs); ages 7+ (real clubs with proper instruction)</div>
+    </div>
+  <div class="info-box" style="background:#DFF0EA;border-left:4px solid #1B6E50">
+    <span class="box-label" style="color:#1B6E50">Key Skills to Develop</span>
+    <div class="info-item" style="color:#333">Grip: interlocking, overlapping, or baseball grip — choose what feels natural</div><div class="info-item" style="color:#333">Stance and alignment: feet shoulder-width, shoulders parallel to target line</div><div class="info-item" style="color:#333">Full swing: backswing turn, weight shift, downswing sequence, and follow-through</div><div class="info-item" style="color:#333">Short game: chipping, pitching, and putting account for most scoring strokes</div><div class="info-item" style="color:#333">Course management: club selection, shot strategy, and mental composure</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Talent Indicators</span>
+    <div class="info-item info-item-dash" style="color:#555">Natural hand-eye coordination and body awareness</div><div class="info-item info-item-dash" style="color:#555">Patience and focus — golf requires sustained concentration over 18 holes</div><div class="info-item info-item-dash" style="color:#555">Good rhythm and timing in the swing</div><div class="info-item info-item-dash" style="color:#555">Emotional control — able to recover from bad shots without frustration</div>
+  </div>
+  <div class="info-box" style="background:#E8F0E8;border-left:4px solid #2E7D32">
+    <span class="box-label" style="color:#2E7D32">Home Practice Drills</span>
+    <div class="info-item info-item-dash" style="color:#555">Putting practice: use a cup or target on the floor, focus on distance control</div><div class="info-item info-item-dash" style="color:#555">Chipping in the yard: use plastic or foam balls to practice chip shots to a target</div><div class="info-item info-item-dash" style="color:#555">Mirror work: practice backswing and finish positions in front of a mirror</div><div class="info-item info-item-dash" style="color:#555">Balance drill: hold the finish position for 3 seconds after each swing</div>
+  </div>
+  <div class="equipment-line">
+        <span class="equip-label">EQUIPMENT:</span> Youth golf clubs (cut down or junior set), golf balls, tees, putting mat or access to a course
+      </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#1B6E50">Practice Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 24</span></div>
+</div><div class="page">
+  <div class="divider-content" style="background:#8B2A3A">
+    <div class="divider-part-label">Part Four</div>
+    <div class="divider-title">Safety and Health</div>
+    <div class="divider-subtitle">Injury Prevention and Recovery</div>
+    <div class="divider-desc">Keeping young athletes healthy is every parent&#x27;s top priority. This section covers how to prevent common injuries, recognize the signs of overuse and concussion, and support your child&#x27;s physical and emotional recovery. Understanding when to push through and when to rest is one of the most important skills a sports parent can develop.</div>
+    <div class="divider-topics"><div><span class="divider-topic-num">01</span>Injury Prevention Strategies</div><div><span class="divider-topic-num">02</span>Common Youth Sports Injuries</div><div><span class="divider-topic-num">03</span>Recovery and Return to Play</div></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 25</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Four &amp;middot; Safety and Health</span>
+      <span class="topic-tag">Injury Prevention Strategies</span>
+    </div>
+    <div class="topic-title" style="color:#8B2A3A">Injury Prevention Strategies</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#F5E6E9;border-left:4px solid #8B2A3A">
+    <span class="box-label" style="color:#8B2A3A">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Proper warm-up and cool-down routines are the single most effective injury prevention tool</div><div class="info-item" style="color:#333">Sport-specific conditioning strengthens the muscles and joints most used in each sport</div><div class="info-item" style="color:#333">Correct equipment fit is critical — helmets, shoes, and protective gear must be sized properly</div><div class="info-item" style="color:#333">Rest days are not optional — growing bodies need 1-2 days off per week from organized sport</div><div class="info-item" style="color:#333">Playing multiple sports reduces overuse injuries compared to year-round single-sport participation</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Inspect equipment regularly for wear, cracks, or improper fit</div><div class="info-item info-item-dash" style="color:#555">Learn the common injuries for your child&#x27;s sport and watch for early warning signs</div><div class="info-item info-item-dash" style="color:#555">Encourage communication — your child should feel safe reporting pain without fear of losing playing time</div><div class="info-item info-item-dash" style="color:#555">Keep a first aid kit at all games and practices</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#8B2A3A">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 26</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Four &amp;middot; Safety and Health</span>
+      <span class="topic-tag">Common Youth Sports Injuries</span>
+    </div>
+    <div class="topic-title" style="color:#8B2A3A">Common Youth Sports Injuries</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#F5E6E9;border-left:4px solid #8B2A3A">
+    <span class="box-label" style="color:#8B2A3A">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Sprains and strains: stretching or tearing of ligaments and muscles — most common in ankles and knees</div><div class="info-item" style="color:#333">Growth plate injuries: damage to developing bone tissue — more common in children than adults</div><div class="info-item" style="color:#333">Overuse injuries: repetitive stress causes gradual damage — stress fractures, tendonitis, and Sever&#x27;s disease</div><div class="info-item" style="color:#333">Concussions: brain injuries from head impact — require immediate removal from play and medical evaluation</div><div class="info-item" style="color:#333">Heat illness: dehydration and heat exhaustion — prevent with proper hydration and acclimatization</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Learn the RICE method: Rest, Ice, Compression, Elevation for acute injuries</div><div class="info-item info-item-dash" style="color:#555">Never let a child play through pain — pain is the body&#x27;s warning system</div><div class="info-item info-item-dash" style="color:#555">After a concussion, follow return-to-play protocols under medical supervision</div><div class="info-item info-item-dash" style="color:#555">Seek professional medical evaluation for any injury that causes limping, swelling, or limited motion</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#8B2A3A">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 27</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Part Four &amp;middot; Safety and Health</span>
+      <span class="topic-tag">Recovery and Return to Play</span>
+    </div>
+    <div class="topic-title" style="color:#8B2A3A">Recovery and Return to Play</div>
+    <div class="topic-subtitle">Key knowledge for parents</div>
+  <div class="info-box" style="background:#F5E6E9;border-left:4px solid #8B2A3A">
+    <span class="box-label" style="color:#8B2A3A">What Parents Need to Know</span>
+    <div class="info-item" style="color:#333">Active recovery (light walking, swimming, or cycling) promotes blood flow and healing</div><div class="info-item" style="color:#333">Sleep is the most powerful recovery tool — 9-11 hours for children under 12</div><div class="info-item" style="color:#333">Nutrition post-exercise: protein for muscle repair, carbohydrates for energy replenishment</div><div class="info-item" style="color:#333">Gradual return to sport follows a step-by-step progression from light activity to full competition</div><div class="info-item" style="color:#333">Mental recovery matters too — burnout and loss of motivation are real concerns in youth sports</div>
+  </div>
+  <div class="info-box" style="background:#FBF0E4;border-left:4px solid #C25E1C">
+    <span class="box-label" style="color:#C25E1C">Practical Tips for Parents</span>
+    <div class="info-item info-item-dash" style="color:#555">Schedule mandatory rest days each week — no exceptions</div><div class="info-item info-item-dash" style="color:#555">Watch for signs of burnout: declining performance, mood changes, or reluctance to practice</div><div class="info-item info-item-dash" style="color:#555">Encourage off-season activities that are not sport-related to maintain balance</div><div class="info-item info-item-dash" style="color:#555">Keep a training log to track workload and ensure gradual progression</div>
+  </div>
+  <div class="note-section">
+    <div class="note-label" style="color:#8B2A3A">Your Notes</div>
+    <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 28</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Tools &amp;amp; Resources</span>
+      <span class="topic-tag">Season Training Planner</span>
+    </div>
+  <div class="tool-title" style="color:#333">Season Training Planner</div>
+  <div class="tool-desc">Map out your child&#x27;s training schedule for the season, balancing practice, games, rest, and family time.</div>
+  
+    <div class="tool-field">
+      <span class="tool-field-label">Athlete:</span>
+      <span class="tool-field-line"></span>
+      <span class="tool-field-label" style="margin-left:20px">Season:</span>
+      <span class="tool-field-line"></span>
+    </div>
+    <div class="tool-field">
+      <span class="tool-field-label">Primary Sport:</span>
+      <span class="tool-field-line"></span>
+    </div>
+    <table class="tool-table">
+      <tr>
+        <th style="width:14%">Week</th>
+        <th style="width:20%">Focus Area</th>
+        <th style="width:22%">Practice Goals</th>
+        <th style="width:22%">Games / Events</th>
+        <th style="width:22%">Rest Days</th>
+      </tr>
+      <tr><td>1</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>2</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>3</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>4</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>5</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>6</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>7</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>8</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>9</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>10</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>11</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>12</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+    </table>
+    <div class="note-section">
+      <div class="note-label">Season Goals &amp; Reflections</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 29</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Tools &amp;amp; Resources</span>
+      <span class="topic-tag">Weekly Practice Log</span>
+    </div>
+  <div class="tool-title" style="color:#333">Weekly Practice Log</div>
+  <div class="tool-desc">Track daily and weekly training activities, including duration, intensity, and how your child felt.</div>
+  
+    <div class="tool-field">
+      <span class="tool-field-label">Week of:</span>
+      <span class="tool-field-line"></span>
+      <span class="tool-field-label" style="margin-left:20px">Sport:</span>
+      <span class="tool-field-line"></span>
+    </div>
+    <table class="tool-table">
+      <tr>
+        <th style="width:12%">Day</th>
+        <th style="width:20%">Activity</th>
+        <th style="width:12%">Duration</th>
+        <th style="width:16%">Intensity</th>
+        <th style="width:40%">Notes / How They Felt</th>
+      </tr>
+      <tr><td>Mon</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+      <tr><td>Tue</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+      <tr><td>Wed</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+      <tr><td>Thu</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+      <tr><td>Fri</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+      <tr><td>Sat</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+      <tr><td>Sun</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+    </table>
+    <div class="note-section">
+      <div class="note-label">Weekly Summary</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 30</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Tools &amp;amp; Resources</span>
+      <span class="topic-tag">Skill Assessment Tracker</span>
+    </div>
+  <div class="tool-title" style="color:#333">Skill Assessment Tracker</div>
+  <div class="tool-desc">Record your child&#x27;s skill development across sports and athletic abilities. Identify strengths and areas for growth.</div>
+  
+    <div class="note-label" style="margin-bottom:6px">Sport Skill Ratings (1 = Beginner, 5 = Advanced)</div>
+    <table class="tool-table">
+      <tr><th style="width:25%">Sport</th><th style="width:18%">Current</th><th style="width:18%">Last Check</th><th style="width:18%">Goal</th><th style="width:21%">Notes</th></tr>
+      <tr><td>Basketball</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Baseball</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Football</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Soccer</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Swimming</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Tennis</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Track</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Volleyball</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Golf</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+    </table>
+    <div class="note-label" style="margin:10px 0 6px">Athletic Ability Ratings</div>
+    <table class="tool-table">
+      <tr><th style="width:25%">Ability</th><th style="width:25%">Current</th><th style="width:25%">Last Check</th><th style="width:25%">Goal</th></tr>
+      <tr><td>Speed</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Strength</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Agility</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Coordination</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Endurance</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr><tr><td>Flexibility</td><td class="td-blank"></td><td class="td-blank"></td><td class="td-blank"></td></tr>
+    </table>
+    <div class="note-section">
+      <div class="note-label">Overall Assessment</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 31</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Tools &amp;amp; Resources</span>
+      <span class="topic-tag">Talent Discovery Journal</span>
+    </div>
+  <div class="tool-title" style="color:#333">Talent Discovery Journal</div>
+  <div class="tool-desc">Document observations about your child&#x27;s natural abilities, preferences, and progress across different sports.</div>
+  
+    <div class="tool-field">
+      <span class="tool-field-label">Date:</span>
+      <span class="tool-field-line"></span>
+    </div>
+    <div class="note-section">
+      <div class="note-label">Sports Observed Today</div>
+      <div class="note-line"></div><div class="note-line"></div>
+    </div>
+    <div class="note-section">
+      <div class="note-label">What Came Naturally (Strengths I Noticed)</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+    <div class="note-section">
+      <div class="note-label">What Needed Extra Effort (Areas to Develop)</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+    <div class="note-section">
+      <div class="note-label">My Child's Reactions &amp; Enthusiasm Level (1-5)</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+    <div class="note-section">
+      <div class="note-label">Next Steps &amp; Activities to Try</div>
+      <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+    </div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 32</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Notes</span>
+      <span class="topic-tag"></span>
+    </div>
+  <div class="note-page-title">Notes</div>
+  <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 33</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Notes</span>
+      <span class="topic-tag"></span>
+    </div>
+  <div class="note-page-title">Notes</div>
+  <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 34</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Notes</span>
+      <span class="topic-tag"></span>
+    </div>
+  <div class="note-page-title">Notes</div>
+  <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 35</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Notes</span>
+      <span class="topic-tag"></span>
+    </div>
+  <div class="note-page-title">Notes</div>
+  <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 36</span></div>
+</div><div class="page">
+  <div class="page-header">
+      <span class="part-tag">Notes</span>
+      <span class="topic-tag"></span>
+    </div>
+  <div class="note-page-title">Notes</div>
+  <div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div><div class="note-line"></div>
+  <div class="page-footer"><span>Youth Sports Development Handbook</span><span>Page 37</span></div>
+</div>
+</body>
+</html>

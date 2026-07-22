@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bible Study Handbook — Full Cover Option B (KDP)</title>
+<style>
+  @page { size: 17.651in 11.25in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    -webkit-print-color-adjust: exact;
+    background: #fdf6f0;
+  }
+
+  .full-cover {
+    width: 17.651in;
+    height: 11.25in;
+    position: relative;
+    display: flex;
+  }
+
+  /* ═══ BACK COVER ═══ */
+  .back-cover {
+    width: 8.625in;
+    height: 11.25in;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f5ebe6 50%, #e8ddd4 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 0.65in 0.6in 0.65in 0.7in;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .back-arch {
+    position: absolute;
+    top: 0; right: 0;
+    width: 5in; height: 7in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 100%);
+    border-radius: 2.5in 2.5in 0 0;
+    opacity: 0.3;
+  }
+
+  .back-peach {
+    position: absolute;
+    bottom: 1in; left: 0.3in;
+    width: 3in; height: 3in;
+    background: radial-gradient(circle, rgba(230,180,150,0.25) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(10px);
+  }
+
+  .back-content {
+    z-index: 5;
+    margin-top: 0.5in;
+    position: relative;
+  }
+
+  .back-quote {
+    text-align: center;
+    margin-bottom: 0.5in;
+    padding: 0 0.3in;
+  }
+  .back-quote-text {
+    font-family: Georgia, serif;
+    font-size: 13pt;
+    font-style: italic;
+    color: #6b8e9e;
+    line-height: 1.7;
+  }
+  .back-quote-author {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #c4a882;
+    letter-spacing: 2pt;
+    text-transform: uppercase;
+    margin-top: 0.12in;
+  }
+
+  .back-features {
+    padding: 0 0.2in;
+  }
+  .back-features-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt;
+    font-weight: 600;
+    color: #6b8e9e;
+    letter-spacing: 4pt;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.3in;
+  }
+  .back-features ul {
+    list-style: none;
+    padding: 0;
+  }
+  .back-features li {
+    font-family: Georgia, serif;
+    font-size: 10.5pt;
+    color: #7a6a5a;
+    line-height: 1.8;
+    padding-left: 0.3in;
+    position: relative;
+    margin-bottom: 0.08in;
+  }
+  .back-features li::before {
+    content: '✿';
+    color: #c49a8a;
+    font-size: 9pt;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+
+  .back-verse {
+    position: absolute;
+    bottom: 1.9in;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 5;
+    padding: 0 0.5in;
+  }
+  .back-verse-text {
+    font-family: Georgia, serif;
+    font-size: 11pt;
+    font-style: italic;
+    color: #8aacbe;
+    line-height: 1.6;
+  }
+  .back-verse-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #c4a882;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+    margin-top: 0.08in;
+  }
+
+  .barcode-area {
+    position: absolute;
+    bottom: 0.3in;
+    right: 0.3in;
+    width: 2in;
+    height: 1.2in;
+    background: white;
+    z-index: 10;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7pt;
+    color: #999;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ═══ SPINE ═══ */
+  .spine {
+    width: 0.401in;
+    height: 11.25in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 50%, #a8c4d4 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .spine-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: Georgia, serif;
+    font-size: 11pt;
+    font-weight: bold;
+    color: #ffffff;
+    letter-spacing: 3pt;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .spine-sub {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7pt;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 2pt;
+    position: absolute;
+    bottom: 1.2in;
+  }
+
+  /* ═══ FRONT COVER ═══ */
+  .front-cover {
+    width: 8.625in;
+    height: 11.25in;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f5ebe6 50%, #e8ddd4 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.125in;
+  }
+
+  .arch {
+    position: absolute;
+    top: 0.125in;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5in;
+    height: 6.875in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 100%);
+    border-radius: 2.5in 2.5in 0 0;
+    opacity: 0.85;
+    z-index: 1;
+  }
+  .arch-inner {
+    position: absolute;
+    top: 0.275in;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4.7in;
+    height: 6.575in;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 2.35in 2.35in 0 0;
+    z-index: 2;
+  }
+
+  .peach-deco {
+    position: absolute;
+    bottom: 1.625in;
+    right: 0.625in;
+    width: 2.5in;
+    height: 2.5in;
+    background: radial-gradient(circle, rgba(230,180,150,0.35) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(10px);
+    z-index: 1;
+  }
+
+  .leaves-deco {
+    position: absolute;
+    bottom: 2.625in;
+    left: 0.425in;
+    width: 2in;
+    height: 2in;
+    z-index: 3;
+    opacity: 0.5;
+  }
+
+  .front-content {
+    z-index: 5;
+    text-align: center;
+    padding: 0 0.8in;
+    margin-top: 0.625in;
+  }
+
+  .overline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 5pt;
+    text-transform: uppercase;
+    margin-bottom: 0.35in;
+    text-indent: 5pt;
+  }
+
+  .title-serif {
+    font-family: Georgia, serif;
+    font-size: 36pt;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .title-script {
+    font-family: Georgia, serif;
+    font-size: 40pt;
+    font-style: italic;
+    color: #f0e0d0;
+    line-height: 1.1;
+    margin-top: 0.1in;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .divider-w {
+    width: 1.2in;
+    height: 1px;
+    background: rgba(255,255,255,0.5);
+    margin: 0.25in auto;
+  }
+
+  .subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 2.5pt;
+    text-transform: uppercase;
+    line-height: 1.8;
+    text-indent: 2.5pt;
+  }
+
+  .info-block {
+    position: absolute;
+    bottom: 1.925in;
+    left: 0;
+    right: 0.125in;
+    text-align: center;
+    z-index: 5;
+  }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 0.25in;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7.5pt;
+    font-weight: 500;
+    color: #8a7060;
+    letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(200,170,140,0.4);
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+
+  .front-verse {
+    font-family: Georgia, serif;
+    font-size: 11pt;
+    font-style: italic;
+    color: #7a6a5a;
+    line-height: 1.6;
+  }
+
+  .front-verse-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #8aacbe;
+    letter-spacing: 2.5pt;
+    text-transform: uppercase;
+    margin-top: 4px;
+    text-indent: 2.5pt;
+  }
+</style>
+</head>
+<body>
+
+<div class="full-cover">
+
+  <!-- ═══ BACK COVER ═══ -->
+  <div class="back-cover">
+    <div class="back-arch"></div>
+    <div class="back-peach"></div>
+
+    <div class="back-content">
+      <div class="back-quote">
+        <div class="back-quote-text">
+          &ldquo;A beautiful, deeply thoughtful guide that takes you through the entire Bible in one year. Every page is designed to help you slow down, reflect, and encounter God&rsquo;s Word in a fresh way.&rdquo;
+        </div>
+      </div>
+
+      <div class="back-features">
+        <div class="back-features-title">What&rsquo;s Inside</div>
+        <ul>
+          <li>52 weeks of curated Scripture covering all 66 books</li>
+          <li>3 rotating study methods: SOAP, Verse Mapping, Inductive</li>
+          <li>Generous journaling space for reflection and prayer</li>
+          <li>10 epoch dividers tracing God&rsquo;s redemptive story</li>
+          <li>Small group guide &amp; sermon notes pages</li>
+          <li>Translation-neutral &mdash; use with any Bible version</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="back-verse">
+      <div class="back-verse-text">
+        &ldquo;All Scripture is breathed out by God<br/>and profitable for teaching, for reproof,<br/>for correction, and for training in righteousness.&rdquo;
+      </div>
+      <div class="back-verse-ref">2 Timothy 3:16</div>
+    </div>
+
+    <div class="barcode-area">
+      Barcode Area<br/>(2" × 1.2")<br/>KDP Auto-Generated
+    </div>
+  </div>
+
+  <!-- ═══ SPINE ═══ -->
+  <div class="spine">
+    <div class="spine-text">BIBLE STUDY HANDBOOK</div>
+    <div class="spine-sub">52-WEEK GUIDE</div>
+  </div>
+
+  <!-- ═══ FRONT COVER ═══ -->
+  <div class="front-cover">
+    <div class="arch"></div>
+    <div class="arch-inner"></div>
+    <div class="peach-deco"></div>
+
+    <!-- Olive branch decoration -->
+    <svg class="leaves-deco" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <g fill="none" stroke="#8a8a6a" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+        <path d="M20,180 Q60,120 100,40"/>
+        <path d="M50,150 Q40,140 30,135"/>
+        <path d="M70,120 Q85,115 95,110"/>
+        <path d="M60,135 Q50,125 40,122"/>
+        <path d="M80,95 Q95,90 105,88"/>
+      </g>
+      <g fill="#9a9a7a" opacity="0.4">
+        <ellipse cx="30" cy="135" rx="14" ry="6" transform="rotate(-25 30 135)"/>
+        <ellipse cx="95" cy="110" rx="14" ry="6" transform="rotate(20 95 110)"/>
+        <ellipse cx="40" cy="122" rx="12" ry="5" transform="rotate(-30 40 122)"/>
+        <ellipse cx="105" cy="88" rx="12" ry="5" transform="rotate(15 105 88)"/>
+      </g>
+    </svg>
+
+    <div class="front-content">
+      <div class="overline">A 52-Week Guide Through Scripture</div>
+      <div class="title-serif">Bible Study</div>
+      <div class="title-script">Handbook</div>
+      <div class="divider-w"></div>
+      <div class="subtitle">Reflect &middot; Pray &middot; Grow</div>
+    </div>
+
+    <div class="info-block">
+      <div class="badges">
+        <span class="badge">10 Epochs</span>
+        <span class="badge">66 Books</span>
+        <span class="badge">52 Weeks</span>
+      </div>
+      <div class="front-verse">&ldquo;Your word is a lamp to my feet<br/>and a light to my path.&rdquo;</div>
+      <div class="front-verse-ref">Psalm 119:105</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

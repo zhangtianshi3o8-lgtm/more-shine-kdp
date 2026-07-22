@@ -1,0 +1,496 @@
+#!/usr/bin/env python3
+"""
+Tea Tasting Journal — KDP Full Wrap Cover Generator
+Zero-dependency (Python stdlib only).
+
+Generates a print-ready full wrap cover (back + spine + front) as
+standalone HTML. Export with Chrome headless to PDF.
+
+Trim: 6" x 9"
+Pages: 112 (cream paper)
+Spine: 112 x 0.0025 = 0.28"
+Bleed: 0.125" all outer edges
+Full cover: 12.53 x 9.25 in
+Publisher: More Shine Press
+"""
+
+import os
+
+OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "tea_tasting_journal_cover_V1.0.html")
+
+# KDP cover specs
+TRIM_W = 6.0          # inches
+TRIM_H = 9.0
+PAGES = 112
+SPINE = PAGES * 0.0025   # cream paper = 0.28"
+BLEED = 0.125
+COVER_W = TRIM_W * 2 + SPINE + BLEED * 2   # 12.53"
+COVER_H = TRIM_H + BLEED * 2               # 9.25"
+
+# Colors — Tea Green / Forest / Sage theme (quiet luxury aesthetic)
+C_CHARCOAL = "#1A2E1F"   # tea dark green
+C_DARK     = "#243828"   # dark forest
+C_BROWN    = "#2A4A30"   # dark green
+C_AMBER_D  = "#3A5A40"   # mid green
+C_AMBER    = "#5A7A5A"   # sage
+C_COPPER   = "#5A7A5A"   # sage accent (replaces copper)
+C_GOLD     = "#C4A04A"   # muted gold
+C_GOLD_L   = "#D4B896"   # light gold / champagne
+C_CREAM    = "#FAF6F0"   # warm cream
+C_WHITE    = "#ffffff"
+
+
+CSS = f"""
+<style>
+@page {{ size: {COVER_W:.4f}in {COVER_H:.4f}in; margin: 0; }}
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+
+body {{
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}}
+
+.cover-wrap {{
+  width: {COVER_W:.4f}in;
+  height: {COVER_H:.4f}in;
+  position: relative;
+  display: flex;
+}}
+
+/* ============ BACK COVER ============ */
+.back-cover {{
+  width: {TRIM_W + BLEED:.4f}in;
+  height: {COVER_H:.4f}in;
+  background: linear-gradient(165deg, {C_CHARCOAL} 0%, {C_DARK} 40%, {C_BROWN} 100%);
+  padding: 0.75in 0.5in 0.45in 0.5in;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+  overflow: hidden;
+}}
+
+/* Subtle tea-leaf texture */
+.back-cover::before {{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 28px 10px at 15% 25%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 26px 9px at 80% 15%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 30px 11px at 70% 70%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 24px 8px at 25% 80%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 22px 8px at 50% 50%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 26px 10px at 10% 60%, {C_GOLD}, transparent);
+}}
+
+/* Decorative circle */
+.back-cover::after {{
+  content: '';
+  position: absolute;
+  top: -0.3in; right: -0.3in;
+  width: 1.2in; height: 1.2in;
+  border-radius: 50%;
+  background: rgba(196, 160, 74, 0.08);
+}}
+
+.back-text {{
+  color: rgba(255,255,255,0.92);
+  font-size: 9pt;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}}
+.back-text .blurb {{
+  font-style: italic;
+  margin-bottom: 14px;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}}
+.back-text .blurb strong {{
+  color: {C_GOLD_L};
+  font-style: normal;
+}}
+
+.back-features {{
+  list-style: none;
+  padding: 0;
+}}
+.back-features li {{
+  font-size: 8pt;
+  color: rgba(255,255,255,0.82);
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.4;
+}}
+.back-features li::before {{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 5px;
+  height: 5px;
+  background: {C_GOLD};
+  border-radius: 50%;
+}}
+
+.back-bottom {{
+  padding-bottom: 0.15in;
+  position: relative;
+  z-index: 2;
+}}
+
+.barcode-area {{
+  width: 2in;
+  height: 1.2in;
+  background: white;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6pt;
+  color: #ccc;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}}
+
+.back-logo {{
+  text-align: center;
+  color: {C_GOLD};
+  font-size: 8pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-top: 8px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}}
+
+/* ============ SPINE ============ */
+.spine {{
+  width: {SPINE:.4f}in;
+  height: {COVER_H:.4f}in;
+  background: linear-gradient(180deg, {C_CHARCOAL} 0%, {C_DARK} 50%, {C_CHARCOAL} 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6in 0;
+  position: relative;
+}}
+
+/* Spine texture */
+.spine::before {{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.03;
+  background-image:
+    radial-gradient(ellipse 10px 6px at 50% 20%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 50%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 80%, {C_GOLD}, transparent);
+}}
+
+.spine-text {{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: rgba(255,255,255,0.95);
+  font-size: 8pt;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}}
+
+.spine-author {{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: {C_GOLD};
+  font-size: 6pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+  z-index: 2;
+}}
+
+/* ============ FRONT COVER ============ */
+.front-cover {{
+  width: {TRIM_W + BLEED:.4f}in;
+  height: {COVER_H:.4f}in;
+  background: linear-gradient(165deg, {C_CHARCOAL} 0%, {C_DARK} 25%, {C_AMBER_D} 55%, {C_DARK} 85%, {C_CHARCOAL} 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: {BLEED}in {BLEED}in {BLEED}in {BLEED}in;
+}}
+
+/* Subtle tea-leaf texture on front */
+.front-cover::before {{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 44px 14px at 15% 25%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 38px 12px at 80% 15%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 42px 13px at 70% 70%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 32px 10px at 25% 80%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 28px 9px at 50% 50%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 34px 11px at 10% 60%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 26px 9px at 90% 45%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 24px 8px at 40% 90%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 22px 8px at 60% 35%, {C_GOLD}, transparent);
+}}
+
+/* ============ TEA CUP (SVG) ============ */
+.glass-wrap {{
+  width: 120px; height: 170px;
+  position: relative;
+  margin: 0 auto 24px;
+  z-index: 5;
+}}
+
+/* ============ TITLE ============ */
+.title-block {{
+  position: relative;
+  z-index: 5;
+  padding: 0 0.5in;
+}}
+
+.main-title {{
+  font-family: Georgia, serif;
+  font-size: 32pt;
+  font-weight: 700;
+  color: {C_WHITE};
+  line-height: 1.12;
+  letter-spacing: 0.5pt;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.55);
+}}
+
+.accent-bar {{
+  width: 120px; height: 2.5px;
+  background: {C_GOLD};
+  margin: 16px auto;
+}}
+
+.subtitle {{
+  font-size: 12pt;
+  color: {C_GOLD_L};
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}}
+
+.features {{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}}
+
+.feature-badge {{
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(196,160,74,0.4);
+  color: {C_GOLD};
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}}
+
+.tagline {{
+  font-size: 9pt;
+  color: {C_GOLD_L};
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-top: 8px;
+}}
+
+.publisher {{
+  position: absolute;
+  bottom: 0.5in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9.5pt;
+  color: {C_GOLD};
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+  z-index: 5;
+}}
+
+/* Screen-only border */
+@media screen {{
+  .cover-wrap {{ border: 1px solid #ccc; }}
+}}
+</style>
+"""
+
+
+def generate(output_path=OUTPUT_FILE):
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea Tasting Journal &mdash; Cover</title>
+  {CSS}
+</head>
+<body>
+<div class="cover-wrap">
+
+  <!-- ============ BACK COVER ============ -->
+  <div class="back-cover">
+    <div class="back-text">
+      <div class="blurb">
+        <strong>Every cup tells a story.</strong>
+        From the delicate vegetal notes of a spring Dragon Well
+        to the deep earthiness of an aged pu-erh, your tea journey
+        deserves to be documented with care. This journal gives you
+        the structure to capture every steeping &mdash; every aroma,
+        every flavor note, every discovery.
+      </div>
+      <div style="margin-bottom: 8px; font-size: 8.5pt; color: {C_GOLD_L}; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt;">
+        What&rsquo;s Inside
+      </div>
+      <ul class="back-features">
+        <li>40 two-page tasting spreads</li>
+        <li>Tea flavor wheel with 8 categories</li>
+        <li>12 tea origins reference guide</li>
+        <li>Brewing methods and terminology</li>
+        <li>32-origin checklist for your journey</li>
+        <li>Tea inventory and shop log</li>
+        <li>Year-in-review favorites summary</li>
+        <li>Compact 6&quot; &times; 9&quot; format for shelf or bag</li>
+      </ul>
+    </div>
+    <div class="back-bottom">
+      <div class="barcode-area">ISBN Barcode Area</div>
+      <div class="back-logo">More Shine Press</div>
+    </div>
+  </div>
+
+  <!-- ============ SPINE ============ -->
+  <div class="spine">
+    <div class="spine-author">More Shine Press</div>
+    <div class="spine-text">Tea Tasting Journal</div>
+  </div>
+
+  <!-- ============ FRONT COVER ============ -->
+  <div class="front-cover">
+
+    <!-- Tea cup with saucer and steam illustration (SVG line art) -->
+    <div class="glass-wrap">
+      <svg viewBox="0 0 120 170" width="120" height="170" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="teaLiquid" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="{C_COPPER}" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="{C_AMBER_D}" stop-opacity="0.95"/>
+          </linearGradient>
+          <linearGradient id="cupShine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(250,246,240,0)"/>
+            <stop offset="35%" stop-color="rgba(250,246,240,0.12)"/>
+            <stop offset="65%" stop-color="rgba(250,246,240,0.06)"/>
+            <stop offset="100%" stop-color="rgba(250,246,240,0)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Steam wisps (3 wavy lines rising above the cup) -->
+        <path d="M 48 22 C 44 16, 52 12, 48 6 C 44 2, 50 -1, 48 -4"
+              stroke="rgba(196,160,74,0.45)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M 60 20 C 56 14, 64 10, 60 4 C 56 0, 62 -3, 60 -6"
+              stroke="rgba(196,160,74,0.35)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M 72 22 C 68 16, 76 12, 72 6 C 68 2, 74 -1, 72 -4"
+              stroke="rgba(196,160,74,0.45)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+
+        <!-- Saucer (wide ellipse at bottom) -->
+        <ellipse cx="60" cy="138" rx="46" ry="5"
+                 stroke="rgba(250,246,240,0.50)" stroke-width="1.6" fill="rgba(250,246,240,0.03)"/>
+        <!-- Saucer inner rim -->
+        <ellipse cx="60" cy="138" rx="36" ry="3.5"
+                 stroke="rgba(250,246,240,0.35)" stroke-width="1" fill="none"/>
+
+        <!-- Cup body — wide shallow teacup (bowl shape) -->
+        <!-- Left rim to right rim: wide top, narrowing slightly to base -->
+        <path d="M 30 78
+                 Q 32 92 40 102
+                 Q 50 112 60 112
+                 Q 70 112 80 102
+                 Q 88 92 90 78"
+              stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <!-- Cup top rim (wide ellipse) -->
+        <ellipse cx="60" cy="78" rx="30" ry="4.5"
+                 stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="rgba(250,246,240,0.03)"/>
+
+        <!-- Tea liquid surface -->
+        <ellipse cx="60" cy="78" rx="27" ry="3.8"
+                 stroke="rgba(212,184,150,0.4)" stroke-width="1" fill="url(#teaLiquid)"/>
+
+        <!-- Tea liquid body fill inside cup -->
+        <path d="M 33 80
+                 Q 35 92 42 101
+                 Q 50 109 60 109
+                 Q 70 109 78 101
+                 Q 85 92 87 80
+                 Z"
+              fill="url(#teaLiquid)" opacity="0.8"/>
+
+        <!-- Cup body subtle shine highlight -->
+        <path d="M 38 86 Q 36 98 44 106"
+              stroke="rgba(250,246,240,0.15)" stroke-width="1" fill="none"/>
+
+        <!-- Cup foot (small base ring sitting on saucer) -->
+        <ellipse cx="60" cy="120" rx="14" ry="3"
+                 stroke="rgba(250,246,240,0.40)" stroke-width="1.4" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Title -->
+    <div class="title-block">
+      <div class="main-title">Tea Tasting<br>Journal</div>
+      <div class="accent-bar"></div>
+      <div class="subtitle">Track Every Steep,<br>Every Blend, Every Discovery</div>
+      <div class="features">
+        <span class="feature-badge">40 Steeping Sessions</span>
+        <span class="feature-badge">Flavor Wheel</span>
+        <span class="feature-badge">Origin Tracker</span>
+        <span class="feature-badge">Brewing Guide</span>
+      </div>
+      <div class="tagline">For Tea Enthusiasts &amp; Connoisseurs</div>
+    </div>
+
+    <div class="publisher">More Shine Press</div>
+  </div>
+
+</div>
+</body>
+</html>"""
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html)
+    return output_path
+
+
+if __name__ == "__main__":
+    path = generate()
+    print(f"[OK] Cover generated: {path}")
+    print(f"     Full cover: {COVER_W:.4f} x {COVER_H:.4f} in")
+    print(f"     Spine: {SPINE:.4f} in ({PAGES} pages, cream paper)")
+    print(f"     At 300 DPI: {COVER_W*300:.0f} x {COVER_H*300:.0f} px")

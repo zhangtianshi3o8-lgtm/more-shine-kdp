@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baseball Scorebook — Cover</title>
+  
+<style>
+@page { size: 12.5300in 9.2500in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cover-wrap {
+  width: 12.5300in;
+  height: 9.2500in;
+  position: relative;
+  display: flex;
+}
+
+/* ============ BACK COVER ============ */
+.back-cover {
+  width: 6.1250in;
+  height: 9.2500in;
+  background: linear-gradient(165deg, #070D18 0%, #0a1929 40%, #2A2520 100%);
+  padding: 0.75in 0.5in 0.45in 0.5in;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle gold texture */
+.back-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 24px 14px at 15% 25%, #C4A04A, transparent),
+    radial-gradient(ellipse 22px 13px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 26px 15px at 70% 70%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 18px 11px at 50% 50%, #C4A04A, transparent),
+    radial-gradient(ellipse 22px 13px at 10% 60%, #C4A04A, transparent);
+}
+
+/* Decorative circle */
+.back-cover::after {
+  content: '';
+  position: absolute;
+  top: -0.3in; right: -0.3in;
+  width: 1.2in; height: 1.2in;
+  border-radius: 50%;
+  background: rgba(196, 160, 74, 0.08);
+}
+
+.back-text {
+  color: rgba(255,255,255,0.92);
+  font-size: 9pt;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}
+.back-text .blurb {
+  font-style: italic;
+  margin-bottom: 14px;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+.back-text .blurb strong {
+  color: #D4B896;
+  font-style: normal;
+}
+
+.back-features {
+  list-style: none;
+  padding: 0;
+}
+.back-features li {
+  font-size: 8pt;
+  color: rgba(255,255,255,0.82);
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.4;
+}
+.back-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 5px;
+  height: 5px;
+  background: #C4A04A;
+  border-radius: 50%;
+}
+
+.back-bottom {
+  padding-bottom: 0.15in;
+  position: relative;
+  z-index: 2;
+}
+
+.barcode-area {
+  width: 2in;
+  height: 1.2in;
+  background: white;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6pt;
+  color: #ccc;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.back-logo {
+  text-align: center;
+  color: #C4A04A;
+  font-size: 8pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-top: 8px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ============ SPINE ============ */
+.spine {
+  width: 0.2800in;
+  height: 9.2500in;
+  background: linear-gradient(180deg, #070D18 0%, #0a1929 50%, #070D18 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6in 0;
+  position: relative;
+}
+
+/* Spine texture */
+.spine::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.03;
+  background-image:
+    radial-gradient(ellipse 10px 6px at 50% 20%, #C4A04A, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 50%, #C4A04A, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 80%, #C4A04A, transparent);
+}
+
+.spine-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: rgba(255,255,255,0.95);
+  font-size: 8pt;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.spine-author {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #C4A04A;
+  font-size: 6pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ FRONT COVER ============ */
+.front-cover {
+  width: 6.1250in;
+  height: 9.2500in;
+  background: linear-gradient(165deg, #070D18 0%, #0a1929 25%, #14254B 55%, #0a1929 85%, #070D18 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.125in 0.125in 0.125in 0.125in;
+}
+
+/* Subtle gold texture on front */
+.front-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 40px 24px at 15% 25%, #C4A04A, transparent),
+    radial-gradient(ellipse 34px 20px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 38px 22px at 70% 70%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 18px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 24px 15px at 50% 50%, #C4A04A, transparent),
+    radial-gradient(ellipse 30px 18px at 10% 60%, #C4A04A, transparent),
+    radial-gradient(ellipse 22px 14px at 90% 45%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 40% 90%, #C4A04A, transparent),
+    radial-gradient(ellipse 18px 11px at 60% 35%, #C4A04A, transparent);
+}
+
+/* ============ BASEBALL (SVG) ============ */
+.ball-wrap {
+  width: 120px; height: 170px;
+  position: relative;
+  margin: 0 auto 24px;
+  z-index: 5;
+}
+
+/* ============ TITLE ============ */
+.title-block {
+  position: relative;
+  z-index: 5;
+  padding: 0 0.5in;
+}
+
+.main-title {
+  font-family: Georgia, serif;
+  font-size: 32pt;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.12;
+  letter-spacing: 0.5pt;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.55);
+}
+
+.accent-bar {
+  width: 120px; height: 2.5px;
+  background: #C4A04A;
+  margin: 16px auto;
+}
+
+.subtitle {
+  font-size: 12pt;
+  color: #D4B896;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.feature-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(196,160,74,0.4);
+  color: #C4A04A;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.tagline {
+  font-size: 9pt;
+  color: #D4B896;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.publisher {
+  position: absolute;
+  bottom: 0.5in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9.5pt;
+  color: #C4A04A;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+  z-index: 5;
+}
+
+/* Screen-only border */
+@media screen {
+  .cover-wrap { border: 1px solid #ccc; }
+}
+</style>
+
+</head>
+<body>
+<div class="cover-wrap">
+
+  <!-- ============ BACK COVER ============ -->
+  <div class="back-cover">
+    <div class="back-text">
+      <div class="blurb">
+        <strong>Every game tells a story.</strong>
+        From the first pitch to the final out, this scorebook helps you
+        capture every hit, every run, and every great play of the baseball
+        season &mdash; from opening day to the championship finale.
+      </div>
+      <div style="margin-bottom: 8px; font-size: 8.5pt; color: #D4B896; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt;">
+        What's Inside
+      </div>
+      <ul class="back-features">
+        <li>Game trackers with full inning-by-inning scoring</li>
+        <li>Playoff series tracker for postseason baseball</li>
+        <li>World Series prediction page</li>
+        <li>Season predictions and standings tracking</li>
+        <li>Division and conference reference guides</li>
+        <li>My teams page for your favorite squads</li>
+        <li>Season calendar and notes pages</li>
+        <li>Large 6&quot; x 9&quot; format &mdash; easy to write in</li>
+      </ul>
+    </div>
+    <div class="back-bottom">
+      <div class="barcode-area">ISBN Barcode Area</div>
+      <div class="back-logo">More Shine Press</div>
+    </div>
+  </div>
+
+  <!-- ============ SPINE ============ -->
+  <div class="spine">
+    <div class="spine-author">More Shine Press</div>
+    <div class="spine-text">Baseball Scorebook</div>
+  </div>
+
+  <!-- ============ FRONT COVER ============ -->
+  <div class="front-cover">
+
+    <!-- Baseball illustration (SVG line art) -->
+    <div class="ball-wrap">
+      <svg viewBox="0 0 120 170" width="120" height="170" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Baseball outline -->
+        <circle cx="60" cy="75" r="42"
+                stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="none"/>
+
+        <!-- Left seam arc (upper curve from left side, arcs over the top to right) -->
+        <path d="M 20 75
+                 C 20 45, 40 25, 60 33"
+              stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="none"
+              stroke-linecap="round"/>
+
+        <!-- Left seam arc continues (lower portion from right bottom back to left) -->
+        <path d="M 20 75
+                 C 20 105, 40 125, 60 117"
+              stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="none"
+              stroke-linecap="round"/>
+
+        <!-- Right seam arc (upper curve from right side, arcs over the top to left) -->
+        <path d="M 100 75
+                 C 100 45, 80 25, 60 33"
+              stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="none"
+              stroke-linecap="round"/>
+
+        <!-- Right seam arc continues (lower portion) -->
+        <path d="M 100 75
+                 C 100 105, 80 125, 60 117"
+              stroke="rgba(250,246,240,0.55)" stroke-width="1.8" fill="none"
+              stroke-linecap="round"/>
+
+        <!-- Red stitch marks on left seam (upper arc) -->
+        <g stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round">
+          <!-- Upper-left seam stitches -->
+          <line x1="24" y1="60" x2="29" y2="57"/>
+          <line x1="27" y1="50" x2="32" y2="48"/>
+          <line x1="34" y1="41" x2="38" y2="40"/>
+          <line x1="45" y1="36" x2="48" y2="35"/>
+          <line x1="55" y1="34" x2="57" y2="34"/>
+        </g>
+
+        <!-- Red stitch marks on left seam (lower arc) -->
+        <g stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round">
+          <line x1="24" y1="90" x2="29" y2="93"/>
+          <line x1="27" y1="100" x2="32" y2="102"/>
+          <line x1="34" y1="109" x2="38" y2="110"/>
+          <line x1="45" y1="114" x2="48" y2="115"/>
+          <line x1="55" y1="116" x2="57" y2="116"/>
+        </g>
+
+        <!-- Red stitch marks on right seam (upper arc) -->
+        <g stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round">
+          <line x1="96" y1="60" x2="91" y2="57"/>
+          <line x1="93" y1="50" x2="88" y2="48"/>
+          <line x1="86" y1="41" x2="82" y2="40"/>
+          <line x1="75" y1="36" x2="72" y2="35"/>
+          <line x1="65" y1="34" x2="63" y2="34"/>
+        </g>
+
+        <!-- Red stitch marks on right seam (lower arc) -->
+        <g stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round">
+          <line x1="96" y1="90" x2="91" y2="93"/>
+          <line x1="93" y1="100" x2="88" y2="102"/>
+          <line x1="86" y1="109" x2="82" y2="110"/>
+          <line x1="75" y1="114" x2="72" y2="115"/>
+          <line x1="65" y1="116" x2="63" y2="116"/>
+        </g>
+
+        <!-- Subtle ball shadow -->
+        <ellipse cx="60" cy="125" rx="34" ry="3.5"
+                 fill="rgba(0,0,0,0.25)"/>
+      </svg>
+    </div>
+
+    <!-- Title -->
+    <div class="title-block">
+      <div class="main-title">Baseball<br>Scorebook</div>
+      <div class="accent-bar"></div>
+      <div class="subtitle">Your Ultimate Season Journal for<br>Major League &amp; College Baseball</div>
+      <div class="features">
+        <span class="feature-badge">Game Tracker</span>
+        <span class="feature-badge">Standings</span>
+        <span class="feature-badge">Playoff Series</span>
+        <span class="feature-badge">Predictions</span>
+      </div>
+      <div class="tagline">Track Every Game</div>
+    </div>
+
+    <div class="publisher">More Shine Press</div>
+  </div>
+
+</div>
+</body>
+</html>

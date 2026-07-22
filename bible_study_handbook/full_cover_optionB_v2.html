@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bible Study Handbook — Full Cover Option B v2 (KDP)</title>
+<style>
+  @page { size: 17.651in 11.25in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    -webkit-print-color-adjust: exact;
+    background: #fdf6f0;
+  }
+
+  .full-cover {
+    width: 17.651in;
+    height: 11.25in;
+    position: relative;
+    display: flex;
+  }
+
+  /* ═══ BACK COVER ═══ */
+  .back-cover {
+    width: 8.625in;
+    height: 11.25in;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f5ebe6 50%, #e8ddd4 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 0.65in 0.6in 0.65in 0.7in;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Back arch — mirrored to top-LEFT to mirror the front cover's centered arch */
+  .back-arch {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 5in; height: 4.5in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 100%);
+    border-radius: 2.5in 2.5in 0 0;
+    opacity: 0.15;
+  }
+
+  .back-peach {
+    position: absolute;
+    bottom: 1in; right: 0.3in;
+    width: 3in; height: 3in;
+    background: radial-gradient(circle, rgba(230,180,150,0.2) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(10px);
+  }
+
+  /* Dove with olive branch — top of back cover */
+  .back-dove {
+    position: absolute;
+    top: 0.35in; right: 0.5in;
+    width: 1.8in; height: 1.5in;
+    z-index: 4;
+  }
+
+  /* Wheat sheaves — bottom-left of back cover */
+  .back-wheat {
+    position: absolute;
+    bottom: 0.3in; left: 0.4in;
+    width: 2.2in; height: 3in;
+    z-index: 3;
+    opacity: 0.55;
+  }
+
+  .back-content {
+    z-index: 5;
+    margin-top: 0.6in;
+    position: relative;
+    padding: 0 0.15in;
+  }
+
+  .back-quote {
+    text-align: center;
+    margin-bottom: 0.45in;
+    padding: 0 0.4in;
+  }
+  .back-quote-text {
+    font-family: Georgia, serif;
+    font-size: 13pt;
+    font-style: italic;
+    color: #6b8e9e;
+    line-height: 1.7;
+  }
+
+  .back-features {
+    padding: 0 0.3in;
+  }
+  .back-features-title {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt;
+    font-weight: 600;
+    color: #6b8e9e;
+    letter-spacing: 4pt;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.3in;
+  }
+  .back-features ul {
+    list-style: none;
+    padding: 0;
+  }
+  .back-features li {
+    font-family: Georgia, serif;
+    font-size: 10.5pt;
+    color: #7a6a5a;
+    line-height: 1.8;
+    padding-left: 0.3in;
+    position: relative;
+    margin-bottom: 0.08in;
+  }
+  .back-features li::before {
+    content: '✦';
+    color: #8aacbe;
+    font-size: 8pt;
+    position: absolute;
+    left: 0;
+    top: 3px;
+  }
+
+  .back-verse {
+    position: absolute;
+    bottom: 1.9in;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 5;
+    padding: 0 0.6in;
+  }
+  .back-verse-text {
+    font-family: Georgia, serif;
+    font-size: 11pt;
+    font-style: italic;
+    color: #8aacbe;
+    line-height: 1.6;
+  }
+  .back-verse-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #c4a882;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+    margin-top: 0.08in;
+  }
+
+  .barcode-area {
+    position: absolute;
+    bottom: 0.3in;
+    right: 0.3in;
+    width: 2in;
+    height: 1.2in;
+    background: white;
+    z-index: 10;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7pt;
+    color: #999;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ═══ SPINE ═══ */
+  .spine {
+    width: 0.401in;
+    height: 11.25in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 50%, #a8c4d4 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .spine-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: Georgia, serif;
+    font-size: 11pt;
+    font-weight: bold;
+    color: #ffffff;
+    letter-spacing: 3pt;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  }
+  .spine-sub {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7pt;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 2pt;
+    position: absolute;
+    bottom: 1.2in;
+  }
+
+  /* ═══ FRONT COVER ═══ */
+  .front-cover {
+    width: 8.625in;
+    height: 11.25in;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f5ebe6 50%, #e8ddd4 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.125in;
+  }
+
+  .arch {
+    position: absolute;
+    top: 0.125in;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5in;
+    height: 6.875in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 100%);
+    border-radius: 2.5in 2.5in 0 0;
+    opacity: 0.85;
+    z-index: 1;
+  }
+  .arch-inner {
+    position: absolute;
+    top: 0.275in;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4.7in;
+    height: 6.575in;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 2.35in 2.35in 0 0;
+    z-index: 2;
+  }
+
+  /* Top decorative arch on front — mirrors back cover arch band */
+  .front-top-arch {
+    position: absolute;
+    top: 0.125in;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7.5in;
+    height: 3.5in;
+    background: linear-gradient(180deg, rgba(168,196,212,0.12) 0%, transparent 100%);
+    border-radius: 3.75in 3.75in 0 0;
+    z-index: 0;
+  }
+
+  .peach-deco {
+    position: absolute;
+    bottom: 1.625in;
+    right: 0.625in;
+    width: 2.5in;
+    height: 2.5in;
+    background: radial-gradient(circle, rgba(230,180,150,0.25) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(10px);
+    z-index: 1;
+  }
+
+  /* Olive branch — left side, realistic */
+  .olive-branch {
+    position: absolute;
+    bottom: 2.8in;
+    left: 0.35in;
+    width: 2.3in;
+    height: 3.5in;
+    z-index: 4;
+    opacity: 0.7;
+  }
+
+  /* Grape vine — right side, realistic */
+  .grape-vine {
+    position: absolute;
+    top: 3.5in;
+    right: 0.3in;
+    width: 2in;
+    height: 3in;
+    z-index: 4;
+    opacity: 0.65;
+  }
+
+  /* Lily — bottom right, elegant */
+  .lily-deco {
+    position: absolute;
+    bottom: 0.3in;
+    right: 0.4in;
+    width: 1.8in;
+    height: 2.5in;
+    z-index: 4;
+    opacity: 0.55;
+  }
+
+  .front-content {
+    z-index: 5;
+    text-align: center;
+    padding: 0 0.8in;
+    margin-top: 0.625in;
+  }
+
+  .overline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 5pt;
+    text-transform: uppercase;
+    margin-bottom: 0.35in;
+    text-indent: 5pt;
+  }
+
+  .title-serif {
+    font-family: Georgia, serif;
+    font-size: 36pt;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .title-script {
+    font-family: Georgia, serif;
+    font-size: 40pt;
+    font-style: italic;
+    color: #f0e0d0;
+    line-height: 1.1;
+    margin-top: 0.1in;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .divider-w {
+    width: 1.2in;
+    height: 1px;
+    background: rgba(255,255,255,0.5);
+    margin: 0.25in auto;
+  }
+
+  .subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 2.5pt;
+    text-transform: uppercase;
+    line-height: 1.8;
+    text-indent: 2.5pt;
+  }
+
+  .info-block {
+    position: absolute;
+    bottom: 1.925in;
+    left: 0;
+    right: 0.125in;
+    text-align: center;
+    z-index: 5;
+  }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 0.25in;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7.5pt;
+    font-weight: 500;
+    color: #8a7060;
+    letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(200,170,140,0.4);
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+
+  .front-verse {
+    font-family: Georgia, serif;
+    font-size: 11pt;
+    font-style: italic;
+    color: #7a6a5a;
+    line-height: 1.6;
+  }
+
+  .front-verse-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #8aacbe;
+    letter-spacing: 2.5pt;
+    text-transform: uppercase;
+    margin-top: 4px;
+    text-indent: 2.5pt;
+  }
+</style>
+</head>
+<body>
+
+<div class="full-cover">
+
+  <!-- ═══ BACK COVER ═══ -->
+  <div class="back-cover">
+    <div class="back-arch"></div>
+    <div class="back-peach"></div>
+
+    <!-- Dove with olive branch — Noah's dove, symbol of peace & God's promise -->
+    <svg class="back-dove" viewBox="0 0 180 150" xmlns="http://www.w3.org/2000/svg">
+      <!-- Dove body -->
+      <g fill="#b0b8b0" opacity="0.8">
+        <!-- Body -->
+        <ellipse cx="90" cy="80" rx="38" ry="28"/>
+        <!-- Head -->
+        <circle cx="125" cy="62" r="18"/>
+        <!-- Wing -->
+        <path d="M75,70 Q60,40 50,55 Q55,75 80,82 Z" fill="#9aa49a"/>
+        <path d="M70,72 Q58,50 52,58 Q56,72 75,80 Z" fill="#aab2aa"/>
+        <!-- Tail -->
+        <path d="M52,78 Q35,75 30,85 Q40,88 55,84 Z"/>
+        <path d="M50,82 Q38,85 35,92 Q45,92 55,88 Z" fill="#9aa49a"/>
+        <!-- Beak -->
+        <path d="M142,62 L152,60 L142,65 Z" fill="#c4a882"/>
+        <!-- Eye -->
+        <circle cx="128" cy="60" r="2.5" fill="#5a5a5a"/>
+      </g>
+      <!-- Olive branch in beak -->
+      <g fill="none" stroke="#8a9a6a" stroke-width="1" stroke-linecap="round" opacity="0.7">
+        <path d="M152,60 Q165,55 172,45"/>
+        <path d="M160,53 Q168,50 173,48"/>
+      </g>
+      <g fill="#9aa87a" opacity="0.6">
+        <ellipse cx="168" cy="50" rx="6" ry="2.5" transform="rotate(-30 168 50)"/>
+        <ellipse cx="163" cy="55" rx="5" ry="2" transform="rotate(-20 163 55)"/>
+        <ellipse cx="172" cy="46" rx="5" ry="2" transform="rotate(-40 172 46)"/>
+      </g>
+      <g fill="#6a7a4a" opacity="0.5">
+        <circle cx="166" cy="52" r="2.5"/>
+        <circle cx="170" cy="49" r="2"/>
+      </g>
+    </svg>
+
+    <!-- Wheat sheaves — symbol of bread of life, provision -->
+    <svg class="back-wheat" viewBox="0 0 220 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wheatG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#c4a860;stop-opacity:0.8"/>
+          <stop offset="100%" style="stop-color:#a08840;stop-opacity:0.6"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Stalk 1 (left) -->
+      <g transform="translate(80,0) rotate(-8)">
+        <line x1="0" y1="100" x2="0" y2="280" stroke="#a89858" stroke-width="1.2" opacity="0.6"/>
+        <!-- Grain head: paired kernels along the stem -->
+        <g fill="url(#wheatG)">
+          <!-- Central stem of grain head -->
+          <line x1="0" y1="20" x2="0" y2="105" stroke="#a89858" stroke-width="1" opacity="0.7"/>
+          <!-- Kernel pairs, top to bottom -->
+          <ellipse cx="-5" cy="30" rx="4" ry="8" transform="rotate(-20 -5 30)"/>
+          <ellipse cx="5" cy="33" rx="4" ry="8" transform="rotate(20 5 33)"/>
+          <ellipse cx="-5" cy="45" rx="4.5" ry="9" transform="rotate(-20 -5 45)"/>
+          <ellipse cx="5" cy="48" rx="4.5" ry="9" transform="rotate(20 5 48)"/>
+          <ellipse cx="-5.5" cy="62" rx="5" ry="10" transform="rotate(-20 -5.5 62)"/>
+          <ellipse cx="5.5" cy="65" rx="5" ry="10" transform="rotate(20 5.5 65)"/>
+          <ellipse cx="-5.5" cy="80" rx="5" ry="10" transform="rotate(-20 -5.5 80)"/>
+          <ellipse cx="5.5" cy="83" rx="5" ry="10" transform="rotate(20 5.5 83)"/>
+          <!-- Awns (bristles) -->
+          <line x1="-3" y1="25" x2="-12" y2="10" stroke="#b8a868" stroke-width="0.6"/>
+          <line x1="0" y1="22" x2="0" y2="5" stroke="#b8a868" stroke-width="0.6"/>
+          <line x1="3" y1="25" x2="12" y2="10" stroke="#b8a868" stroke-width="0.6"/>
+          <line x1="-5" y1="40" x2="-14" y2="28" stroke="#b8a868" stroke-width="0.5"/>
+          <line x1="5" y1="42" x2="14" y2="30" stroke="#b8a868" stroke-width="0.5"/>
+          <line x1="-6" y1="58" x2="-16" y2="48" stroke="#b8a868" stroke-width="0.5"/>
+          <line x1="6" y1="60" x2="16" y2="50" stroke="#b8a868" stroke-width="0.5"/>
+        </g>
+        <!-- Leaves -->
+        <g fill="url(#wheatG)" opacity="0.5">
+          <ellipse cx="-8" cy="150" rx="4" ry="18" transform="rotate(-30 -8 150)"/>
+          <ellipse cx="8" cy="180" rx="4" ry="18" transform="rotate(25 8 180)"/>
+          <ellipse cx="-7" cy="210" rx="3.5" ry="15" transform="rotate(-35 -7 210)"/>
+        </g>
+      </g>
+
+      <!-- Stalk 2 (center) -->
+      <g transform="translate(130,0) rotate(5)">
+        <line x1="0" y1="110" x2="0" y2="285" stroke="#a89858" stroke-width="1.2" opacity="0.6"/>
+        <g fill="url(#wheatG)">
+          <line x1="0" y1="25" x2="0" y2="115" stroke="#a89858" stroke-width="1" opacity="0.7"/>
+          <ellipse cx="-5" cy="35" rx="4" ry="8" transform="rotate(-20 -5 35)"/>
+          <ellipse cx="5" cy="38" rx="4" ry="8" transform="rotate(20 5 38)"/>
+          <ellipse cx="-5" cy="52" rx="4.5" ry="9" transform="rotate(-20 -5 52)"/>
+          <ellipse cx="5" cy="55" rx="4.5" ry="9" transform="rotate(20 5 55)"/>
+          <ellipse cx="-5.5" cy="70" rx="5" ry="10" transform="rotate(-20 -5.5 70)"/>
+          <ellipse cx="5.5" cy="73" rx="5" ry="10" transform="rotate(20 5.5 73)"/>
+          <ellipse cx="-5.5" cy="88" rx="5" ry="10" transform="rotate(-20 -5.5 88)"/>
+          <ellipse cx="5.5" cy="91" rx="5" ry="10" transform="rotate(20 5.5 91)"/>
+          <line x1="-3" y1="30" x2="-12" y2="15" stroke="#b8a868" stroke-width="0.6"/>
+          <line x1="0" y1="27" x2="0" y2="10" stroke="#b8a868" stroke-width="0.6"/>
+          <line x1="3" y1="30" x2="12" y2="15" stroke="#b8a868" stroke-width="0.6"/>
+          <line x1="-5" y1="47" x2="-14" y2="35" stroke="#b8a868" stroke-width="0.5"/>
+          <line x1="5" y1="49" x2="14" y2="37" stroke="#b8a868" stroke-width="0.5"/>
+          <line x1="-6" y1="65" x2="-16" y2="55" stroke="#b8a868" stroke-width="0.5"/>
+          <line x1="6" y1="67" x2="16" y2="57" stroke="#b8a868" stroke-width="0.5"/>
+        </g>
+        <g fill="url(#wheatG)" opacity="0.5">
+          <ellipse cx="8" cy="155" rx="4" ry="18" transform="rotate(25 8 155)"/>
+          <ellipse cx="-8" cy="190" rx="4" ry="18" transform="rotate(-30 -8 190)"/>
+          <ellipse cx="7" cy="220" rx="3.5" ry="15" transform="rotate(30 7 220)"/>
+        </g>
+      </g>
+
+      <!-- Stalk 3 (right, shorter, behind) -->
+      <g transform="translate(170,10) rotate(15)" opacity="0.6">
+        <line x1="0" y1="120" x2="0" y2="275" stroke="#a89858" stroke-width="1" opacity="0.6"/>
+        <g fill="url(#wheatG)">
+          <line x1="0" y1="35" x2="0" y2="125" stroke="#a89858" stroke-width="0.8" opacity="0.6"/>
+          <ellipse cx="-4" cy="45" rx="3.5" ry="7" transform="rotate(-20 -4 45)"/>
+          <ellipse cx="4" cy="48" rx="3.5" ry="7" transform="rotate(20 4 48)"/>
+          <ellipse cx="-4.5" cy="62" rx="4" ry="8" transform="rotate(-20 -4.5 62)"/>
+          <ellipse cx="4.5" cy="65" rx="4" ry="8" transform="rotate(20 4.5 65)"/>
+          <ellipse cx="-4.5" cy="80" rx="4" ry="8" transform="rotate(-20 -4.5 80)"/>
+          <ellipse cx="4.5" cy="83" rx="4" ry="8" transform="rotate(20 4.5 83)"/>
+          <line x1="-3" y1="40" x2="-10" y2="28" stroke="#b8a868" stroke-width="0.4"/>
+          <line x1="0" y1="37" x2="0" y2="22" stroke="#b8a868" stroke-width="0.4"/>
+          <line x1="3" y1="40" x2="10" y2="28" stroke="#b8a868" stroke-width="0.4"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="back-content">
+      <div class="back-quote">
+        <div class="back-quote-text">
+          &ldquo;A beautiful, deeply thoughtful guide that takes you through the entire Bible in one year. Every page is designed to help you slow down, reflect, and encounter God&rsquo;s Word in a fresh way.&rdquo;
+        </div>
+      </div>
+
+      <div class="back-features">
+        <div class="back-features-title">What&rsquo;s Inside</div>
+        <ul>
+          <li>52 weeks of curated Scripture covering all 66 books</li>
+          <li>3 rotating study methods: SOAP, Verse Mapping, Inductive</li>
+          <li>Generous journaling space for reflection and prayer</li>
+          <li>10 epoch dividers tracing God&rsquo;s redemptive story</li>
+          <li>Small group guide &amp; sermon notes pages</li>
+          <li>Translation-neutral &mdash; use with any Bible version</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="back-verse">
+      <div class="back-verse-text">
+        &ldquo;All Scripture is breathed out by God<br/>and profitable for teaching, for reproof,<br/>for correction, and for training in righteousness.&rdquo;
+      </div>
+      <div class="back-verse-ref">2 Timothy 3:16</div>
+    </div>
+
+    <div class="barcode-area">
+      Barcode Area<br/>(2" × 1.2")<br/>KDP Auto-Generated
+    </div>
+  </div>
+
+  <!-- ═══ SPINE ═══ -->
+  <div class="spine">
+    <div class="spine-text">BIBLE STUDY HANDBOOK</div>
+    <div class="spine-sub">52-WEEK GUIDE</div>
+  </div>
+
+  <!-- ═══ FRONT COVER ═══ -->
+  <div class="front-cover">
+    <div class="front-top-arch"></div>
+    <div class="arch"></div>
+    <div class="arch-inner"></div>
+    <div class="peach-deco"></div>
+
+    <!-- Olive branch — symbol of peace, Noah's dove, Garden of Gethsemane -->
+    <svg class="olive-branch" viewBox="0 0 230 350" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main stem -->
+      <path d="M60,340 Q70,250 90,150 Q100,80 120,20" fill="none" stroke="#8a8a6a" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+      
+      <!-- Branch stems -->
+      <path d="M88,160 Q75,145 62,130" fill="none" stroke="#8a8a6a" stroke-width="1" opacity="0.7"/>
+      <path d="M95,120 Q110,108 125,95" fill="none" stroke="#8a8a6a" stroke-width="1" opacity="0.7"/>
+      <path d="M100,85 Q85,72 72,60" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+      <path d="M108,55 Q122,48 135,40" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+      <path d="M80,220 Q65,210 52,200" fill="none" stroke="#8a8a6a" stroke-width="1" opacity="0.7"/>
+      <path d="M85,260 Q98,250 110,245" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+      <path d="M75,290 Q62,285 50,280" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+
+      <!-- Olive leaves — elongated ovals, silver-green -->
+      <g fill="#9aa87a" opacity="0.7">
+        <!-- Upper leaves -->
+        <ellipse cx="62" cy="130" rx="18" ry="5" transform="rotate(-25 62 130)"/>
+        <ellipse cx="125" cy="95" rx="18" ry="5" transform="rotate(25 125 95)"/>
+        <ellipse cx="72" cy="60" rx="16" ry="4.5" transform="rotate(-30 72 60)"/>
+        <ellipse cx="135" cy="40" rx="16" ry="4.5" transform="rotate(20 135 40)"/>
+        <!-- Mid leaves on main stem -->
+        <ellipse cx="82" cy="190" rx="18" ry="5" transform="rotate(-15 82 190)"/>
+        <ellipse cx="98" cy="165" rx="16" ry="4.5" transform="rotate(25 98 165)"/>
+        <ellipse cx="94" cy="100" rx="17" ry="5" transform="rotate(-15 94 100)"/>
+        <ellipse cx="108" cy="70" rx="15" ry="4.5" transform="rotate(30 108 70)"/>
+        <!-- Lower leaves -->
+        <ellipse cx="52" cy="200" rx="18" ry="5" transform="rotate(-30 52 200)"/>
+        <ellipse cx="110" cy="245" rx="16" ry="4.5" transform="rotate(20 110 245)"/>
+        <ellipse cx="50" cy="280" rx="16" ry="4.5" transform="rotate(-25 50 280)"/>
+        <ellipse cx="75" cy="310" rx="14" ry="4" transform="rotate(15 75 310)"/>
+      </g>
+
+      <!-- Olives — small round fruit -->
+      <g fill="#7a7a4a" opacity="0.65">
+        <ellipse cx="80" cy="145" rx="4.5" ry="6"/>
+        <ellipse cx="116" cy="108" rx="4.5" ry="6"/>
+        <ellipse cx="90" cy="220" rx="5" ry="6.5"/>
+        <ellipse cx="68" cy="175" rx="4" ry="5.5"/>
+        <ellipse cx="100" cy="75" rx="4" ry="5.5"/>
+      </g>
+      <!-- Highlights on olives -->
+      <g fill="#9a9a6a" opacity="0.5">
+        <ellipse cx="79" cy="143" rx="2" ry="2.5"/>
+        <ellipse cx="115" cy="106" rx="2" ry="2.5"/>
+        <ellipse cx="89" cy="218" rx="2.5" ry="3"/>
+        <ellipse cx="99" cy="73" rx="1.5" ry="2"/>
+      </g>
+    </svg>
+
+    <!-- Grape vine — symbol of John 15 "I am the vine" -->
+    <svg class="grape-vine" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Vine stem -->
+      <path d="M180,290 Q160,200 170,100 Q180,50 165,15" fill="none" stroke="#8a7a5a" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <!-- Tendrils -->
+      <path d="M168,120 Q150,115 155,100 Q165,95 158,88" fill="none" stroke="#8a7a5a" stroke-width="0.8" opacity="0.5"/>
+      <path d="M172,200 Q185,195 180,180 Q172,178 176,170" fill="none" stroke="#8a7a5a" stroke-width="0.8" opacity="0.5"/>
+
+      <!-- Grape leaves — maple-like shape -->
+      <g fill="#8aa87a" opacity="0.55">
+        <!-- Leaf 1 (upper) -->
+        <path d="M165,70 
+          Q145,55 140,70 Q135,85 145,82 
+          Q140,95 150,90 Q148,100 158,90 
+          Q155,82 160,75 Q165,82 165,70 Z"/>
+        <!-- Leaf 2 (mid) -->
+        <path d="M175,160
+          Q195,145 198,160 Q200,175 188,172
+          Q193,185 182,180 Q185,190 175,180
+          Q178,172 180,165 Q170,172 175,160 Z"
+          transform="scale(-1,1) translate(-370,0)"/>
+        <!-- Leaf 3 (lower) -->
+        <path d="M168,230
+          Q148,218 144,232 Q140,246 152,244
+          Q148,256 158,250 Q156,260 166,252
+          Q163,244 166,236 Q172,242 168,230 Z"/>
+      </g>
+      <!-- Leaf veins -->
+      <g fill="none" stroke="#7a9a6a" stroke-width="0.5" opacity="0.4">
+        <line x1="155" y1="65" x2="148" y2="78"/>
+        <line x1="155" y1="65" x2="155" y2="88"/>
+        <line x1="155" y1="65" x2="162" y2="80"/>
+      </g>
+
+      <!-- Grape cluster 1 -->
+      <g fill="#7a5a7a" opacity="0.5">
+        <!-- Row 1 -->
+        <circle cx="160" cy="100" r="5"/>
+        <circle cx="168" cy="98" r="5"/>
+        <circle cx="176" cy="102" r="5"/>
+        <!-- Row 2 -->
+        <circle cx="155" cy="108" r="5.5"/>
+        <circle cx="163" cy="107" r="5.5"/>
+        <circle cx="171" cy="109" r="5.5"/>
+        <circle cx="179" cy="110" r="5"/>
+        <!-- Row 3 -->
+        <circle cx="159" cy="117" r="5"/>
+        <circle cx="167" cy="118" r="5"/>
+        <circle cx="175" cy="119" r="5"/>
+        <!-- Row 4 -->
+        <circle cx="163" cy="126" r="4.5"/>
+        <circle cx="171" cy="127" r="4.5"/>
+        <!-- Row 5 -->
+        <circle cx="167" cy="134" r="4"/>
+      </g>
+      <!-- Grape highlights -->
+      <g fill="#9a7a9a" opacity="0.4">
+        <circle cx="159" cy="107" r="2"/>
+        <circle cx="167" cy="106" r="2"/>
+        <circle cx="175" cy="108" r="2"/>
+        <circle cx="163" cy="116" r="1.5"/>
+        <circle cx="171" cy="117" r="1.5"/>
+      </g>
+
+      <!-- Small grape cluster 2 -->
+      <g fill="#7a5a7a" opacity="0.4">
+        <circle cx="178" cy="215" r="4"/>
+        <circle cx="185" cy="213" r="4"/>
+        <circle cx="182" cy="222" r="4"/>
+        <circle cx="188" cy="221" r="3.5"/>
+        <circle cx="185" cy="229" r="3.5"/>
+        <circle cx="180" cy="230" r="3"/>
+      </g>
+    </svg>
+
+    <!-- Lily — "Consider the lilies" (Matthew 6), Song of Solomon -->
+    <svg class="lily-deco" viewBox="0 0 180 250" xmlns="http://www.w3.org/2000/svg">
+      <!-- Stem -->
+      <path d="M90,250 Q85,180 88,100" fill="none" stroke="#8a9a6a" stroke-width="1.5" opacity="0.6"/>
+      
+      <!-- Long leaves -->
+      <g fill="#9aa87a" opacity="0.5">
+        <ellipse cx="60" cy="170" rx="6" ry="45" transform="rotate(-25 60 170)"/>
+        <ellipse cx="115" cy="155" rx="6" ry="40" transform="rotate(20 115 155)"/>
+        <ellipse cx="70" cy="200" rx="5" ry="35" transform="rotate(-20 70 200)"/>
+      </g>
+
+      <!-- Lily flowers — trumpet shape -->
+      <!-- Flower 1 (main, open) -->
+      <g transform="translate(88,80)">
+        <!-- Petals — 6 trumpet petals -->
+        <g fill="#f0e6e8" opacity="0.75" stroke="#d4b8ba" stroke-width="0.5">
+          <!-- Back petals -->
+          <ellipse cx="0" cy="-15" rx="8" ry="22" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-15" rx="8" ry="22" transform="rotate(60)"/>
+          <ellipse cx="0" cy="-15" rx="8" ry="22" transform="rotate(-60)"/>
+          <!-- Front petals -->
+          <ellipse cx="0" cy="-12" rx="9" ry="20" transform="rotate(30)" fill="#f5ece8"/>
+          <ellipse cx="0" cy="-12" rx="9" ry="20" transform="rotate(-30)" fill="#f5ece8"/>
+          <ellipse cx="0" cy="-12" rx="9" ry="20" transform="rotate(90)" fill="#f5ece8"/>
+        </g>
+        <!-- Stamens -->
+        <g stroke="#e8c850" stroke-width="1" opacity="0.6" stroke-linecap="round">
+          <line x1="0" y1="-5" x2="-3" y2="-18"/>
+          <line x1="0" y1="-5" x2="3" y2="-18"/>
+          <line x1="0" y1="-5" x2="0" y2="-20"/>
+          <line x1="0" y1="-5" x2="-5" y2="-15"/>
+          <line x1="0" y1="-5" x2="5" y2="-15"/>
+        </g>
+        <!-- Anthers -->
+        <g fill="#d4a850" opacity="0.7">
+          <ellipse cx="-3" cy="-18" rx="1.5" ry="2.5"/>
+          <ellipse cx="3" cy="-18" rx="1.5" ry="2.5"/>
+          <ellipse cx="0" cy="-20" rx="1.5" ry="2.5"/>
+          <ellipse cx="-5" cy="-15" rx="1.2" ry="2"/>
+          <ellipse cx="5" cy="-15" rx="1.2" ry="2"/>
+        </g>
+      </g>
+
+      <!-- Bud (closed, smaller) -->
+      <g transform="translate(105,120)">
+        <ellipse cx="0" cy="-8" rx="6" ry="18" fill="#f0e6e8" opacity="0.7" stroke="#d4b8ba" stroke-width="0.4"/>
+        <ellipse cx="0" cy="-6" rx="4" ry="14" fill="#f5ece8" opacity="0.6"/>
+      </g>
+    </svg>
+
+    <div class="front-content">
+      <div class="overline">A 52-Week Guide Through Scripture</div>
+      <div class="title-serif">Bible Study</div>
+      <div class="title-script">Handbook</div>
+      <div class="divider-w"></div>
+      <div class="subtitle">Reflect &middot; Pray &middot; Grow</div>
+    </div>
+
+    <div class="info-block">
+      <div class="badges">
+        <span class="badge">10 Epochs</span>
+        <span class="badge">66 Books</span>
+        <span class="badge">52 Weeks</span>
+      </div>
+      <div class="front-verse">&ldquo;Your word is a lamp to my feet<br/>and a light to my path.&rdquo;</div>
+      <div class="front-verse-ref">Psalm 119:105</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

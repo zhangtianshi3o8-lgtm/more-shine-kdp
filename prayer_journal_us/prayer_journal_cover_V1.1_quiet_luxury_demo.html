@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prayer Journal — Cover V1.1 Quiet Luxury</title>
+<style>
+@page { size: 12.57in 9.25in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  background: #222;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cover-wrap {
+  width: 12.57in;
+  height: 9.25in;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+/* ===== BACK COVER ===== */
+.back-cover {
+  width: 6.0in;
+  height: 9.25in;
+  margin-left: 0.125in;
+  background: #0A1320;
+  display: flex;
+  flex-direction: column;
+  padding: 0.55in 0.50in 0.40in 0.50in;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+/* TONE-ON-TONE: subtle cross pattern — barely visible */
+.back-cover .bc-subtle-pattern {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image:
+    repeating-linear-gradient(45deg,
+      transparent 0px, transparent 28px,
+      #C9A84C 28px, #C9A84C 29px,
+      transparent 29px, transparent 57px,
+      #C9A84C 57px, #C9A84C 58px);
+  z-index: 0;
+}
+
+/* TONE-ON-TONE: large faded cross watermark */
+.back-cover .bc-watermark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.5in; height: 4in;
+  opacity: 0.025;
+  z-index: 0;
+}
+
+.back-cover .bc-watermark::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 0;
+  transform: translateX(-50%);
+  width: 0.5in; height: 4in;
+  background: #C9A84C;
+}
+
+.back-cover .bc-watermark::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 1.1in;
+  transform: translateX(-50%);
+  width: 1.8in; height: 0.5in;
+  background: #C9A84C;
+}
+
+.back-cover .bc-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.back-cover .bc-blurb-title {
+  font-size: 11pt;
+  color: #A89058;
+  font-weight: 700;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-bottom: 0.15in;
+  text-align: center;
+}
+
+.back-cover .bc-blurb {
+  font-size: 9.5pt;
+  color: #C8C0B0;
+  line-height: 1.65;
+  text-align: justify;
+  margin-bottom: 0.25in;
+}
+
+.back-cover .bc-divider {
+  width: 1.5in;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8A7438, transparent);
+  margin: 0.1in auto;
+}
+
+.back-cover .bc-features {
+  margin-top: 0.1in;
+}
+
+.back-cover .bc-feature {
+  font-size: 9pt;
+  color: #C8C0B0;
+  line-height: 1.8;
+  padding-left: 0.18in;
+  position: relative;
+}
+
+/* CSS dot instead of unicode bullet */
+.back-cover .bc-feature::before {
+  width: 4px; height: 4px;
+  background: #8A7438;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 7px;
+}
+
+.back-cover .bc-quote {
+  margin-top: 0.25in;
+  padding: 0.12in 0.15in;
+  border-left: 1px solid #5A4E30;
+  font-size: 9pt;
+  font-style: italic;
+  color: #A89058;
+  line-height: 1.5;
+}
+
+.back-cover .bc-bottom {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.back-cover .bc-pub {
+  font-size: 7pt;
+  color: #5A6A85;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-bottom: 0.12in;
+  align-self: center;
+}
+
+.back-cover .bc-barcode {
+  width: 2in;
+  height: 1.2in;
+  background: white;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7pt;
+  color: #999;
+}
+
+/* ===== SPINE ===== */
+.spine {
+  width: 0.32in;
+  height: 9.25in;
+  background: #0A1320;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.spine .sp-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10pt;
+  color: #A89058;
+  font-weight: 700;
+  letter-spacing: 3pt;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.spine .sp-pub {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 6pt;
+  color: #5A6A85;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0.6in;
+}
+
+.spine .sp-top-orn {
+  position: absolute;
+  top: 0.6in;
+  width: 60%;
+  height: 1px;
+  background: #5A4E30;
+}
+
+.spine .sp-bot-orn {
+  position: absolute;
+  bottom: 1.5in;
+  width: 60%;
+  height: 1px;
+  background: #5A4E30;
+}
+
+/* ===== FRONT COVER — "QUIET LUXURY" ===== */
+.front-cover {
+  width: 6.0in;
+  height: 9.25in;
+  background: #0A1320;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  padding: 0.5in 0.5in;
+  margin-right: 0.125in;
+}
+
+/* TONE-ON-TONE PATTERN LAYER 1: Diagonal lines */
+.front-cover .fc-diagonal {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.025;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent 0px, transparent 40px,
+    #C9A84C 40px, #C9A84C 41px);
+  z-index: 1;
+}
+
+/* TONE-ON-TONE PATTERN LAYER 2: Subtle dot grid */
+.front-cover .fc-dots {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.03;
+  background-image: radial-gradient(circle, #C9A84C 0.8px, transparent 1px);
+  background-size: 18px 18px;
+  z-index: 1;
+}
+
+/* TONE-ON-TONE PATTERN LAYER 3: Large faded cross watermark */
+.front-cover .fc-watermark {
+  position: absolute;
+  left: 50%; top: 40%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0.03;
+}
+
+.front-cover .fc-wm-v {
+  position: absolute;
+  left: 50%; top: -1.5in;
+  transform: translateX(-50%);
+  width: 1.2in; height: 5in;
+  background: #C9A84C;
+}
+
+.front-cover .fc-wm-h {
+  position: absolute;
+  left: 50%; top: 0;
+  transform: translateX(-50%);
+  width: 3.5in; height: 1.2in;
+  background: #C9A84C;
+}
+
+/* TONE-ON-TONE PATTERN LAYER 4: Corner ornaments */
+.front-cover .fc-corner {
+  position: absolute;
+  width: 0.8in; height: 0.8in;
+  opacity: 0.06;
+  z-index: 1;
+}
+
+.front-cover .fc-corner-tl {
+  top: 0.35in; left: 0.35in;
+  border-top: 1px solid #C9A84C;
+  border-left: 1px solid #C9A84C;
+}
+
+.front-cover .fc-corner-tr {
+  top: 0.35in; right: 0.35in;
+  border-top: 1px solid #C9A84C;
+  border-right: 1px solid #C9A84C;
+}
+
+.front-cover .fc-corner-bl {
+  bottom: 0.35in; left: 0.35in;
+  border-bottom: 1px solid #C9A84C;
+  border-left: 1px solid #C9A84C;
+}
+
+.front-cover .fc-corner-br {
+  bottom: 0.35in; right: 0.35in;
+  border-bottom: 1px solid #C9A84C;
+  border-right: 1px solid #C9A84C;
+}
+
+/* === VISIBLE MAIN ELEMENT (for Amazon thumbnail) === */
+/* Small visible cross — the anchor */
+.front-cover .fc-cross-wrap {
+  position: relative;
+  z-index: 3;
+  width: 40px; height: 68px;
+  margin: 0 auto 0.35in;
+  margin-top: 0.6in;
+}
+
+.front-cover .fc-cross-vert {
+  position: absolute;
+  left: 50%; top: 0;
+  transform: translateX(-50%);
+  width: 9px; height: 68px;
+  background: linear-gradient(180deg, #A89058, #8A7438);
+  border-radius: 1px;
+}
+
+.front-cover .fc-cross-horiz {
+  position: absolute;
+  left: 50%; top: 18px;
+  transform: translateX(-50%);
+  width: 32px; height: 9px;
+  background: linear-gradient(180deg, #A89058, #8A7438);
+  border-radius: 1px;
+}
+
+/* Title — MUST be clearly visible */
+.front-cover .fc-title-area {
+  position: relative;
+  z-index: 3;
+}
+
+.front-cover .fc-title {
+  font-size: 30pt;
+  font-weight: 400;
+  color: white;
+  letter-spacing: 4pt;
+  margin-bottom: 0.08in;
+}
+
+.front-cover .fc-ornament {
+  width: 1.5in;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8A7438 30%, #8A7438 70%, transparent);
+  margin: 0.15in auto;
+}
+
+.front-cover .fc-subtitle {
+  font-size: 10.5pt;
+  font-style: italic;
+  color: #A89058;
+  max-width: 4in;
+  line-height: 1.55;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Bottom area */
+.front-cover .fc-bottom {
+  position: absolute;
+  bottom: 0.65in;
+  left: 0; right: 0;
+  text-align: center;
+  z-index: 3;
+}
+
+.front-cover .fc-verse {
+  font-size: 8.5pt;
+  color: #C8C0B0;
+  font-style: italic;
+  line-height: 1.6;
+  max-width: 3.5in;
+  margin: 0 auto 0.08in;
+}
+
+.front-cover .fc-verse-ref {
+  font-size: 7pt;
+  color: #8A7438;
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+}
+
+.front-cover .fc-pub {
+  font-size: 7pt;
+  color: #5A6A85;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  margin-top: 0.15in;
+}
+
+/* Side-by-side comparison label */
+.compare-label {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9pt;
+  color: #888;
+  letter-spacing: 1pt;
+  white-space: nowrap;
+}
+
+@media screen {
+  .cover-wrap { border: 1px solid #444; margin: 40px auto; position: relative; }
+}
+</style>
+</head>
+<body>
+<div class="cover-wrap">
+
+  <!-- ====== BACK COVER ====== -->
+  <div class="back-cover">
+    <div class="bc-subtle-pattern"></div>
+    <div class="bc-watermark"></div>
+    <div class="bc-content">
+      <div class="bc-blurb-title">About This Journal</div>
+      <div class="bc-blurb">Deepen your prayer life one week at a time.<br/><br/>This guided prayer journal walks you through fifty-two weeks of intentional communion with God. Each week features a Scripture passage to anchor your heart, along with generous writing space organized around the time-tested ACTS prayer model.</div>
+      <div class="bc-divider"></div>
+      <div class="bc-features">
+      <div class="bc-feature">52 undated weekly spreads — start any time, any year</div>
+      <div class="bc-feature">52 Scripture passages from the World English Bible</div>
+      <div class="bc-feature">Guided ACTS prayer sections on every spread</div>
+      <div class="bc-feature">Dedicated Answered Prayers section</div>
+      <div class="bc-feature">Gratitude pages to cultivate a thankful heart</div>
+      <div class="bc-feature">Elegant design for both men and women</div>
+      </div>
+      <div class="bc-quote">
+        "The Lord is near to all who call on him,<br/>
+        to all who call on him in truth."<br/>
+        <span style="font-size:7.5pt;color:#8A7438;font-style:normal;letter-spacing:1pt;">PSALM 145:18 (WEB)</span>
+      </div>
+    </div>
+    <div class="bc-bottom">
+      <div class="bc-pub">More Shine Press</div>
+      <div class="bc-barcode">Barcode Area</div>
+    </div>
+  </div>
+
+  <!-- ====== SPINE ====== -->
+  <div class="spine">
+    <div class="sp-top-orn"></div>
+    <div class="sp-text">Prayer Journal</div>
+    <div class="sp-bot-orn"></div>
+    <div class="sp-pub">More Shine Press</div>
+  </div>
+
+  <!-- ====== FRONT COVER ====== -->
+  <div class="front-cover">
+    <!-- Hidden pattern layers -->
+    <div class="fc-diagonal"></div>
+    <div class="fc-dots"></div>
+    <div class="fc-watermark">
+      <div class="fc-wm-v"></div>
+      <div class="fc-wm-h"></div>
+    </div>
+    <div class="fc-corner fc-corner-tl"></div>
+    <div class="fc-corner fc-corner-tr"></div>
+    <div class="fc-corner fc-corner-bl"></div>
+    <div class="fc-corner fc-corner-br"></div>
+
+    <!-- Visible main elements -->
+    <div class="fc-cross-wrap">
+      <div class="fc-cross-vert"></div>
+      <div class="fc-cross-horiz"></div>
+    </div>
+    <div class="fc-title-area">
+      <div class="fc-title">Prayer Journal</div>
+      <div class="fc-ornament"></div>
+      <div class="fc-subtitle">A 52-Week Guided Journal for Prayer, Scripture & Gratitude</div>
+    </div>
+    <div class="fc-bottom">
+      <div class="fc-verse">
+        "Call to me, and I will answer you,<br/>
+        and will show you great things."
+      </div>
+      <div class="fc-verse-ref">Jeremiah 33:3 (WEB)</div>
+      <div class="fc-pub">More Shine Press</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

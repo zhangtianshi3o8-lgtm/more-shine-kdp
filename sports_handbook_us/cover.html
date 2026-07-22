@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cover — Youth Sports Development Handbook</title>
+<style>
+@page { size: 8.5in 11in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cover {
+  width: 8.5in; height: 11in;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(155deg, #0D2847 0%, #1B4D89 35%, #236BAA 65%, #2E8BCC 100%);
+}
+
+/* ---- Top decorative bar ---- */
+.top-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 0.12in;
+  background: linear-gradient(90deg, #C25E1C 0%, #E8841C 50%, #FFB347 100%);
+}
+
+/* ---- Diagonal accent stripes ---- */
+.accent-stripe {
+  position: absolute;
+  background: rgba(255,255,255,0.04);
+  transform: rotate(-22deg);
+}
+.stripe-1 { top: -1in; right: -2in; width: 6in; height: 0.4in; }
+.stripe-2 { top: -0.5in; right: -2in; width: 5in; height: 0.2in; }
+.stripe-3 { bottom: 2.5in; left: -3in; width: 8in; height: 0.3in; }
+
+/* ---- Sport circles row ---- */
+.sport-icons {
+  position: absolute;
+  top: 0.9in;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.35in;
+}
+.ball {
+  width: 0.55in; height: 0.55in;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16pt;
+}
+.ball-bball {
+  background: radial-gradient(circle at 35% 35%, #FF8844, #D4621C);
+  box-shadow: inset -3px -3px 6px rgba(0,0,0,0.2);
+}
+.ball-bball::after {
+  content: ''; position: absolute;
+  width: 100%; height: 100%; border-radius: 50%;
+  border-top: 1.5px solid rgba(0,0,0,0.25);
+  border-bottom: 1.5px solid rgba(0,0,0,0.25);
+  transform: rotate(0deg);
+}
+.ball-baseball {
+  background: radial-gradient(circle at 35% 35%, #FFFFFF, #E0E0E0);
+  box-shadow: inset -3px -3px 6px rgba(0,0,0,0.1);
+}
+.ball-baseball::after {
+  content: ''; position: absolute;
+  width: 80%; height: 60%;
+  border-left: 1.5px solid #B33;
+  border-right: 1.5px solid #B33;
+  border-radius: 40%;
+}
+.ball-football {
+  background: radial-gradient(ellipse at 35% 35%, #8B5E2A, #5C3D1A);
+  width: 0.65in; border-radius: 50%;
+  transform: rotate(15deg);
+}
+.ball-soccer {
+  background: radial-gradient(circle at 35% 35%, #FFFFFF, #CCCCCC);
+  box-shadow: inset -3px -3px 6px rgba(0,0,0,0.1);
+}
+.ball-soccer::after {
+  content: ''; position: absolute;
+  width: 40%; height: 40%;
+  background: rgba(0,0,0,0.7);
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+.ball-tennis {
+  background: radial-gradient(circle at 35% 35%, #DFFF4F, #B5D020);
+  box-shadow: inset -3px -3px 6px rgba(0,0,0,0.1);
+}
+.ball-tennis::after {
+  content: ''; position: absolute;
+  width: 100%; height: 100%; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(20deg);
+}
+
+/* ---- Main title area ---- */
+.title-area {
+  position: absolute;
+  top: 2.3in;
+  left: 0.7in; right: 0.7in;
+  text-align: center;
+}
+
+.title-pretitle {
+  font-size: 10pt;
+  color: rgba(255,179,71,0.95);
+  letter-spacing: 4pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.title-main {
+  font-size: 38pt;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+  letter-spacing: -0.5pt;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.title-bar {
+  width: 2.2in; height: 3px;
+  background: #FFB347;
+  margin: 20px auto 18px;
+  border-radius: 2px;
+}
+
+.title-sub {
+  font-size: 13pt;
+  color: rgba(255,255,255,0.8);
+  font-style: italic;
+  line-height: 1.5;
+  max-width: 5.5in;
+  margin: 0 auto;
+}
+
+/* ---- Feature badges ---- */
+.feature-row {
+  position: absolute;
+  bottom: 2.6in;
+  left: 0.7in; right: 0.7in;
+  display: flex;
+  justify-content: center;
+  gap: 0.3in;
+}
+.feature-badge {
+  text-align: center;
+  padding: 10px 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  width: 1.5in;
+}
+.feature-badge .feat-num {
+  font-size: 18pt;
+  font-weight: 700;
+  color: #FFB347;
+  line-height: 1;
+}
+.feature-badge .feat-label {
+  font-size: 7.5pt;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+/* ---- Bottom section ---- */
+.bottom-section {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 0.5in 0.7in 0.5in;
+  text-align: center;
+}
+.bottom-bar {
+  height: 0.12in;
+  background: linear-gradient(90deg, #FFB347 0%, #E8841C 50%, #C25E1C 100%);
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+}
+.bottom-tagline {
+  font-size: 9pt;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+}
+
+/* ---- Star/sport accents ---- */
+.corner-accent {
+  position: absolute;
+  width: 1.5in; height: 1.5in;
+  opacity: 0.06;
+}
+.corner-tl { top: 0.3in; left: 0.3in; border-top: 3px solid white; border-left: 3px solid white; }
+.corner-br { bottom: 0.3in; right: 0.3in; border-bottom: 3px solid white; border-right: 3px solid white; }
+
+@media screen { .cover { border: 1px dashed #ccc; margin: 10px auto; } }
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="top-bar"></div>
+  <div class="accent-stripe stripe-1"></div>
+  <div class="accent-stripe stripe-2"></div>
+  <div class="accent-stripe stripe-3"></div>
+  <div class="corner-accent corner-tl"></div>
+  <div class="corner-accent corner-br"></div>
+
+  <!-- Sport ball icons -->
+  <div class="sport-icons">
+    <div class="ball ball-bball"></div>
+    <div class="ball ball-baseball"></div>
+    <div class="ball ball-football"></div>
+    <div class="ball ball-soccer"></div>
+    <div class="ball ball-tennis"></div>
+  </div>
+
+  <!-- Title -->
+  <div class="title-area">
+    <div class="title-pretitle">The Complete Parent's Guide</div>
+    <div class="title-main">Youth Sports<br>Development<br>Handbook</div>
+    <div class="title-bar"></div>
+    <div class="title-sub">A Parent's Guide to Training and<br>Discovering Your Child's Athletic Potential</div>
+  </div>
+
+  <!-- Feature badges -->
+  <div class="feature-row">
+    <div class="feature-badge">
+      <div class="feat-num">9</div>
+      <div class="feat-label">Major Sports</div>
+    </div>
+    <div class="feature-badge">
+      <div class="feat-num">22</div>
+      <div class="feat-label">Training Topics</div>
+    </div>
+    <div class="feature-badge">
+      <div class="feat-num">4</div>
+      <div class="feat-label">Tracking Tools</div>
+    </div>
+  </div>
+
+  <!-- Bottom -->
+  <div class="bottom-section">
+    <div class="bottom-tagline">Skills &middot; Drills &middot; Talent Discovery</div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>
+</body>
+</html>

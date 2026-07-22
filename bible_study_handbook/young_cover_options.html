@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bible Study Handbook — Young & Fresh Cover Options</title>
+<style>
+  @page { size: 8.5in 11in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f0e8;
+    -webkit-print-color-adjust: exact;
+    font-family: Georgia, serif;
+  }
+
+  .page-break { page-break-after: always; }
+  
+  /* ═══════════════════════════════════════════
+     SHARED LABEL
+     ═══════════════════════════════════════════ */
+  .label {
+    text-align: center;
+    padding: 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14pt;
+    font-weight: 600;
+    color: #666;
+    letter-spacing: 2pt;
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION A: Sage & Blush Watercolor Floral
+     ═══════════════════════════════════════════ */
+  .cover-a {
+    width: 8.5in; height: 11in;
+    background: linear-gradient(170deg, #f0ebe1 0%, #e8e0d0 100%);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    page-break-after: always;
+  }
+
+  /* Watercolor blobs for organic feel */
+  .cover-a .blob1 {
+    position: absolute; top: -1in; right: -1.5in;
+    width: 5in; height: 5in;
+    background: radial-gradient(circle, rgba(180,200,160,0.4) 0%, rgba(180,200,160,0.1) 50%, transparent 70%);
+    border-radius: 50%; filter: blur(20px);
+  }
+  .cover-a .blob2 {
+    position: absolute; bottom: -1in; left: -1.5in;
+    width: 5in; height: 5in;
+    background: radial-gradient(circle, rgba(220,180,190,0.3) 0%, rgba(220,180,190,0.08) 50%, transparent 70%);
+    border-radius: 50%; filter: blur(20px);
+  }
+  .cover-a .blob3 {
+    position: absolute; top: 40%; left: 10%;
+    width: 2in; height: 2in;
+    background: radial-gradient(circle, rgba(200,175,140,0.2) 0%, transparent 70%);
+    border-radius: 50%; filter: blur(15px);
+  }
+
+  /* Floral sprigs (SVG) */
+  .cover-a .floral-top {
+    position: absolute; top: 0.5in; right: 0.5in;
+    width: 2in; height: 2.5in; z-index: 2;
+    opacity: 0.7;
+  }
+  .cover-a .floral-bottom {
+    position: absolute; bottom: 0.3in; left: 0.3in;
+    width: 2.5in; height: 2in; z-index: 2;
+    opacity: 0.6;
+  }
+
+  .cover-a .content {
+    z-index: 5; text-align: center; padding: 0 0.8in;
+  }
+  .cover-a .overline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt; font-weight: 500;
+    color: #7a9b6e; letter-spacing: 5pt; text-transform: uppercase;
+    margin-bottom: 0.3in;
+  }
+  .cover-a .title-serif {
+    font-size: 38pt; font-weight: bold; color: #3a5a3a;
+    line-height: 1.15; font-family: Georgia, serif;
+  }
+  .cover-a .title-script {
+    font-size: 44pt; font-style: italic; color: #c97b7b;
+    line-height: 1.1; margin-top: 0.1in;
+    font-family: 'Snell Roundhand', 'Apple Chancery', cursive;
+  }
+  .cover-a .divider {
+    width: 1.5in; height: 1px; background: #b8a88a;
+    margin: 0.3in auto; position: relative;
+  }
+  .cover-a .divider::after {
+    content: '✿'; position: absolute; top: -10px; left: 50%;
+    transform: translateX(-50%); background: #f0ebe1;
+    padding: 0 8px; color: #c97b7b; font-size: 12pt;
+  }
+  .cover-a .subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10pt; font-weight: 500;
+    color: #6b6b5b; letter-spacing: 2.5pt; text-transform: uppercase;
+    line-height: 1.8;
+  }
+  .cover-a .badges {
+    display: flex; gap: 10px; margin-top: 0.35in;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .cover-a .badge {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7.5pt; font-weight: 500; color: #7a9b6e;
+    letter-spacing: 1.5pt; text-transform: uppercase;
+    background: rgba(122,155,110,0.1);
+    border: 1px solid rgba(122,155,110,0.3);
+    padding: 4px 10px; border-radius: 15px;
+  }
+  .cover-a .verse {
+    position: absolute; bottom: 0.7in; left: 0; right: 0;
+    text-align: center; z-index: 5; padding: 0 0.8in;
+  }
+  .cover-a .verse-text {
+    font-size: 11pt; font-style: italic; color: #8a7a6a;
+    line-height: 1.6;
+  }
+  .cover-a .verse-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt; font-weight: 600; color: #c97b7b;
+    letter-spacing: 2.5pt; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION B: Dusty Blue & Peach Modern Botanical
+     ═══════════════════════════════════════════ */
+  .cover-b {
+    width: 8.5in; height: 11in;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f5ebe6 50%, #e8ddd4 100%);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    page-break-after: always;
+  }
+  .cover-b .arch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 5in; height: 7in;
+    background: linear-gradient(180deg, #a8c4d4 0%, #8aacbe 100%);
+    border-radius: 2.5in 2.5in 0 0;
+    opacity: 0.85; z-index: 1;
+  }
+  .cover-b .arch-inner {
+    position: absolute; top: 0.15in; left: 50%; transform: translateX(-50%);
+    width: 4.7in; height: 6.7in;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 2.35in 2.35in 0 0;
+    z-index: 2;
+  }
+  .cover-b .peach-deco {
+    position: absolute; bottom: 1.5in; right: 0.5in;
+    width: 2.5in; height: 2.5in;
+    background: radial-gradient(circle, rgba(230,180,150,0.35) 0%, transparent 60%);
+    border-radius: 50%; filter: blur(10px); z-index: 1;
+  }
+  .cover-b .leaves {
+    position: absolute; bottom: 2.5in; left: 0.3in;
+    width: 2in; height: 2in; z-index: 3; opacity: 0.5;
+  }
+  .cover-b .content {
+    z-index: 5; text-align: center; padding: 0 0.8in;
+    margin-top: 0.5in;
+  }
+  .cover-b .overline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9pt; font-weight: 500;
+    color: #6b8e9e; letter-spacing: 5pt; text-transform: uppercase;
+    margin-bottom: 0.35in;
+  }
+  .cover-b .title-serif {
+    font-size: 36pt; font-weight: 700; color: #ffffff;
+    line-height: 1.2; font-family: Georgia, serif;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .cover-b .title-script {
+    font-size: 40pt; font-style: italic; color: #f0e0d0;
+    line-height: 1.1; margin-top: 0.1in;
+    font-family: Georgia, serif;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .cover-b .subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9.5pt; font-weight: 500; color: rgba(255,255,255,0.9);
+    letter-spacing: 2.5pt; text-transform: uppercase;
+    line-height: 1.8; margin-top: 0.3in;
+  }
+  .cover-b .divider-w {
+    width: 1.2in; height: 1px; background: rgba(255,255,255,0.5);
+    margin: 0.2in auto;
+  }
+  .cover-b .info-block {
+    position: absolute; bottom: 1.8in; left: 0; right: 0;
+    text-align: center; z-index: 5;
+  }
+  .cover-b .badges {
+    display: flex; gap: 8px; margin-bottom: 0.25in;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .cover-b .badge {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7.5pt; font-weight: 500; color: #8a7060;
+    letter-spacing: 1.5pt; text-transform: uppercase;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(200,170,140,0.4);
+    padding: 4px 10px; border-radius: 12px;
+  }
+  .cover-b .verse-text {
+    font-size: 11pt; font-style: italic; color: #7a6a5a;
+    line-height: 1.6;
+  }
+  .cover-b .verse-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt; font-weight: 600; color: #8aacbe;
+    letter-spacing: 2.5pt; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION C: Terracotta Warm Minimalist
+     ═══════════════════════════════════════════ */
+  .cover-c {
+    width: 8.5in; height: 11in;
+    background: #faf5f0;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    page-break-after: always;
+  }
+  .cover-c .top-band {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3in;
+    background: linear-gradient(160deg, #c4856a 0%, #b07050 100%);
+  }
+  .cover-c .bottom-band {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2.2in;
+    background: linear-gradient(20deg, #8a8a6a 0%, #7a7a5a 100%);
+  }
+  .cover-c .center-area {
+    position: relative; z-index: 5;
+    width: 7in; text-align: center;
+    background: #faf5f0;
+    padding: 0.6in 0.5in;
+    box-shadow: 0 0 30px rgba(0,0,0,0.05);
+    border: 1px solid #e0d5c8;
+  }
+  .cover-c .overline {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8.5pt; font-weight: 600;
+    color: #b07050; letter-spacing: 5pt; text-transform: uppercase;
+    margin-bottom: 0.25in;
+  }
+  .cover-c .title {
+    font-size: 40pt; font-weight: 800; color: #3a3a2a;
+    line-height: 1.1; font-family: 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -1pt;
+  }
+  .cover-c .title-italic {
+    font-size: 42pt; font-weight: 300; font-style: italic;
+    color: #b07050; line-height: 1.1; margin-top: 0.05in;
+    font-family: Georgia, serif;
+  }
+  .cover-c .divider-c {
+    width: 2in; height: 2px; background: #c4a882;
+    margin: 0.3in auto; position: relative;
+  }
+  .cover-c .divider-c::after {
+    content: '◆'; position: absolute; top: -9px; left: 50%;
+    transform: translateX(-50%); background: #faf5f0;
+    padding: 0 8px; color: #b07050; font-size: 10pt;
+  }
+  .cover-c .subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10pt; font-weight: 500; color: #6a6a5a;
+    letter-spacing: 3pt; text-transform: uppercase;
+    line-height: 1.8;
+  }
+  .cover-c .badges {
+    display: flex; gap: 8px; margin-top: 0.3in;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .cover-c .badge {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 7.5pt; font-weight: 600; color: #8a8a6a;
+    letter-spacing: 1.5pt; text-transform: uppercase;
+    border: 1.5px solid rgba(138,138,106,0.4);
+    padding: 4px 10px; border-radius: 4px;
+  }
+  .cover-c .verse-top {
+    position: absolute; top: 1in; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .cover-c .verse-top-text {
+    font-size: 12pt; font-style: italic; color: rgba(255,255,255,0.9);
+    font-family: Georgia, serif; line-height: 1.5;
+  }
+  .cover-c .verse-top-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt; font-weight: 600; color: rgba(255,255,255,0.7);
+    letter-spacing: 2pt; text-transform: uppercase; margin-top: 3px;
+  }
+  .cover-c .verse-bottom {
+    position: absolute; bottom: 0.7in; left: 0; right: 0;
+    text-align: center; z-index: 10;
+  }
+  .cover-c .verse-bottom-text {
+    font-size: 11pt; font-style: italic; color: rgba(255,255,255,0.85);
+    font-family: Georgia, serif; line-height: 1.5;
+  }
+  .cover-c .verse-bottom-ref {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8pt; font-weight: 600; color: rgba(255,255,255,0.6);
+    letter-spacing: 2pt; text-transform: uppercase; margin-top: 3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════ OPTION A ════════════ -->
+<div class="label">OPTION A — Sage & Blush Floral</div>
+
+<div class="cover-a">
+  <div class="blob1"></div>
+  <div class="blob2"></div>
+  <div class="blob3"></div>
+
+  <!-- Floral sprig top-right -->
+  <svg class="floral-top" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#7a9b6e" stroke-width="1.2" stroke-linecap="round" opacity="0.8">
+      <path d="M100,250 Q95,180 100,80"/>
+      <path d="M100,180 Q70,165 55,140" />
+      <path d="M100,160 Q130,145 145,120" />
+      <path d="M100,130 Q75,115 60,90" />
+      <path d="M100,110 Q125,95 140,70" />
+    </g>
+    <!-- Leaves -->
+    <g fill="#8aab7e" opacity="0.6">
+      <ellipse cx="55" cy="140" rx="18" ry="8" transform="rotate(-30 55 140)"/>
+      <ellipse cx="145" cy="120" rx="18" ry="8" transform="rotate(30 145 120)"/>
+      <ellipse cx="60" cy="90" rx="15" ry="7" transform="rotate(-35 60 90)"/>
+      <ellipse cx="140" cy="70" rx="15" ry="7" transform="rotate(35 140 70)"/>
+    </g>
+    <!-- Flowers -->
+    <g fill="#d49a9a" opacity="0.7">
+      <circle cx="100" cy="80" r="12"/>
+      <circle cx="88" cy="74" r="8"/>
+      <circle cx="112" cy="76" r="8"/>
+      <circle cx="93" cy="86" r="7"/>
+      <circle cx="107" cy="86" r="7"/>
+    </g>
+    <circle cx="100" cy="80" r="5" fill="#e8c870" opacity="0.8"/>
+    <!-- Small buds -->
+    <circle cx="50" cy="155" r="5" fill="#d49a9a" opacity="0.5"/>
+    <circle cx="150" cy="135" r="5" fill="#d49a9a" opacity="0.5"/>
+    <circle cx="55" cy="105" r="4" fill="#d49a9a" opacity="0.4"/>
+    <circle cx="145" cy="85" r="4" fill="#d49a9a" opacity="0.4"/>
+  </svg>
+
+  <!-- Floral sprig bottom-left -->
+  <svg class="floral-bottom" viewBox="0 0 250 200" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#7a9b6e" stroke-width="1.2" stroke-linecap="round" opacity="0.7">
+      <path d="M30,200 Q50,140 80,60"/>
+      <path d="M50,180 Q40,160 25,150"/>
+      <path d="M65,140 Q80,125 100,120"/>
+      <path d="M75,100 Q60,85 45,80"/>
+    </g>
+    <g fill="#8aab7e" opacity="0.5">
+      <ellipse cx="25" cy="150" rx="16" ry="7" transform="rotate(-20 25 150)"/>
+      <ellipse cx="100" cy="120" rx="16" ry="7" transform="rotate(25 100 120)"/>
+      <ellipse cx="45" cy="80" rx="14" ry="6" transform="rotate(-30 45 80)"/>
+    </g>
+    <g fill="#c4a882" opacity="0.5">
+      <circle cx="80" cy="60" r="10"/>
+      <circle cx="72" cy="56" r="7"/>
+      <circle cx="88" cy="58" r="7"/>
+    </g>
+    <circle cx="80" cy="60" r="4" fill="#d49a9a" opacity="0.6"/>
+  </svg>
+
+  <div class="content">
+    <div class="overline">A 52-Week Journey</div>
+    <div class="title-serif">Bible Study</div>
+    <div class="title-script">Handbook</div>
+    <div class="divider"></div>
+    <div class="subtitle">Reflect &middot; Pray &middot; Grow</div>
+    <div class="badges">
+      <span class="badge">10 Epochs</span>
+      <span class="badge">66 Books</span>
+      <span class="badge">52 Weeks</span>
+    </div>
+  </div>
+
+  <div class="verse">
+    <div class="verse-text">&ldquo;Your word is a lamp to my feet<br/>and a light to my path.&rdquo;</div>
+    <div class="verse-ref">Psalm 119:105</div>
+  </div>
+</div>
+
+
+<!-- ════════════ OPTION B ════════════ -->
+<div class="page-break"></div>
+<div class="label">OPTION B — Dusty Blue Arch & Peach</div>
+
+<div class="cover-b">
+  <div class="arch"></div>
+  <div class="arch-inner"></div>
+  <div class="peach-deco"></div>
+
+  <!-- Olive branch decoration -->
+  <svg class="leaves" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#8a8a6a" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+      <path d="M20,180 Q60,120 100,40"/>
+      <path d="M50,150 Q40,140 30,135"/>
+      <path d="M70,120 Q85,115 95,110"/>
+      <path d="M60,135 Q50,125 40,122"/>
+      <path d="M80,95 Q95,90 105,88"/>
+    </g>
+    <g fill="#9a9a7a" opacity="0.4">
+      <ellipse cx="30" cy="135" rx="14" ry="6" transform="rotate(-25 30 135)"/>
+      <ellipse cx="95" cy="110" rx="14" ry="6" transform="rotate(20 95 110)"/>
+      <ellipse cx="40" cy="122" rx="12" ry="5" transform="rotate(-30 40 122)"/>
+      <ellipse cx="105" cy="88" rx="12" ry="5" transform="rotate(15 105 88)"/>
+    </g>
+  </svg>
+
+  <div class="content">
+    <div class="overline">A 52-Week Guide</div>
+    <div class="title-serif">Bible Study</div>
+    <div class="title-script">Handbook</div>
+    <div class="divider-w"></div>
+    <div class="subtitle">Reflect &middot; Pray &middot; Grow</div>
+  </div>
+
+  <div class="info-block">
+    <div class="badges">
+      <span class="badge">10 Epochs</span>
+      <span class="badge">66 Books</span>
+      <span class="badge">52 Weeks</span>
+    </div>
+    <div class="verse-text">&ldquo;Your word is a lamp to my feet<br/>and a light to my path.&rdquo;</div>
+    <div class="verse-ref">Psalm 119:105</div>
+  </div>
+</div>
+
+
+<!-- ════════════ OPTION C ════════════ -->
+<div class="page-break"></div>
+<div class="label">OPTION C — Terracotta Warm Minimalist</div>
+
+<div class="cover-c">
+  <div class="top-band"></div>
+  <div class="bottom-band"></div>
+
+  <div class="verse-top">
+    <div class="verse-top-text">&ldquo;Your word is a lamp to my feet<br/>and a light to my path.&rdquo;</div>
+    <div class="verse-top-ref">Psalm 119:105</div>
+  </div>
+
+  <div class="center-area">
+    <div class="overline">A 52-Week Guide Through Scripture</div>
+    <div class="title">Bible Study</div>
+    <div class="title-italic">Handbook</div>
+    <div class="divider-c"></div>
+    <div class="subtitle">Reflect &middot; Pray &middot; Grow</div>
+    <div class="badges">
+      <span class="badge">10 Epochs</span>
+      <span class="badge">66 Books</span>
+      <span class="badge">52 Weeks</span>
+    </div>
+  </div>
+
+  <div class="verse-bottom">
+    <div class="verse-bottom-text">&ldquo;All Scripture is breathed out by God<br/>and profitable for teaching.&rdquo;</div>
+    <div class="verse-bottom-ref">2 Timothy 3:16</div>
+  </div>
+</div>
+
+</body>
+</html>

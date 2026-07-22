@@ -1,0 +1,83 @@
+============================================================
+  CYCLING ADVENTURE JOURNAL — KDP LISTING INFORMATION
+  More Shine Press
+============================================================
+
+PRODUCT DETAILS
+------------------------------------------------------------
+Title:          Cycling Adventure Journal
+Subtitle:       Track Your Rides, Routes, and Milestones
+Author:         More Shine Press
+Language:       English
+Trim Size:      5" x 8" (12.7 x 20.32 cm)
+Pages:          80
+Paper:          White
+B&W/Color:      Black & White (Standard)
+Ink Type:       Standard
+Binding:        Paperback (Perfect Bound)
+
+CATEGORY
+------------------------------------------------------------
+Sports & Outdoors > Individual Sports > Cycling
+Crafts, Hobbies & Home > Sports & Outdoors
+
+DESCRIPTION (for Amazon listing)
+------------------------------------------------------------
+Every ride tells a story. This journal helps you remember each one.
+
+Whether you ride road, mountain, gravel, or commuter routes, the Cycling Adventure Journal gives you a clean, organized way to record every detail that matters — distance, elevation, weather, route notes, and how the ride felt.
+
+<b>What's Inside:</b>
+
+  - 35 two-page ride spreads with comprehensive prompts
+  - Route details: distance, time, elevation gain, average speed
+  - Weather and surface conditions tracking
+  - Bike setup and gear notes for each ride
+  - Personal highlights and memorable moments section
+  - Milestone tracker for personal records and goals
+  - Annual summary and statistics pages
+  - Compact 5" x 8" size — fits in a jersey pocket or saddlebag
+
+<b>Designed for Cyclists:</b>
+
+The two-page-per-ride layout gives you room to breathe. Left page captures the hard data — distance, time, climbing, conditions. Right page is for the story — what you saw, how you felt, what you'd do differently. No clutter, just clean space that respects your riding habits.
+
+<b>Perfect For:</b>
+  - Road cyclists tracking training progress
+  - Mountain bikers logging trail adventures
+  - Bikepackers and touring cyclists
+  - Commuters building a riding habit
+  - Gifts for the cyclist in your life
+
+KEYWORDS (7 backend keywords for Amazon)
+------------------------------------------------------------
+1. cycling journal ride log book notebook
+2. bike riding diary training tracker
+3. road cycling mileage log journal
+4. mountain biking adventure journal book
+5. bicycle ride record book spiral
+6. bikepacking touring journal logbook
+7. cyclist gift notebook men women
+
+PRICING
+------------------------------------------------------------
+KDP Print Cost (B&W, white, 80pp): $1.96
+List Price: $8.99
+Royalty (60% of list - print cost): $8.99 x 0.60 - $1.96 = $3.43 per copy
+
+FILES
+------------------------------------------------------------
+Interior:  ~/cycling_journal/cycling_adventure_journal_V1.0.pdf (80 pages)
+Cover:    ~/cycling_journal/cycling_cover_V1.0.pdf (full wrap)
+HTML:     ~/cycling_journal/cycling_adventure_journal.html
+          ~/cycling_journal/cycling_cover.html
+
+COMPLIANCE STATUS
+------------------------------------------------------------
+✓ No external URLs
+✓ No brand names or trademarks
+✓ No copyrighted material
+✓ No medical/health claims
+✓ No social media references
+✓ No email/phone numbers
+✓ KDP compliance scan: PASSED

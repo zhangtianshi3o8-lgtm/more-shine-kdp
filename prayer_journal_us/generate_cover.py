@@ -1,0 +1,481 @@
+#!/usr/bin/env python3
+"""
+Prayer Journal — KDP Cover Generator (Full Wrap: Back + Spine + Front)
+Trim: 6 x 9 in | Pages: 128 | Cream paper
+Publisher: More Shine Press
+Zero-dependency: Python stdlib only, HTML + Chrome headless PDF export.
+
+Cover math:
+  spine = 128 × 0.0025 = 0.320 in
+  full_w = 6 + 6 + 0.320 + 0.125×2 = 12.570 in
+  full_h = 9 + 0.125×2 = 9.250 in
+  front starts at: 0.125 + 6 + 0.320 = 6.445 in from left
+"""
+
+import os
+
+OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+HTML_FILE = os.path.join(OUTPUT_DIR, "prayer_journal_cover_V1.0.html")
+
+# ---- Cover dimensions ----
+TRIM_W = 6.0
+TRIM_H = 9.0
+BLEED = 0.125
+PAGES = 128
+PAPER_FACTOR = 0.0025  # cream
+SPINE = PAGES * PAPER_FACTOR  # 0.320
+
+COVER_W = TRIM_W * 2 + SPINE + BLEED * 2  # 12.570
+COVER_H = TRIM_H + BLEED * 2               # 9.250
+
+# Section offsets (from left edge)
+BACK_X = 0                 # bleed starts at 0
+BACK_W = TRIM_W            # back trim is 6in
+SPINE_X = BLEED + TRIM_W   # spine starts after back + bleed
+SPINE_W = SPINE            # 0.320
+FRONT_X = BLEED + TRIM_W + SPINE  # front starts after spine
+FRONT_W = TRIM_W           # 6in
+
+BOOK_TITLE = "Prayer Journal"
+BOOK_SUBTITLE = "A 52-Week Guided Journal for Prayer, Scripture & Gratitude"
+PUBLISHER = "More Shine Press"
+
+CSS = f"""
+@page {{ size: {COVER_W}in {COVER_H}in; margin: 0; }}
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+
+body {{
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}}
+
+.cover-wrap {{
+  width: {COVER_W}in;
+  height: {COVER_H}in;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}}
+
+/* ---- BACK COVER ---- */
+.back-cover {{
+  width: {TRIM_W}in;
+  height: {COVER_H}in;
+  margin-left: {BLEED}in;
+  background: linear-gradient(170deg, #0F1B33 0%, #1B2A4A 40%, #1B2A4A 60%, #0F1B33 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 0.55in 0.50in 0.40in 0.50in;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}}
+
+/* Subtle texture on back */
+.back-cover .bc-texture {{
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.03;
+  background-image:
+    radial-gradient(ellipse 40px 12px at 20% 30%, #C9A84C, transparent),
+    radial-gradient(ellipse 30px 10px at 70% 20%, #C9A84C, transparent),
+    radial-gradient(ellipse 35px 11px at 60% 75%, #C9A84C, transparent),
+    radial-gradient(ellipse 25px 8px at 30% 80%, #C9A84C, transparent),
+    radial-gradient(ellipse 20px 7px at 80% 50%, #C9A84C, transparent),
+    radial-gradient(ellipse 28px 9px at 15% 55%, #C9A84C, transparent);
+}}
+
+.back-cover .bc-content {{
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}}
+
+.back-cover .bc-blurb-title {{
+  font-size: 11pt;
+  color: #D4B968;
+  font-weight: 700;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-bottom: 0.15in;
+  text-align: center;
+}}
+
+.back-cover .bc-blurb {{
+  font-size: 9.5pt;
+  color: #E8E0D0;
+  line-height: 1.65;
+  text-align: justify;
+  margin-bottom: 0.25in;
+}}
+
+.back-cover .bc-divider {{
+  width: 1.5in;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+  margin: 0.1in auto;
+}}
+
+.back-cover .bc-features {{
+  margin-top: 0.1in;
+}}
+
+.back-cover .bc-feature {{
+  font-size: 9pt;
+  color: #E8E0D0;
+  line-height: 1.8;
+  padding-left: 0.18in;
+  position: relative;
+}}
+
+.back-cover .bc-feature::before {{
+  content: "\\2022";
+  color: #C9A84C;
+  position: absolute;
+  left: 0;
+  font-size: 10pt;
+}}
+
+.back-cover .bc-quote {{
+  margin-top: 0.25in;
+  padding: 0.12in 0.15in;
+  border-left: 2px solid #C9A84C;
+  font-size: 9pt;
+  font-style: italic;
+  color: #D4B968;
+  line-height: 1.5;
+}}
+
+/* Back bottom: publisher + barcode */
+.back-cover .bc-bottom {{
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}}
+
+.back-cover .bc-pub {{
+  font-size: 7pt;
+  color: #8A9AB5;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-bottom: 0.12in;
+  align-self: center;
+}}
+
+.back-cover .bc-barcode {{
+  width: 2in;
+  height: 1.2in;
+  background: white;
+  margin-right: 0;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7pt;
+  color: #999;
+}}
+
+/* ---- SPINE ---- */
+.spine {{
+  width: {SPINE}in;
+  height: {COVER_H}in;
+  background: linear-gradient(180deg, #0F1B33 0%, #1B2A4A 50%, #0F1B33 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}}
+
+.spine .sp-text {{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10pt;
+  color: #D4B968;
+  font-weight: 700;
+  letter-spacing: 3pt;
+  text-transform: uppercase;
+  white-space: nowrap;
+}}
+
+.spine .sp-pub {{
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 6pt;
+  color: #8A9AB5;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0.6in;
+}}
+
+.spine .sp-top-orn {{
+  position: absolute;
+  top: 0.6in;
+  width: 60%;
+  height: 1px;
+  background: #C9A84C;
+  opacity: 0.5;
+}}
+
+.spine .sp-bot-orn {{
+  position: absolute;
+  bottom: 1.5in;
+  width: 60%;
+  height: 1px;
+  background: #C9A84C;
+  opacity: 0.5;
+}}
+
+/* ---- FRONT COVER ---- */
+.front-cover {{
+  width: {TRIM_W}in;
+  height: {COVER_H}in;
+  background: linear-gradient(165deg, #0F1B33 0%, #1B2A4A 30%, #1B2A4A 50%, #0F1B33 80%, #0F1B33 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  padding: 0.5in 0.5in;
+  margin-right: {BLEED}in;
+}}
+
+/* Radiating light from cross */
+.front-cover .fc-glow {{
+  position: absolute;
+  left: 50%; top: 38%;
+  transform: translate(-50%, -50%);
+  width: 4in; height: 4in;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.10), rgba(201,168,76,0.03) 40%, transparent 70%);
+  z-index: 1;
+}}
+
+/* Light rays */
+.front-cover .fc-rays {{
+  position: absolute;
+  left: 50%; top: 38%;
+  transform: translate(-50%, -50%);
+  width: 3in; height: 3in;
+  z-index: 1;
+  opacity: 0.15;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg, #C9A84C 1deg, transparent 2deg, transparent 20deg,
+      transparent 30deg, #C9A84C 31deg, transparent 32deg, transparent 50deg,
+      transparent 170deg, #C9A84C 171deg, transparent 172deg, transparent 190deg,
+      transparent 200deg, #C9A84C 201deg, transparent 202deg, transparent 220deg,
+      transparent 340deg, #C9A84C 341deg, transparent 342deg, transparent 360deg);
+  border-radius: 50%;
+}}
+
+/* Cross */
+.front-cover .fc-cross-wrap {{
+  position: relative;
+  z-index: 2;
+  width: 50px; height: 85px;
+  margin: 0 auto 0.35in;
+  margin-top: 0.5in;
+}}
+
+.front-cover .fc-cross-vert {{
+  position: absolute;
+  left: 50%; top: 0;
+  transform: translateX(-50%);
+  width: 12px; height: 85px;
+  background: linear-gradient(180deg, #D4B968, #C9A84C, #B8941C);
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(201,168,76,0.4);
+}}
+
+.front-cover .fc-cross-horiz {{
+  position: absolute;
+  left: 50%; top: 22px;
+  transform: translateX(-50%);
+  width: 40px; height: 12px;
+  background: linear-gradient(180deg, #D4B968, #C9A84C, #B8941C);
+  border-radius: 2px;
+}}
+
+/* Title area */
+.front-cover .fc-title-area {{
+  position: relative;
+  z-index: 2;
+}}
+
+.front-cover .fc-title {{
+  font-size: 30pt;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 3pt;
+  margin-bottom: 0.1in;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}}
+
+.front-cover .fc-ornament {{
+  width: 1.8in;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #C9A84C 30%, #C9A84C 70%, transparent);
+  margin: 0.15in auto;
+}}
+
+.front-cover .fc-subtitle {{
+  font-size: 11pt;
+  font-style: italic;
+  color: #D4B968;
+  max-width: 4.2in;
+  line-height: 1.55;
+  margin: 0 auto;
+}}
+
+.front-cover .fc-bottom {{
+  position: absolute;
+  bottom: 0.65in;
+  left: 0; right: 0;
+  text-align: center;
+  z-index: 2;
+}}
+
+.front-cover .fc-verse {{
+  font-size: 8.5pt;
+  color: #E8E0D0;
+  font-style: italic;
+  line-height: 1.6;
+  max-width: 3.5in;
+  margin: 0 auto 0.08in;
+}}
+
+.front-cover .fc-verse-ref {{
+  font-size: 7pt;
+  color: #C9A84C;
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+}}
+
+.front-cover .fc-pub {{
+  font-size: 7pt;
+  color: #8A9AB5;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  margin-top: 0.15in;
+}}
+
+@media screen {{
+  .cover-wrap {{ border: 1px solid #ccc; margin: 10px auto; }}
+}}
+"""
+
+BACK_BLURB = (
+    "Deepen your prayer life one week at a time.\n\n"
+    "This guided prayer journal walks you through fifty-two weeks of intentional "
+    "communion with God. Each week features a Scripture passage to anchor your "
+    "heart, along with generous writing space organized around the time-tested "
+    "ACTS prayer model — Adoration, Confession, Thanksgiving, and Supplication."
+)
+
+BACK_FEATURES = [
+    "52 undated weekly spreads — start any time, any year",
+    "52 Scripture passages from the World English Bible",
+    "Guided ACTS prayer sections on every spread",
+    "Dedicated Answered Prayers section to track God's faithfulness",
+    "Gratitude pages to cultivate a thankful heart",
+    "Generous writing space that respects your handwriting",
+    "Elegant design for both men and women",
+]
+
+def main():
+    features_html = "\n".join(
+        f'      <div class="bc-feature">{feat}</div>' for feat in BACK_FEATURES
+    )
+
+    full_html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{BOOK_TITLE} — Cover</title>
+<style>{CSS}</style>
+</head>
+<body>
+<div class="cover-wrap">
+
+  <!-- ====== BACK COVER ====== -->
+  <div class="back-cover">
+    <div class="bc-texture"></div>
+    <div class="bc-content">
+      <div class="bc-blurb-title">About This Journal</div>
+      <div class="bc-blurb">{BACK_BLURB.replace(chr(10), '<br/>')}</div>
+      <div class="bc-divider"></div>
+      <div class="bc-features">
+{features_html}
+      </div>
+      <div class="bc-quote">
+        "The Lord is near to all who call on him,<br/>
+        to all who call on him in truth."<br/>
+        <span style="font-size:7.5pt;color:#C9A84C;font-style:normal;letter-spacing:1pt;">PSALM 145:18 (WEB)</span>
+      </div>
+    </div>
+    <div class="bc-bottom">
+      <div class="bc-pub">{PUBLISHER}</div>
+      <div class="bc-barcode">Barcode Area</div>
+    </div>
+  </div>
+
+  <!-- ====== SPINE ====== -->
+  <div class="spine">
+    <div class="sp-top-orn"></div>
+    <div class="sp-text">{BOOK_TITLE}</div>
+    <div class="sp-bot-orn"></div>
+    <div class="sp-pub">{PUBLISHER}</div>
+  </div>
+
+  <!-- ====== FRONT COVER ====== -->
+  <div class="front-cover">
+    <div class="fc-glow"></div>
+    <div class="fc-rays"></div>
+    <div class="fc-cross-wrap">
+      <div class="fc-cross-vert"></div>
+      <div class="fc-cross-horiz"></div>
+    </div>
+    <div class="fc-title-area">
+      <div class="fc-title">{BOOK_TITLE}</div>
+      <div class="fc-ornament"></div>
+      <div class="fc-subtitle">{BOOK_SUBTITLE}</div>
+    </div>
+    <div class="fc-bottom">
+      <div class="fc-verse">
+        "Call to me, and I will answer you,<br/>
+        and will show you great things."
+      </div>
+      <div class="fc-verse-ref">Jeremiah 33:3 (WEB)</div>
+      <div class="fc-pub">{PUBLISHER}</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>'''
+
+    with open(HTML_FILE, "w", encoding="utf-8") as f:
+        f.write(full_html)
+
+    print(f"Generated: {HTML_FILE}")
+    print(f"Cover dimensions: {COVER_W:.3f}in x {COVER_H:.3f}in")
+    print(f"Spine width: {SPINE:.3f}in ({SPINE*25.4:.1f}mm)")
+    print(f"  Back: {BLEED:.3f} to {BLEED+TRIM_W:.3f}in")
+    print(f"  Spine: {SPINE_X:.3f} to {SPINE_X+SPINE:.3f}in")
+    print(f"  Front: {FRONT_X:.3f} to {FRONT_X+TRIM_W:.3f}in")
+
+
+if __name__ == "__main__":
+    main()

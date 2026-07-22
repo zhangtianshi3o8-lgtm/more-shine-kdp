@@ -1,0 +1,112 @@
+============================================================
+  KDP 上架文案清单 — Bible Study Handbook
+  最后更新: 2026-07-16
+============================================================
+
+【1. 书名 Title】
+Bible Study Handbook
+
+【2. 副标题 Subtitle】（KDP字段，最多200字符，搜索权重极高）
+A 52-Week Guide Through Scripture: Reflection Journal for Women
+
+【3. 作者 Author】
+（你确认后再填写，可以笔名/品牌名/留空选 Anonymous）
+
+【4. 简介 Description】（KDP商品页面展示，支持基础HTML）
+
+<i>Your word is a lamp to my feet and a light to my path. — Psalm 119:105</i>
+
+<b>A complete 52-week journey through all 66 books of the Bible.</b>
+
+This handbook guides you through God's redemptive story — from Genesis to Revelation — in 10 connected epochs. Each week, you'll study a major passage, reflect on its theme, and encounter how it points to Jesus.
+
+<h2>What's Inside</h2>
+<ul>
+<li><b>52 Weeks of Teaching</b> — A full year of curated Scripture passages with theme overviews, key verses, and "Christ Connection" callouts showing how every part of the Bible points to Jesus</li>
+<li><b>3 Rotating Journal Methods</b> — SOAP method, Verse Mapping, and Inductive Study keep your experience fresh all year long</li>
+<li><b>Generous Writing Space</b> — Each week includes a full journaling page with scripture writing area, gratitude prompts, prayer space, and reflection questions</li>
+<li><b>10 Epoch Dividers</b> — Beautiful full-page section markers tracing the biblical timeline from Creation to New Creation</li>
+<li><b>Decorative Verse Pages</b> — Anti-bleed pages between weeks feature key verses in elegant typography</li>
+<li><b>Small Group Guide</b> — A complete meeting format for groups using this handbook together</li>
+<li><b>Sermon Notes Pages</b> — 4 bonus templates for Sunday worship</li>
+</ul>
+
+<h2>Designed for You</h2>
+<ul>
+<li><b>Wide margins & generous gutter</b> designed for comfortable writing</li>
+<li><b>Clear pen guide</b> showing which pens work best on KDP paper</li>
+<li><b>Large, readable fonts</b> (minimum 10pt) — no squinting</li>
+<li><b>Translation-neutral</b> — uses verse references only, so you can study with any Bible translation you prefer (ESV, NIV, KJV, NLT, CSB, NASB, and more)</li>
+</ul>
+
+<h2>Perfect For</h2>
+Personal devotions, women's Bible study groups, church small groups, Sunday school classes, and anyone who wants to go deeper into God's Word over the course of a year.
+
+<b>10 Epochs · 66 Books · 52 Weeks · One Story.</b>
+
+------------------------------------------
+【5. 关键词 Keywords】（KDP后台，7个槽位，每个最多50字符）
+
+Slot 1: bible study guide for women
+Slot 2: scripture journal notebook reflection
+Slot 3: christian workbook devotional journal
+Slot 4: 52 week bible study plan
+Slot 5: bible study journal for women small group
+Slot 6: genesis to revelation study guide
+Slot 7: christian gifts for women spiritual growth
+
+------------------------------------------
+【6. 分类建议 Categories】（KDP, 选2个）
+
+主分类 (Primary):
+Books > Christian Books & Bibles > Christian Living > Devotional
+
+副分类 (Secondary):
+Books > Christian Books & Bibles > Bible Study > Reference
+
+备选分类（如果名额允许）:
+- Books > Christian Books & Bibles > Christian Living > Spiritual Growth
+- Books > Crafts, Hobbies & Home > Crafts & Hobbies > Crafts
+
+------------------------------------------
+【7. 尺寸与规格】
+
+Trim Size: 8.5 x 11 in (21.59 x 27.94 cm)
+Paper: White (KDP标准白纸)
+Ink: Black & White
+Page Count: 178（确定后核实）
+Bleed: No Bleed（内容均在安全区内）
+
+------------------------------------------
+【8. 定价建议】
+
+KDP 标准色（黑白）印刷 + 40%版税：
+- 178页印刷成本约 $5.15
+- 建议零售价 $14.99 - $16.99
+- 40%版税计算：$14.99 × 40% - 印刷分摊 ≈ $3.49/本
+- $16.99 × 40% ≈ $4.49/本
+
+竞品定价参考：
+- 100-150页 guide 类: $8.99 - $12.99
+- 150-200页 handbook 类: $13.99 - $19.99
+- 咱们178页+52周+66卷，建议 $15.99 起步
+
+------------------------------------------
+【9. 封面文件说明】
+
+封面已集成在 HTML 中（浏览器打印为PDF时包含）。
+KDP需要单独上传封面PDF（含书脊）：
+- 前封面: 可从 cover_preview.html 截图导出
+- 全封面: 需要拼接 前+书脊+后封面
+- 178页书脊宽度: 约 0.375 in（KDP计算器）
+- 完整封面尺寸: 17.625 x 11.25 in (含出血)
+
+------------------------------------------
+【10. A+ Content 建议（上架后）】
+
+如果申请到 A+ Content，建议模块：
+1. 全书结构图（10 Epochs 时间线）
+2. 内页展示（教学页 + 日志页 + 装饰页 三种）
+3. 三种笔记法对比图（SOAP / Verse Mapping / Inductive）
+4. 尺寸对比图（手持效果）
+5. 使用场景图（咖啡桌/书桌/教会小组）

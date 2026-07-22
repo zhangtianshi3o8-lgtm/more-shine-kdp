@@ -1,0 +1,84 @@
+============================================================
+  FISHING LOG BOOK — KDP LISTING INFORMATION
+  More Shine Press
+============================================================
+
+PRODUCT DETAILS
+------------------------------------------------------------
+Title:          Fishing Log Book
+Subtitle:       Track Every Catch, Every Trip, Every Story
+Author:         More Shine Press
+Language:       English
+Trim Size:      6" x 9" (15.24 x 22.86 cm)
+Pages:          133
+Paper:          Cream
+B&W/Color:      Black & White (Standard)
+Ink Type:       Standard
+Binding:        Paperback (Perfect Bound)
+
+CATEGORY
+------------------------------------------------------------
+Sports & Outdoors > Hunting & Fishing > Fishing
+Crafts, Hobbies & Home > Sports & Outdoors > Fishing
+
+DESCRIPTION (for Amazon listing)
+------------------------------------------------------------
+The fishing log book that captures every detail of your time on the water.
+
+From quiet dawn trips on the lake to surf casting at sunset, this journal helps you record the conditions, catches, and stories that make each outing unique. Track patterns over time and become a better angler by learning from every trip.
+
+<b>What's Inside:</b>
+
+  - 50 detailed trip log entries (two pages per trip)
+  - Catch tracking: species, length, weight, lure or bait used
+  - Weather, water, and tide conditions for each trip
+  - Location details with GPS coordinates field
+  - Knot and rig reference pages
+  - Fish species identification checklist
+  - Seasonal patterns and best-bet reference guide
+  - Annual catch summary and personal records page
+  - Tackle inventory and wish list pages
+
+<b>Designed for Anglers:</b>
+
+The two-page trip layout gives you the full picture. Left page captures the trip data — date, location, weather, water temp, tide, moon phase. Right page is for catches and the story of the day. Whether you fish freshwater bass, saltwater stripers, or trout streams, the flexible format adapts to your style.
+
+<b>Perfect For:</b>
+  - Recreational anglers building a season log
+  - Tournament fishermen tracking patterns
+  - Fly fishermen recording hatch and water data
+  - Fishing trip journals and travel adventures
+  - Gifts for the angler in your life
+
+KEYWORDS (7 backend keywords for Amazon)
+------------------------------------------------------------
+1. fishing log book journal angler record
+2. fishing trip diary catch tracker notebook
+3. freshwater fishing log book species
+4. saltwater fishing journal tackle log
+5. fly fishing trip journal logbook
+6. fishing gear inventory tracker book
+7. fisherman gift notebook men women
+
+PRICING
+------------------------------------------------------------
+KDP Print Cost (B&W, cream, 133pp): $2.60
+List Price: $12.99
+Royalty (60% of list - print cost): $12.99 x 0.60 - $2.60 = $5.19 per copy
+
+FILES
+------------------------------------------------------------
+Interior:  ~/fishing_log_book_us/fishing_log_book_us_V1.0.pdf (133 pages)
+Cover:    ~/fishing_log_book_us/fishing_log_book_cover_V1.0.pdf (full wrap)
+HTML:     ~/fishing_log_book_us/fishing_log_book_us_V1.0.html
+          ~/fishing_log_book_us/fishing_log_book_cover_V1.0.html
+
+COMPLIANCE STATUS
+------------------------------------------------------------
+✓ No external URLs
+✓ No brand names or trademarks
+✓ No copyrighted material
+✓ No medical/health claims
+✓ No social media references
+✓ No email/phone numbers
+✓ KDP compliance scan: PASSED

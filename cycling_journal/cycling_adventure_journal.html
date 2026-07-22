@@ -1,0 +1,4221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cycling Adventure Journal - Interior</title>
+  
+<style>
+  @page { size: 5in 8in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #2c2c2c;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* --- PAGE BASE --- */
+  .page {
+    width: 5in; height: 8in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Alternating gutter margins for facing pages */
+  .page.recto {   /* odd page, right side - gutter on left */
+    padding: 0.45in 0.38in 0.4in 0.65in;
+  }
+  .page.verso {   /* even page, left side - gutter on right */
+    padding: 0.45in 0.65in 0.4in 0.38in;
+  }
+
+  /* --- HEADERS --- */
+  .ride-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #1a5d3a;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .ride-header .title {
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: #1a5d3a;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .ride-header .number {
+    font-size: 18pt;
+    font-weight: bold;
+    color: #c4862a;
+  }
+
+  .page-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1a5d3a;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #1a5d3a;
+    margin-bottom: 10px;
+  }
+  .page-subtitle {
+    font-size: 8pt;
+    text-align: center;
+    color: #999;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  /* --- FORM FIELDS --- */
+  .field-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 7px;
+  }
+  .field {
+    flex: 1;
+  }
+  .field-label {
+    font-size: 6.5pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .field-line {
+    border-bottom: 1px solid #d0d0d0;
+    height: 16px;
+  }
+
+  /* --- KEY-VALUE TABLE --- */
+  .kv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+  }
+  .kv-table td {
+    border: 1px solid #ccc;
+    padding: 4px 5px;
+    height: 22px;
+  }
+  .kv-table td.label {
+    background: #eef5ef;
+    font-weight: bold;
+    color: #555;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    width: 30%;
+    white-space: nowrap;
+  }
+  .kv-table td.fill { }
+
+  /* --- CHECKBOXES --- */
+  .check-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    margin-bottom: 7px;
+  }
+  .check-item {
+    font-size: 7.5pt;
+    color: #555;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .check-box {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border: 1.2px solid #999;
+    border-radius: 2px;
+  }
+
+  /* --- STAR RATING --- */
+  .rating-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+  }
+  .rating-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .rating-label {
+    font-size: 7pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    margin-right: 4px;
+  }
+  .star {
+    font-size: 12pt;
+    color: #ddd;
+    letter-spacing: 1px;
+  }
+
+  /* --- SECTION DIVIDER --- */
+  .section-bar {
+    background: #1a5d3a;
+    color: white;
+    font-size: 7.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    margin: 8px 0 6px 0;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    border-radius: 2px;
+  }
+
+  /* --- ROUTE SKETCH AREA (dotted grid) --- */
+  .route-map {
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+    background-size: 0.16in 0.16in;
+    background-position: 0.08in 0.08in;
+  }
+
+  /* --- LINED NOTES --- */
+  .write-line {
+    border-bottom: 1px solid #d0d0d0;
+    height: 18px;
+  }
+
+  /* --- FOOTER --- */
+  .page-footer {
+    position: absolute;
+    bottom: 0.22in;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 6.5pt;
+    color: #bbb;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- TITLE PAGE --- */
+  .title-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 8in;
+    padding: 1in;
+    text-align: center;
+  }
+  .title-page .bike-icon {
+    font-size: 48pt;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  .title-page h1 {
+    font-size: 24pt;
+    color: #1a5d3a;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .title-page .subtitle {
+    font-size: 11pt;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+  .title-page .divider {
+    width: 2in;
+    height: 2px;
+    background: #c4862a;
+    margin: 15px 0;
+  }
+  .title-page .publisher {
+    font-size: 9pt;
+    color: #999;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 40px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+
+  /* --- HOW TO USE --- */
+  .htu-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 9px;
+    font-size: 8pt;
+    line-height: 1.4;
+  }
+  .htu-num {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1a5d3a;
+    color: white;
+    font-size: 8pt;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .htu-text {
+    color: #444;
+    padding-top: 1px;
+  }
+
+  /* --- BIKE INFO CARD --- */
+  .bike-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .bike-card-title {
+    font-size: 9pt;
+    font-weight: bold;
+    color: #1a5d3a;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Screen preview border */
+  .page {
+    border: 1px dashed #e0e0e0;
+  }
+  @media print {
+    .page { border: none; }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="page recto" style="padding:0;">
+  <div class="title-page">
+    <div class="bike-icon">&#128691;</div>
+    <h1>Cycling<br>Adventure<br>Journal</h1>
+    <div class="divider"></div>
+    <div class="subtitle">A Rider's Log for Roads, Trails &amp; Journeys</div>
+    <div class="publisher">More Shine Press</div>
+  </div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">This Journal Belongs To</div>
+  <div style="margin-top: 20px;">
+    <table class="kv-table">
+      <tr><td class="label">Name</td><td class="fill"></td></tr>
+      <tr><td class="label">Email</td><td class="fill"></td></tr>
+      <tr><td class="label">Phone</td><td class="fill"></td></tr>
+      <tr><td class="label">Home Base</td><td class="fill"></td></tr>
+      <tr><td class="label">Emergency Contact</td><td class="fill"></td></tr>
+      <tr><td class="label">Emergency Phone</td><td class="fill"></td></tr>
+      <tr><td class="label">Blood Type</td><td class="fill"></td></tr>
+      <tr><td class="label">Allergies / Medical</td><td class="fill"></td></tr>
+    </table>
+  </div>
+  <div style="margin-top: 16px; font-size: 7.5pt; color: #888; font-style: italic; text-align: center; line-height: 1.5;">
+    Carry this journal on every ride.<br>
+    In case of emergency, the information above could help first responders.
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">How to Use This Journal</div>
+  <div style="margin-top: 6px;">
+    <div class="htu-item"><div class="htu-num">1</div><div class="htu-text">Record each ride as soon as you finish while memories are fresh. Fill in the fields on the left page, then write your story on the right.</div></div><div class="htu-item"><div class="htu-num">2</div><div class="htu-text">Use the route sketch area to draw your path, mark checkpoints, or note turn-by-turn directions.</div></div><div class="htu-item"><div class="htu-num">3</div><div class="htu-text">Rate your rides by difficulty and overall enjoyment. Over time you will discover your favorite routes and conditions.</div></div><div class="htu-item"><div class="htu-num">4</div><div class="htu-text">Log details about your bikes on the next page so you can track which setup works best for different terrain.</div></div><div class="htu-item"><div class="htu-num">5</div><div class="htu-text">Use the summary pages at the back to tally your miles, elevation, and memorable moments at season's end.</div></div><div class="htu-item"><div class="htu-num">6</div><div class="htu-text">This journal fits 35 rides. Carry it in your jersey pocket, handlebar bag, or backpack.</div></div>
+  </div>
+  <div style="margin-top: 14px; padding: 8px 10px; background: #eef5ef; border-radius: 4px; border-left: 3px solid #c4862a;">
+    <div style="font-size: 7pt; color: #888; text-transform: uppercase; letter-spacing: 1px; font-family: 'Helvetica Neue', 'Arial', sans-serif; margin-bottom: 3px;">Pro Tip</div>
+    <div style="font-size: 7.5pt; color: #555; line-height: 1.4; font-style: italic;">
+      Take a moment after each ride to jot down not just the numbers, but how the ride made you feel.
+      Years from now, those notes will be the most valuable part of this journal.
+    </div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">My Bikes</div>
+  <div class="page-subtitle">Record your rides and setups</div>
+  
+    <div class="bike-card">
+      <div class="bike-card-title">Bike 1</div>
+      <table class="kv-table">
+        <tr>
+          <td class="label" style="width:35%">Type</td><td class="fill"></td>
+          <td class="label" style="width:35%">Brand / Model</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Frame Size</td><td class="fill"></td>
+          <td class="label" style="width:35%">Year</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Tire Size</td><td class="fill"></td>
+          <td class="label" style="width:35%">Groupset</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Notable Mods</td><td class="fill" colspan="3"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="bike-card">
+      <div class="bike-card-title">Bike 2</div>
+      <table class="kv-table">
+        <tr>
+          <td class="label" style="width:35%">Type</td><td class="fill"></td>
+          <td class="label" style="width:35%">Brand / Model</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Frame Size</td><td class="fill"></td>
+          <td class="label" style="width:35%">Year</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Tire Size</td><td class="fill"></td>
+          <td class="label" style="width:35%">Groupset</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Notable Mods</td><td class="fill" colspan="3"></td>
+        </tr>
+      </table>
+    </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#01</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #01</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#01</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #01</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#02</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #02</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#02</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #02</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#03</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #03</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#03</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #03</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#04</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #04</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#04</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #04</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#05</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #05</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#05</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #05</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#06</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #06</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#06</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #06</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#07</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #07</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#07</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #07</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#08</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #08</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#08</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #08</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#09</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #09</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#09</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #09</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#10</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #10</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#10</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #10</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#11</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #11</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#11</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #11</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#12</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #12</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#12</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #12</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#13</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #13</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#13</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #13</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#14</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #14</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#14</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #14</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#15</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #15</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#15</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #15</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#16</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #16</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#16</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #16</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#17</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #17</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#17</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #17</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#18</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #18</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#18</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #18</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#19</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #19</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#19</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #19</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#20</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #20</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#20</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #20</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#21</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #21</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#21</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #21</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#22</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #22</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#22</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #22</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#23</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #23</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#23</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #23</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#24</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #24</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#24</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #24</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#25</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #25</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#25</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #25</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#26</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #26</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#26</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #26</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#27</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #27</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#27</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #27</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#28</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #28</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#28</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #28</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#29</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #29</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#29</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #29</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#30</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #30</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#30</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #30</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#31</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #31</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#31</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #31</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#32</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #32</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#32</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #32</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#33</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #33</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#33</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #33</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#34</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #34</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#34</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #34</div>
+</div>
+
+<div class="page recto">
+  <div class="ride-header">
+    <span class="title">Ride Log</span>
+    <span class="number">#35</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Start</td><td class="fill" colspan="3"></td>
+    </tr>
+    <tr>
+      <td class="label">End</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Conditions</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Distance</td><td class="fill"></td>
+      <td class="label">Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Elevation</td><td class="fill"></td>
+      <td class="label">Avg Speed</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Max Speed</td><td class="fill"></td>
+      <td class="label">Calories</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Details</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Terrain</td><td class="fill"></td>
+      <td class="label">Bike Used</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Riding With</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Ride #35</div>
+</div>
+
+<div class="page verso">
+  <div class="ride-header">
+    <span class="title">Journey Notes</span>
+    <span class="number">#35</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Route Sketch &amp; Map</div>
+  <div class="route-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Highlights &amp; Memories</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="field-label" style="margin-top: 8px;">Would ride this route again?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Ride #35</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Ride Summary</div>
+  <div class="page-subtitle">Tally your season at a glance</div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label" style="width:50%">Total Rides</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Distance</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Ride Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Elevation</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Longest Ride</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Most Challenging</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Top 5 Favorite Rides</div>
+  <table class="kv-table">
+    <tr><td class="label" style="width:12%">#</td><td class="label" style="width:30%">Date</td><td class="label" style="width:58%">Route / Why</td></tr>
+    <tr><td>1</td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td></tr>
+  </table>
+
+  <div class="section-bar">Goals for Next Season</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+</body>
+</html>

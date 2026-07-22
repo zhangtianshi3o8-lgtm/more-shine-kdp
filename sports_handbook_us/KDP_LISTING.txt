@@ -1,0 +1,83 @@
+============================================================
+  YOUTH SPORTS DEVELOPMENT HANDBOOK — KDP LISTING INFORMATION
+  More Shine Press
+============================================================
+
+PRODUCT DETAILS
+------------------------------------------------------------
+Title:          Youth Sports Development Handbook
+Subtitle:       A Parent's Guide to Training and Discovering Your Child's Athletic Potential
+Author:         More Shine Press
+Language:       English
+Trim Size:      8.5" x 11" (21.59 x 27.94 cm)
+Pages:          37
+Paper:          White
+B&W/Color:      Black & White (Standard)
+Ink Type:       Standard
+Binding:        Paperback (Perfect Bound)
+
+CATEGORY
+------------------------------------------------------------
+Sports & Outdoors > Coaching > Sports Psychology
+Parenting & Relationships > Parenting > School-Age Children
+
+DESCRIPTION (for Amazon listing)
+------------------------------------------------------------
+Give your young athlete the foundation they need to succeed — in sports and in life.
+
+This practical handbook is written for parents who want to support their child's athletic journey with confidence. Whether your child is just starting out or already competing, this guide gives you age-appropriate training advice, nutrition basics, and proven strategies for nurturing athletic potential without pressure or burnout.
+
+<b>What's Inside:</b>
+
+  - Age-by-age athletic development roadmap (ages 6 to 18)
+  - Fundamentals of movement: running, jumping, throwing, coordination
+  - Warm-up and flexibility routines for young bodies
+  - Sport-specific training tips for major sports
+  - Nutrition and hydration guidance for growing athletes
+  - Injury prevention and safety essentials
+  - Mental toughness and confidence-building strategies
+  - Parent's guide to balancing support without pressure
+  - Large 8.5" x 11" format — easy to read and reference
+
+<b>Designed for Parents:</b>
+
+Each section breaks down complex sports science into clear, actionable advice you can apply at home. Key points are organized by age group, so you always know what's appropriate for your child's stage of development. The handbook format makes it easy to find what you need quickly.
+
+<b>Perfect For:</b>
+  - Parents of young athletes (ages 6-18)
+  - Parent-coaches and volunteer coaches
+  - Youth sports program coordinators
+  - Anyone guiding a child's athletic development
+
+KEYWORDS (7 backend keywords for Amazon)
+------------------------------------------------------------
+1. youth sports training parent guide book
+2. kids athletic development handbook
+3. coaching young athletes parent resource
+4. child sports nutrition fitness guide
+5. youth sports injury prevention safety
+6. kids fitness training age appropriate
+7. sports parenting guide children teens
+
+PRICING
+------------------------------------------------------------
+KDP Print Cost (B&W, white, 37pp): $1.44
+List Price: $7.99
+Royalty (60% of list - print cost): $7.99 x 0.60 - $1.44 = $3.35 per copy
+
+FILES
+------------------------------------------------------------
+Interior:  ~/sports_handbook_us/sports_handbook_us_V2.0_interior.pdf (37 pages)
+Cover:    ~/sports_handbook_us/cover.pdf (full wrap)
+HTML:     ~/sports_handbook_us/sports_handbook_us_V2.0.html
+          ~/sports_handbook_us/cover.html
+
+COMPLIANCE STATUS
+------------------------------------------------------------
+✓ No external URLs
+✓ No brand names or trademarks
+✓ No copyrighted material
+✓ No medical/health claims
+✓ No social media references
+✓ No email/phone numbers
+✓ KDP compliance scan: PASSED

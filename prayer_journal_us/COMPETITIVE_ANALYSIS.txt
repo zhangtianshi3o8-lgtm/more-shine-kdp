@@ -1,0 +1,90 @@
+============================================================
+  PRAYER JOURNAL — COMPETITIVE ANALYSIS
+  差评调研：2个头部竞品 + 本产品对照
+============================================================
+
+竞品 #1: Shannon Roberts "Prayer Journal for Women: 52 Week"
+         48,400+评论 | $15.97 | 4.8星 | 螺旋装订
+
+竞品 #2: Paper Peony Press "Prayer Journal for Women"
+         1,000+评论 | $11.89 | 4.8星 | 精装
+
+============================================================
+  差评汇总（从真实1-3星评价中提取）
+============================================================
+
+【失败因素 #1】书写空间不足（两个竞品均出现）
+  - "Not enough writing room as I wanted" (PP Press)
+  - "Too many words and prompts for it to be accurately reflective" (Roberts)
+  - "Pretty but not very efficient, doesn't have much substance" (PP Press)
+  → 原因：太多提示文字挤占了实际书写空间
+
+  ✓ 本产品对策：ACTS四区每区3-4条书写行（22px高度），
+    提示文字精简到一行，把空间让给用户书写
+
+【失败因素 #2】格式过于重复，用久会腻
+  - "Same format every single day, hundreds pages of it, gets boring"
+  - "Every page is the same" (PP Press)
+  → 原因：日复一日完全相同的版面
+
+  ✓ 本产品对策：采用"周"而非"日"为单位（52周 vs 365天），
+    每周不同经文带来新意，降低重复疲劳感。
+    右页设4个不同视角的区块增加层次。
+
+【失败因素 #3】设计太幼稚 / 不适合成人
+  - "Inner designs are more suitable for a young girl than an adult"
+  - "A bit juvenile in design and distracting"
+  → 原因：花花绿绿的装饰、卡通元素
+
+  ✓ 本产品对策：海军蓝+金色+十字架的成熟优雅设计，
+    男女通用，无任何幼稚元素
+
+【失败因素 #4】提示过多反而令人不知所措
+  - "Too much going on within the pages"
+  - "Simply too many words and prompts"
+  - "Overwhelming to be practical"
+  → 原因：每页塞满各种引导文字和装饰框
+
+  ✓ 本产品对策：每页只有4个清晰的ACTS区块，
+    标签一行（如"Adoration — Praising God"），
+    提示一行（如"Who God is — His love, power..."），
+    其余全是空白书写行
+
+【失败因素 #5】页面太少 / 太薄
+  - "Not enough paper, kinda pricey for how thin it is" (PP Press)
+  → 原因：只有60-80页
+
+  ✓ 本产品对策：128页（52周×2页=104 + 前言5 + 分隔4 +
+    蒙允记录5 + 感恩5 + 笔记7 + 结尾1 = 131页含分隔）
+
+【失败因素 #6】字体太小/花体难读
+  - "Fancy cursive but so light you need a magnifier" (Roberts)
+  → 原因：装饰性花体字+浅色印刷
+
+  ✓ 本产品对策：Georgia衬线体，正文8.5pt，标题11pt，
+    深色#2A2A2A印刷，100%可读性
+
+【失败因素 #7】装订问题（KDP无法控制）
+  - "Doesn't lay flat for easy writing" (Roberts)
+  - "Wire spirals bent, back cover fell off" (Roberts)
+  - "Pages upside down" (PP Press)
+
+  注意：平装本（KDP唯一选项）天然不能完全摊平。
+  本产品通过alternating gutter margins缓解：
+  奇数页左边多留0.25英寸，偶数页右边多留0.25英寸，
+  让靠近书脊的书写区域更容易下笔。
+
+============================================================
+  本产品的竞争优势总结
+============================================================
+
+1. 结构恰到好处：ACTS模型提供方向感，但不挤压书写空间
+2. 周刊制而非日刊制：降低使用压力，每周深度反思一次
+3. 男女通用设计：竞品几乎全偏女性化（花卉/水彩），男性市场空白
+4. 128页厚实：比竞品（60-80页）多40-60%，物有所值
+5. 蒙允祷告追踪区：竞品缺少的实用功能，回头翻看增强信心
+6. 公共领域经文：无版权风险，52节精选覆盖全年主题
+7. 不注日期：随时开始，永久有效，不会"过期"
+
+建议售价 $12.99 介于竞品之间（$11.89-$15.97）
+版税 $5.25/本（60% royalty - $2.54 print cost）

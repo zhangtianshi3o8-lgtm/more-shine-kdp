@@ -1,0 +1,82 @@
+============================================================
+  COFFEE TASTING LOG BOOK — KDP LISTING INFORMATION
+  More Shine Press
+============================================================
+
+PRODUCT DETAILS
+------------------------------------------------------------
+Title:          Coffee Tasting Log Book
+Subtitle:       Track Every Cup, Every Origin, Every Flavor
+Author:         More Shine Press
+Language:       English
+Trim Size:      6" x 9" (15.24 x 22.86 cm)
+Pages:          112
+Paper:          Cream
+B&W/Color:      Black & White (Standard)
+Ink Type:       Standard
+Binding:        Paperback (Perfect Bound)
+
+CATEGORY
+------------------------------------------------------------
+Crafts, Hobbies & Home > Cooking & Food > Wine & Drinks > Coffee
+Crafts, Hobbies & Home > Cooking & Food > Cooking by Ingredient
+
+DESCRIPTION (for Amazon listing)
+------------------------------------------------------------
+Your perfect companion for exploring the world of coffee, one cup at a time.
+
+Whether you are a casual coffee drinker or a dedicated home barista, this tasting log book helps you capture every detail of your coffee journey. From single-origin beans to your favorite espresso blend, record what makes each cup memorable.
+
+<b>What's Inside:</b>
+
+  - 50 detailed tasting entry pages with guided prompts
+  - Cupping scoresheet with the SCA-inspired 100-point scale
+  - Brewing method tracker (pour-over, French press, AeroPress, espresso, and more)
+  - Coffee origin reference map with major growing regions
+  - Flavor wheel reference guide to sharpen your palate
+  - Roast level and grind size quick-reference chart
+  - Bean inventory and purchase log
+  - Personal rating and favorites summary pages
+
+<b>Designed for Coffee Lovers:</b>
+
+Each tasting page guides you through the essential evaluation steps — aroma, flavor, acidity, body, sweetness, and aftertaste. The clean layout gives you plenty of writing space without crowding, and the compact 6" x 9" format goes wherever your coffee adventures take you.
+
+<b>Perfect For:</b>
+  - Home baristas honing their craft
+  - Coffee enthusiasts tracking their favorite roasts
+  - Cupping sessions and tasting groups
+  - Gifts for the coffee lover in your life
+
+KEYWORDS (7 backend keywords for Amazon)
+------------------------------------------------------------
+1. coffee tasting journal notebook cupping
+2. home barista log book brewing tracker
+3. espresso tasting notes record book
+4. coffee flavor wheel scorebook journal
+5. single origin coffee bean diary
+6. pour over coffee brewing journal log
+7. coffee lover gift notebook men women
+
+PRICING
+------------------------------------------------------------
+KDP Print Cost (B&W, cream, 112pp): $2.34
+List Price: $9.99
+Royalty (60% of list - print cost): $9.99 x 0.60 - $2.34 = $3.65 per copy
+
+FILES
+------------------------------------------------------------
+Interior:  ~/coffee_tasting_log_book_us/coffee_tasting_log_book_us_V1.0.pdf (112 pages)
+Cover:    ~/coffee_tasting_log_book_us/coffee_tasting_log_book_cover_V1.0.pdf (full wrap)
+HTML:     ~/coffee_tasting_log_book_us/coffee_tasting_log_book_us_V1.0.html
+          ~/coffee_tasting_log_book_us/coffee_tasting_log_book_cover_V1.0.html
+
+COMPLIANCE STATUS
+------------------------------------------------------------
+✓ No external URLs
+✓ No brand names or trademarks
+✓ No copyrighted material
+✓ No medical/health claims
+✓ No social media references
+✓ No email/phone numbers
+✓ KDP compliance scan: PASSED

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #1A1A1A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.45in 0.5in 0.38in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print  { .page { border: none; margin: 0; } }
+
+/* ---- Colors ---- */
+/* Golf green dark:   #0D3B20 */
+/* Golf green medium: #1A5C38 */
+/* Golf green light:  #2d7a4f */
+/* Gold accent:       #D4A017 */
+/* Gold light:        #E8C84A */
+/* Light green bg:    #f0f5f0, #e8f0e8 */
+/* Cream:             #fffbf0 */
+
+/* ---- Cover ---- */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0D3B20 0%, #1A5C38 40%, #0D3B20 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Fairway stripes on cover */
+.cover .fairway-lines {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.04) 40px,
+      rgba(255,255,255,0.04) 42px
+    );
+}
+
+/* CSS Golf Ball */
+.cover .golf-ball {
+  width: 100px; height: 100px;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f0f0f0 55%, #cccccc 100%);
+  border-radius: 50%;
+  position: relative;
+  margin: 0 auto 6px;
+  box-shadow: 3px 4px 15px rgba(0,0,0,0.6);
+}
+.cover .golf-ball::before {
+  content: "";
+  position: absolute;
+  top: 8%; left: 8%; width: 84%; height: 84%;
+  border-radius: 50%;
+  background-image: radial-gradient(circle, rgba(160,160,160,0.35) 1.5px, transparent 2.5px);
+  background-size: 10px 10px;
+}
+/* Tee under ball */
+.cover .tee {
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 16px solid #c4a76d;
+  margin: 0 auto 20px;
+  position: relative;
+}
+.cover .tee::after {
+  content: "";
+  position: absolute;
+  top: -16px; left: -4px;
+  width: 8px; height: 4px;
+  background: #a08850;
+  border-radius: 2px 2px 0 0;
+}
+
+.cover .title-block {
+  position: relative;
+  z-index: 5;
+  padding: 0 0.4in;
+}
+
+.cover .main-title {
+  font-family: Georgia, serif;
+  font-size: 30pt;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: 0.5pt;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+
+.cover .accent-bar {
+  width: 120px; height: 3px;
+  background: #D4A017;
+  margin: 14px auto;
+}
+
+.cover .subtitle {
+  font-size: 12pt;
+  color: #aacbb0;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.cover .features {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.cover .feature-badge {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(212,160,23,0.5);
+  color: #D4A017;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.cover .season-tag {
+  font-size: 9pt;
+  color: #8fbf9f;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.cover .publisher {
+  position: absolute;
+  bottom: 0.4in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #D4A017;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ---- Section Divider ---- */
+.divider {
+  width: 6in; height: 9in;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #1A5C38;
+  position: relative;
+  overflow: hidden;
+}
+.divider .div-lines {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: repeating-linear-gradient(90deg,
+    transparent, transparent 40px,
+    rgba(255,255,255,0.04) 40px, rgba(255,255,255,0.04) 42px);
+}
+.divider .div-num {
+  font-size: 60pt;
+  color: rgba(212,160,23,0.12);
+  font-weight: 700;
+  position: absolute;
+  top: 1in;
+}
+.divider .div-label {
+  font-size: 10pt;
+  color: #D4A017;
+  letter-spacing: 3pt;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  position: relative;
+}
+.divider .div-title {
+  font-size: 26pt;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1.2;
+  position: relative;
+  padding: 0 0.6in;
+}
+.divider .div-sub {
+  font-size: 11pt;
+  color: #8fbf9f;
+  font-style: italic;
+  margin-top: 14px;
+  position: relative;
+}
+
+/* ---- Content Pages ---- */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7.5pt;
+  color: #999;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #1A5C38;
+  margin-bottom: 14px;
+}
+.section-header .sh-left {
+  font-weight: 700;
+  letter-spacing: 0.8pt;
+  color: #1A5C38;
+  text-transform: uppercase;
+}
+.section-header .sh-right {
+  color: #aaa;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0.22in;
+  left: 0.5in; right: 0.5in;
+  font-size: 6.5pt;
+  color: #bbb;
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.5px solid #eee;
+  padding-top: 3px;
+}
+
+.page-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #1A5C38;
+  margin-bottom: 3px;
+}
+
+.page-subtitle {
+  font-size: 8pt;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+/* ---- Writing Lines ---- */
+.wline {
+  border-bottom: 0.5px solid #c8c8c8;
+  height: 22px;
+}
+.wline-wide {
+  border-bottom: 0.5px solid #c8c8c8;
+  height: 26px;
+}
+
+/* ---- Scorecard Table ---- */
+.scorecard {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2px 0;
+  table-layout: fixed;
+}
+.scorecard th {
+  background: #1A5C38;
+  color: white;
+  font-size: 6.5pt;
+  font-weight: 700;
+  padding: 3px 1px;
+  text-align: center;
+}
+.scorecard th.sc-hdr {
+  background: #0D3B20;
+  width: 12%;
+}
+.scorecard th.sc-total-hdr {
+  background: #2d7a4f;
+}
+.scorecard th.sc-grand-hdr {
+  background: #D4A017;
+}
+.scorecard td {
+  border: 0.5px solid #888;
+  font-size: 7pt;
+  padding: 2px 1px;
+  text-align: center;
+  height: 20px;
+}
+.scorecard td.sc-label {
+  text-align: left;
+  padding-left: 5px;
+  font-size: 6pt;
+  font-weight: 700;
+  color: #1A5C38;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+  background: #f0f5f0;
+}
+.scorecard td.sc-total {
+  background: #e8f0e8;
+  font-weight: 700;
+}
+.scorecard td.sc-grand {
+  background: #D4A017;
+  color: white;
+  font-weight: 700;
+  font-size: 8pt;
+}
+
+/* ---- Stat Tracker Table ---- */
+.stat-tracker {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 7pt;
+  margin: 6px 0;
+}
+.stat-tracker th {
+  background: #1A5C38;
+  color: white;
+  padding: 4px 1px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 6.5pt;
+  line-height: 1.2;
+}
+.stat-tracker td {
+  border: 0.5px solid #bbb;
+  padding: 3px 2px;
+  text-align: center;
+  font-size: 7pt;
+  height: 20px;
+}
+
+/* ---- Club Distance Table ---- */
+.club-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 7.5pt;
+  margin: 6px 0;
+}
+.club-table th {
+  background: #1A5C38;
+  color: white;
+  padding: 4px 4px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 7pt;
+}
+.club-table td {
+  border: 0.5px solid #bbb;
+  padding: 4px 4px;
+  text-align: center;
+  font-size: 7.5pt;
+  height: 20px;
+}
+.club-table td.club-name {
+  text-align: left;
+  padding-left: 8px;
+  font-weight: 700;
+  color: #1A5C38;
+  font-size: 7.5pt;
+}
+
+/* ---- Course Log Table ---- */
+.course-log {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 7pt;
+  margin: 6px 0;
+}
+.course-log th {
+  background: #1A5C38;
+  color: white;
+  padding: 4px 2px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 6.5pt;
+}
+.course-log td {
+  border: 0.5px solid #bbb;
+  padding: 3px 2px;
+  text-align: center;
+  font-size: 7pt;
+  height: 22px;
+}
+
+/* ---- Field Labels ---- */
+.field-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: #1A5C38;
+  text-transform: uppercase;
+  letter-spacing: 0.8pt;
+  margin-bottom: 3px;
+  margin-top: 8px;
+}
+.field-label .small-note {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #aaa;
+  font-style: italic;
+  font-size: 6.5pt;
+  float: right;
+}
+
+.fill-blank {
+  border-bottom: 0.5px solid #999;
+  height: 16px;
+  display: inline-block;
+}
+
+/* ---- Checkbox ---- */
+.checkbox {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border: 1px solid #555;
+  border-radius: 2px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.checkbox-row {
+  font-size: 8pt;
+  color: #555;
+  margin: 4px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.checkbox-row span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* ---- Star Rating ---- */
+.stars {
+  font-size: 14pt;
+  color: #ccc;
+  letter-spacing: 3pt;
+}
+
+/* ---- Owner Page ---- */
+.owner-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+.owner-page .owner-icon {
+  width: 50px; height: 50px;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0e0e0 60%, #b8b8b8 100%);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  position: relative;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+}
+.owner-page .owner-icon::before {
+  content: "";
+  position: absolute;
+  top: 10%; left: 10%; width: 80%; height: 80%;
+  border-radius: 50%;
+  background-image: radial-gradient(circle, rgba(160,160,160,0.3) 1px, transparent 1.8px);
+  background-size: 7px 7px;
+}
+.owner-page .owner-title {
+  font-size: 20pt;
+  font-weight: 700;
+  color: #1A5C38;
+  margin-bottom: 6px;
+}
+.owner-page .owner-sub {
+  font-size: 9pt;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+.owner-line {
+  width: 4in;
+  margin: 10px auto;
+  text-align: left;
+}
+.owner-line .ol-label {
+  font-size: 8pt;
+  font-weight: 700;
+  color: #1A5C38;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  margin-bottom: 2px;
+}
+.owner-line .ol-blank {
+  border-bottom: 1px solid #999;
+  height: 20px;
+}
+
+/* ---- Back Cover ---- */
+.back-cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: auto;
+  background: linear-gradient(180deg, #0D3B20 0%, #1A5C38 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.back-cover .bc-lines {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: repeating-linear-gradient(90deg,
+    transparent, transparent 40px,
+    rgba(255,255,255,0.04) 40px, rgba(255,255,255,0.04) 42px);
+}
+.back-cover .bc-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 0.6in;
+}
+.back-cover .bc-title {
+  font-size: 16pt;
+  color: #D4A017;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 1pt;
+}
+.back-cover .bc-text {
+  font-size: 9pt;
+  color: #aacbb0;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.back-cover .bc-features {
+  text-align: left;
+  margin: 0 auto 24px;
+  max-width: 3.5in;
+}
+.back-cover .bc-features li {
+  list-style: none;
+  font-size: 8pt;
+  color: #e0e0e0;
+  margin: 5px 0;
+}
+.back-cover .bc-features li::before {
+  content: "\25B8 ";
+  color: #D4A017;
+}
+.back-cover .bc-publisher {
+  font-size: 9pt;
+  color: #D4A017;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+</style></head>
+<body>
+<div class="page"><div class="section-header"><span class="sh-left">Clubs &amp; Equipment</span><span class="sh-right">Club Distances</span></div><div class="page-title">Club Distance Chart</div><div class="page-subtitle">Know your yardages — the key to better club selection</div><table class="club-table">
+<tr>
+<th style="width:25%;">Club</th>
+<th style="width:20%;">Avg Total (yds)</th>
+<th style="width:20%;">Avg Carry (yds)</th>
+<th style="width:35%;">Notes</th>
+</tr><tr><td class="club-name">Driver</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">3-Wood</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">5-Wood</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">7-Wood</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">3-Hybrid</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">4-Hybrid</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">5-Hybrid</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">3-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">4-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">5-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">6-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">7-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">8-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">9-Iron</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">Pitching Wedge</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">Gap Wedge</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">Sand Wedge</td><td></td><td></td><td></td></tr>
+<tr><td class="club-name">Lob Wedge</td><td></td><td></td><td></td></tr>
+</table>
+
+<div class="field-label">Distance Gap Notes</div>
+<div style="font-size:7pt; color:#aaa; font-style:italic;">Where are your gaps too large or too small?</div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+<div class="page-footer"><span></span><span>Golf Game Tracker</span></div>
+</div>
+
+</body></html>
