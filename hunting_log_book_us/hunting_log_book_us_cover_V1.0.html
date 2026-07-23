@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hunting Log Book — Cover</title>
+  <style>
+@page { size: 12.4575in 9.2500in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Georgia, "Iowan Old Style", "Palatino", serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.cover-wrap { width: 12.4575in; height: 9.2500in; position: relative; display: flex; }
+
+/* BACK */
+.back-cover {
+  width: 6.1250in; height: 9.2500in;
+  background: linear-gradient(165deg, #0D1B0A 0%, #1A2E12 40%, #3E2E1A 100%);
+  padding: 0.75in 0.5in 0.45in 0.5in; display: flex; flex-direction: column;
+  justify-content: space-around; position: relative; overflow: hidden;
+}
+.back-cover::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 24px 14px at 15% 25%, #4A7C2E, transparent),
+    radial-gradient(ellipse 22px 13px at 80% 15%, #6B5D3D, transparent),
+    radial-gradient(ellipse 26px 15px at 70% 70%, #4A7C2E, transparent),
+    radial-gradient(ellipse 20px 12px at 25% 80%, #6B5D3D, transparent);
+}
+.back-cover::after {
+  content: ''; position: absolute; top: -0.3in; right: -0.3in; width: 1.2in; height: 1.2in;
+  border-radius: 50%; background: rgba(74, 124, 46, 0.08);
+}
+.back-text { color: rgba(255,255,255,0.92); font-size: 9pt; line-height: 1.6; position: relative; z-index: 2; }
+.back-text .blurb { font-style: italic; margin-bottom: 14px; font-size: 9.5pt; line-height: 1.55; }
+.back-text .blurb strong { color: #D4B896; font-style: normal; }
+.back-features { list-style: none; padding: 0; }
+.back-features li { font-size: 8pt; color: rgba(255,255,255,0.82); padding: 3px 0; padding-left: 16px; position: relative; line-height: 1.4; }
+.back-features li::before { content: ''; position: absolute; left: 0; top: 5px; width: 5px; height: 5px; background: #4A7C2E; border-radius: 50%; }
+.back-bottom { padding-bottom: 0.15in; position: relative; z-index: 2; }
+.barcode-area { width: 2in; height: 1.2in; background: white; margin-left: auto; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 6pt; color: #ccc; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.back-logo { text-align: center; color: #C4A04A; font-size: 8pt; letter-spacing: 2.5pt; text-transform: uppercase; font-weight: 700; padding-top: 8px; margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.15); }
+
+/* SPINE */
+.spine { width: 0.2075in; height: 9.2500in; background: linear-gradient(180deg, #0D1B0A 0%, #1A2E12 50%, #0D1B0A 100%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0.6in 0; position: relative; }
+.spine::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.03; background-image: radial-gradient(ellipse 10px 6px at 50% 20%, #4A7C2E, transparent), radial-gradient(ellipse 10px 6px at 50% 50%, #6B5D3D, transparent), radial-gradient(ellipse 10px 6px at 50% 80%, #4A7C2E, transparent); }
+.spine-text { writing-mode: vertical-rl; transform: rotate(180deg); color: rgba(255,255,255,0.95); font-size: 8pt; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; line-height: 1; position: relative; z-index: 2; }
+.spine-author { writing-mode: vertical-rl; transform: rotate(180deg); color: #C4A04A; font-size: 6pt; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'Helvetica Neue', Arial, sans-serif; position: relative; z-index: 2; }
+
+/* FRONT */
+.front-cover {
+  width: 6.1250in; height: 9.2500in;
+  background: linear-gradient(165deg, #0D1B0A 0%, #1A2E12 25%, #3E2E1A 55%, #1A2E12 85%, #0D1B0A 100%);
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 0.125in 0.125in 0.125in 0.125in;
+}
+.front-cover::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 40px 24px at 15% 25%, #4A7C2E, transparent),
+    radial-gradient(ellipse 34px 20px at 80% 15%, #6B5D3D, transparent),
+    radial-gradient(ellipse 38px 22px at 70% 70%, #4A7C2E, transparent),
+    radial-gradient(ellipse 28px 18px at 25% 80%, #6B5D3D, transparent),
+    radial-gradient(ellipse 24px 15px at 50% 50%, #4A7C2E, transparent),
+    radial-gradient(ellipse 30px 18px at 10% 60%, #6B5D3D, transparent);
+}
+
+.target-wrap { width: 120px; height: 120px; position: relative; margin: 0 auto 24px; z-index: 5; }
+.title-block { position: relative; z-index: 5; padding: 0 0.5in; }
+.main-title { font-family: Georgia, serif; font-size: 32pt; font-weight: 700; color: #ffffff; line-height: 1.12; letter-spacing: 0.5pt; text-shadow: 2px 2px 8px rgba(0,0,0,0.55); }
+.accent-bar { width: 120px; height: 2.5px; background: #4A7C2E; margin: 16px auto; }
+.subtitle { font-size: 11pt; color: #D4B896; font-style: italic; line-height: 1.5; margin-bottom: 22px; }
+.features { display: flex; justify-content: center; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+.feature-badge { background: rgba(255,255,255,0.08); border: 1px solid rgba(74,124,46,0.4); color: #C4A04A; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.5pt; padding: 4px 10px; border-radius: 3px; text-transform: uppercase; }
+.tagline { font-size: 9pt; color: #D4B896; letter-spacing: 2pt; text-transform: uppercase; margin-top: 8px; }
+.publisher { position: absolute; bottom: 0.5in; left: 0; right: 0; text-align: center; font-size: 9.5pt; color: #C4A04A; letter-spacing: 2.5pt; text-transform: uppercase; font-weight: 700; z-index: 5; }
+@media screen { .cover-wrap { border: 1px solid #ccc; } }
+</style>
+</head>
+<body>
+<div class="cover-wrap">
+
+  <div class="back-cover">
+    <div class="back-text">
+      <div class="blurb">
+        <strong>Every hunt tells a story.</strong>
+        From the first light of opening day to the last sit of the season,
+        this log book helps you capture it all &mdash; weather, game movement,
+        shot placement, and the memories that make hunting a lifelong pursuit.
+      </div>
+      <div style="margin-bottom: 8px; font-size: 8.5pt; color: #D4B896; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt;">What's Inside</div>
+      <ul class="back-features">
+        <li>35 two-page hunt log spreads with full field details</li>
+        <li>Detailed weather, wind, and barometric tracking</li>
+        <li>Game sighting, shot record, and harvest details</li>
+        <li>Weapon and gear log per hunt</li>
+        <li>Season summary tables every 7 hunts</li>
+        <li>Season goals and license tracking page</li>
+        <li>Large 6" x 9" format &mdash; fits in your pack</li>
+      </ul>
+    </div>
+    <div class="back-bottom">
+      <div class="barcode-area">ISBN Barcode Area</div>
+      <div class="back-logo">More Shine Press</div>
+    </div>
+  </div>
+
+  <div class="spine">
+    <div class="spine-author">More Shine Press</div>
+    <div class="spine-text">Hunting Log Book</div>
+  </div>
+
+  <div class="front-cover">
+    <div class="target-wrap">
+      <svg viewBox="0 0 120 120" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="46" stroke="#4A7C2E" stroke-width="1.5" fill="none" opacity="0.3"/>
+        <circle cx="60" cy="60" r="34" stroke="#4A7C2E" stroke-width="1.5" fill="none"/>
+        <circle cx="60" cy="60" r="22" stroke="#4A7C2E" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <circle cx="60" cy="60" r="10" stroke="#4A7C2E" stroke-width="1.2" fill="none"/>
+        <circle cx="60" cy="60" r="4" fill="#4A7C2E" opacity="0.7"/>
+        <line x1="60" y1="4" x2="60" y2="24" stroke="#4A7C2E" stroke-width="1.5"/>
+        <line x1="60" y1="96" x2="60" y2="116" stroke="#4A7C2E" stroke-width="1.5"/>
+        <line x1="4" y1="60" x2="24" y2="60" stroke="#4A7C2E" stroke-width="1.5"/>
+        <line x1="96" y1="60" x2="116" y2="60" stroke="#4A7C2E" stroke-width="1.5"/>
+        <path d="M 42 22 L 36 10 L 39 16 L 30 12 L 35 19 L 26 18 M 78 22 L 84 10 L 81 16 L 90 12 L 85 19 L 94 18"
+              stroke="#6B5D3D" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="title-block">
+      <div class="main-title">Hunting<br>Log Book</div>
+      <div class="accent-bar"></div>
+      <div class="subtitle">Track Every Hunt,<br>Every Season, Every Memory</div>
+      <div class="features">
+        <span class="feature-badge">35 Hunt Logs</span>
+        <span class="feature-badge">Weather Tracker</span>
+        <span class="feature-badge">Shot Record</span>
+        <span class="feature-badge">Season Summary</span>
+      </div>
+      <div class="tagline">For Hunters &amp; Outdoorsmen</div>
+    </div>
+    <div class="publisher">More Shine Press</div>
+  </div>
+
+</div>
+</body>
+</html>

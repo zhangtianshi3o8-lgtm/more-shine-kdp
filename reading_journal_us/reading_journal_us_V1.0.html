@@ -1,0 +1,2954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading Journal</title>
+  <style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.5in 0.5in 0.4in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print { .page { border: none; margin: 0; } }
+
+/* TITLE PAGE */
+.cover {
+  width: 6in; height: 9in; padding: 0;
+  page-break-after: always;
+  position: relative; overflow: hidden;
+  background: linear-gradient(165deg, #0F0A1A 0%, #1A1228 30%, #0F0A1A 65%, #08050F 100%);
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+}
+.cover .glow-bg {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.06;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #7B6BA8, transparent),
+    radial-gradient(ellipse 26px 16px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 70% 70%, #7B6BA8, transparent),
+    radial-gradient(ellipse 22px 14px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 50% 45%, #7B6BA8, transparent);
+}
+.cover .title-main { font-size: 32pt; font-weight: 700; color: #FAF6F0; line-height: 1.2; letter-spacing: 1pt; position: relative; z-index: 2; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+.cover .accent-bar { width: 100px; height: 2px; background: #7B6BA8; margin: 20px auto; position: relative; z-index: 2; }
+.cover .subtitle { font-size: 12pt; color: #B8A8D8; font-style: italic; line-height: 1.5; position: relative; z-index: 2; }
+.cover .pub { position: absolute; bottom: 0.6in; left: 0; right: 0; text-align: center; font-size: 9pt; color: #C4A04A; letter-spacing: 2.5pt; text-transform: uppercase; font-weight: 700; }
+
+/* PAGE HEADER */
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 0.5px solid #eee; }
+.page-header .ph-left { font-size: 8pt; color: #7B6BA8; text-transform: uppercase; letter-spacing: 1pt; font-weight: 700; }
+.page-header .ph-right { font-size: 8pt; color: #999; }
+
+/* SECTION */
+.section-header { display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.section-title { font-size: 14pt; font-weight: 700; color: #0F0A1A; letter-spacing: 0.5pt; text-transform: uppercase; }
+.section-line { flex: 1; height: 1px; background: #7B6BA8; margin: 0 12px; opacity: 0.4; }
+
+/* BOOK LOG BANNER */
+.book-banner { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px solid #7B6BA8; padding-bottom: 5px; margin-bottom: 10px; }
+.book-banner .bb-num { display: inline-block; border: 1.5px solid #7B6BA8; border-radius: 4px; padding: 3px 10px; font-size: 8pt; color: #7B6BA8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt; }
+.book-banner .bb-label { font-size: 8pt; color: #999; text-transform: uppercase; letter-spacing: 0.5pt; }
+.book-banner .bb-line { flex: 1; height: 12px; border-bottom: 1px dotted #ccc; }
+
+/* INFO FIELDS */
+.info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px; }
+.info-field .if-label { font-size: 6.5pt; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; font-weight: 700; display: block; margin-bottom: 1px; }
+.info-field .if-write { height: 16px; border-bottom: 1px dotted #ccc; }
+
+/* WRITE BOX */
+.write-box { border: 1px solid #7B6BA8; border-radius: 3px; padding: 6px 8px; margin-bottom: 8px; }
+.write-box .wb-label { font-size: 7pt; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; font-weight: 700; margin-bottom: 3px; }
+.write-box .wb-area { height: 24px; }
+
+/* STARS */
+.stars-row { display: flex; align-items: center; gap: 2px; margin-bottom: 8px; }
+.stars-row .sr-label { font-size: 8pt; width: 60px; flex-shrink: 0; }
+.star { font-size: 14pt; color: #7B6BA8; opacity: 0.4; }
+
+/* CHECKBOXES */
+.type-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.type-check { display: inline-flex; align-items: center; gap: 3px; font-size: 7.5pt; color: #555; }
+.type-box { width: 10px; height: 10px; border: 1.5px solid #7B6BA8; border-radius: 2px; }
+
+/* QUOTE BOX */
+.quote-box { border-left: 3px solid #C4A04A; padding: 6px 10px; margin-bottom: 8px; background: #F8F5EE; }
+.quote-box .qb-label { font-size: 7pt; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.5pt; font-weight: 700; margin-bottom: 3px; }
+.quote-box .qb-area { height: 24px; }
+
+/* GENRE CHECK */
+.genre-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px 10px; margin-bottom: 8px; }
+
+/* NOTES */
+.notes-line { border-bottom: 1px solid #ddd; height: 22px; }
+
+/* FINAL */
+.final-page { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; }
+.final-page .fp-text { font-size: 12pt; color: #999; font-style: italic; line-height: 1.8; margin-bottom: 20px; }
+.final-page .fp-logo { font-size: 11pt; color: #C4A04A; letter-spacing: 2.5pt; text-transform: uppercase; font-weight: 700; }
+.final-page .fp-line { width: 60px; height: 1.5px; background: #7B6BA8; margin: 12px auto; opacity: 0.5; }
+
+/* HOW-TO */
+.howto-text { font-size: 10pt; line-height: 1.7; }
+.howto-text p { margin-bottom: 8px; }
+.howto-text .ht-title { font-size: 11pt; font-weight: 700; color: #0F0A1A; margin-bottom: 4px; margin-top: 6px; }
+.howto-text .ht-icon { color: #7B6BA8; font-weight: 700; margin-right: 4px; }
+
+/* TBR TABLE */
+.tbr-table { width: 100%; border-collapse: collapse; }
+.tbr-table th { font-size: 6.5pt; color: #7B6BA8; text-transform: uppercase; padding: 4px 3px; border-bottom: 1.5px solid #7B6BA8; text-align: left; }
+.tbr-table td { padding: 4px 3px; border-bottom: 1px solid #eee; height: 22px; font-size: 8pt; }
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.stat-box { border: 1px solid #7B6BA8; border-radius: 4px; padding: 8px; text-align: center; }
+.stat-box .sb-num { font-size: 24pt; font-weight: 700; color: #7B6BA8; line-height: 1; }
+.stat-box .sb-label { font-size: 7pt; color: #999; text-transform: uppercase; letter-spacing: 0.5pt; margin-top: 4px; }
+</style>
+</head>
+<body>
+<!-- PAGE 1: Interior Title -->
+<div class="cover">
+  <div class="glow-bg"></div>
+
+  <div style="position: relative; z-index: 2; margin-bottom: 20px;">
+    <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Open book -->
+      <path d="M 15 30 Q 15 26 19 26 L 45 26 Q 50 26 50 30 L 50 78 Q 50 74 45 74 L 19 74 Q 15 74 15 78 Z"
+            stroke="#7B6BA8" stroke-width="1.5" fill="none"/>
+      <path d="M 50 30 Q 50 26 55 26 L 81 26 Q 85 26 85 30 L 85 78 Q 85 74 81 74 L 55 74 Q 50 74 50 78 Z"
+            stroke="#7B6BA8" stroke-width="1.5" fill="none"/>
+      <!-- Page lines -->
+      <line x1="20" y1="34" x2="44" y2="34" stroke="#7B6BA8" stroke-width="0.8" opacity="0.4"/>
+      <line x1="20" y1="40" x2="44" y2="40" stroke="#7B6BA8" stroke-width="0.8" opacity="0.4"/>
+      <line x1="20" y1="46" x2="40" y2="46" stroke="#7B6BA8" stroke-width="0.8" opacity="0.4"/>
+      <line x1="56" y1="34" x2="80" y2="34" stroke="#7B6BA8" stroke-width="0.8" opacity="0.4"/>
+      <line x1="56" y1="40" x2="80" y2="40" stroke="#7B6BA8" stroke-width="0.8" opacity="0.4"/>
+      <line x1="56" y1="46" x2="76" y2="46" stroke="#7B6BA8" stroke-width="0.8" opacity="0.4"/>
+      <!-- Spine center -->
+      <line x1="50" y1="30" x2="50" y2="78" stroke="#C4A04A" stroke-width="1.2"/>
+    </svg>
+  </div>
+
+  <div class="title-main">Reading Journal</div>
+  <div class="accent-bar"></div>
+  <div class="subtitle">Track Every Book, Every Thought, Every Journey</div>
+
+  <div class="pub">More Shine Press</div>
+</div>
+<!-- PAGE 2: How to Use -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">How to Use This Journal</span>
+    <span class="ph-right">Page 2</span>
+  </div>
+
+  <div class="howto-text">
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Your Reading Companion</div>
+    <p>This journal is designed to be a faithful companion on your reading
+    journey. Whether you read fiction or nonfiction, classics or thrillers,
+    this book helps you capture what you read, what you thought about it,
+    and what you want to read next.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> The Book Log</div>
+    <p>Each book uses a <strong>single-page entry</strong>. Record the title, author,
+    genre, dates, and page count. Rate the book with stars, write your
+    favorite quotes, and capture your thoughts and takeaways.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Tips</div>
+    <p>&#9679; <strong>Write while it's fresh.</strong> Jot notes as you read or right after finishing.</p>
+    <p>&#9679; <strong>Note page numbers</strong> for quotes you want to revisit.</p>
+    <p>&#9679; <strong>Rate honestly.</strong> Your future self will thank you for honest reviews.</p>
+    <p>&#9679; <strong>Keep your TBR list</strong> updated so you never wonder "what's next?"</p>
+  </div>
+</div>
+<!-- PAGE 3: Book Log #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 3</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #001</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 4: Book Log #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 4</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #002</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 5: Book Log #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 5</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #003</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 6: Book Log #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 6</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #004</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 7: Book Log #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 7</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #005</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 8: Book Log #6 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 8</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #006</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 9: Book Log #7 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 9</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #007</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 10: Book Log #8 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 10</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #008</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 11: Book Log #9 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 11</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #009</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 12: Book Log #10 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 12</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #010</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 13: Book Log #11 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 13</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #011</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 14: Book Log #12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 14</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #012</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 15: TBR -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">To Be Read (TBR) List</span>
+    <span class="ph-right">Page 15</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Reading Wishlist</div>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="tbr-table">
+    <thead>
+      <tr>
+        <th style="width: 30px;">Done</th>
+        <th>Title &amp; Author</th>
+        <th style="width: 80px;">Genre</th>
+        <th style="width: 50px;">Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 16: Book Log #13 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 16</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #013</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 17: Book Log #14 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 17</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #014</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 18: Book Log #15 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 18</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #015</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 19: Book Log #16 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 19</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #016</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 20: Book Log #17 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 20</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #017</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 21: Book Log #18 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 21</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #018</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 22: Book Log #19 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 22</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #019</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 23: Book Log #20 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 23</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #020</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 24: Book Log #21 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 24</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #021</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 25: Book Log #22 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 25</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #022</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 26: Book Log #23 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 26</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #023</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 27: Book Log #24 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 27</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #024</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 28: TBR -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">To Be Read (TBR) List</span>
+    <span class="ph-right">Page 28</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Reading Wishlist</div>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="tbr-table">
+    <thead>
+      <tr>
+        <th style="width: 30px;">Done</th>
+        <th>Title &amp; Author</th>
+        <th style="width: 80px;">Genre</th>
+        <th style="width: 50px;">Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 29: Book Log #25 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 29</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #025</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 30: Book Log #26 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 30</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #026</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 31: Book Log #27 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 31</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #027</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 32: Book Log #28 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 32</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #028</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 33: Book Log #29 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 33</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #029</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 34: Book Log #30 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 34</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #030</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 35: Book Log #31 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 35</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #031</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 36: Book Log #32 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 36</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #032</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 37: Book Log #33 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 37</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #033</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 38: Book Log #34 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 38</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #034</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 39: Book Log #35 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 39</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #035</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 40: Book Log #36 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 40</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #036</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 41: TBR -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">To Be Read (TBR) List</span>
+    <span class="ph-right">Page 41</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Reading Wishlist</div>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="tbr-table">
+    <thead>
+      <tr>
+        <th style="width: 30px;">Done</th>
+        <th>Title &amp; Author</th>
+        <th style="width: 80px;">Genre</th>
+        <th style="width: 50px;">Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 42: Book Log #37 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 42</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #037</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 43: Book Log #38 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 43</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #038</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 44: Book Log #39 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 44</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #039</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 45: Book Log #40 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 45</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #040</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 46: Book Log #41 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 46</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #041</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 47: Book Log #42 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 47</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #042</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 48: Book Log #43 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 48</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #043</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 49: Book Log #44 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 49</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #044</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 50: Book Log #45 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 50</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #045</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 51: Book Log #46 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 51</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #046</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 52: Book Log #47 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 52</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #047</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 53: Book Log #48 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 53</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #048</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 54: TBR -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">To Be Read (TBR) List</span>
+    <span class="ph-right">Page 54</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Reading Wishlist</div>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="tbr-table">
+    <thead>
+      <tr>
+        <th style="width: 30px;">Done</th>
+        <th>Title &amp; Author</th>
+        <th style="width: 80px;">Genre</th>
+        <th style="width: 50px;">Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 55: Book Log #49 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 55</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #049</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 56: Book Log #50 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Book Log</span>
+    <span class="ph-right">Page 56</span>
+  </div>
+
+  <div class="book-banner">
+    <span class="bb-num">Book #050</span>
+    <span class="bb-label">Title:</span>
+    <div class="bb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Author</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Pages</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Started</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Date Finished</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7B6BA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Genre</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Fiction</span> <span class="type-check"><span class="type-box"></span>Nonfiction</span> <span class="type-check"><span class="type-box"></span>Mystery</span> <span class="type-check"><span class="type-box"></span>Romance</span> <span class="type-check"><span class="type-box"></span>Sci-Fi</span> <span class="type-check"><span class="type-box"></span>Fantasy</span> <span class="type-check"><span class="type-box"></span>Thriller</span> <span class="type-check"><span class="type-box"></span>Biography</span> <span class="type-check"><span class="type-box"></span>History</span> <span class="type-check"><span class="type-box"></span>Self-Help</span> <span class="type-check"><span class="type-box"></span>Classic</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Format (Print / eBook / Audio)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Source (Bought / Library / Gift)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="stars-row">
+    <span class="sr-label">Rating</span>
+    <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span> <span class="star">&#9734;</span>
+  </div>
+
+  <div class="quote-box">
+    <div class="qb-label">Favorite Quote(s) &mdash; Note Page #</div>
+    <div class="qb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">My Thoughts &amp; Review</div>
+    <div class="wb-area" style="height: 44px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Key Takeaway / What I Learned</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 57: TBR -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">To Be Read (TBR) List</span>
+    <span class="ph-right">Page 57</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Reading Wishlist</div>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="tbr-table">
+    <thead>
+      <tr>
+        <th style="width: 30px;">Done</th>
+        <th>Title &amp; Author</th>
+        <th style="width: 80px;">Genre</th>
+        <th style="width: 50px;">Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 58: TBR -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">To Be Read (TBR) List</span>
+    <span class="ph-right">Page 58</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Reading Wishlist</div>
+    <div class="section-line"></div>
+  </div>
+
+  <table class="tbr-table">
+    <thead>
+      <tr>
+        <th style="width: 30px;">Done</th>
+        <th>Title &amp; Author</th>
+        <th style="width: 80px;">Genre</th>
+        <th style="width: 50px;">Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 59: Yearly Stats -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Yearly Reading Stats</span>
+    <span class="ph-right">Page 59</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Year in Books: ______</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box"><div class="sb-num">&nbsp;</div><div class="sb-label">Books Read</div></div>
+    <div class="stat-box"><div class="sb-num">&nbsp;</div><div class="sb-label">Total Pages</div></div>
+    <div class="stat-box"><div class="sb-num">&nbsp;</div><div class="sb-label">Avg Rating</div></div>
+    <div class="stat-box"><div class="sb-num">&nbsp;</div><div class="sb-label">New Authors</div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Favorite Book of the Year</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Biggest Surprise</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label" style="color: #C4A04A;">Reading Goal for Next Year</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Genres Explored / New Favorites</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 60: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 60</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 61: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 61</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 62: Final -->
+<div class="page">
+  <div class="final-page">
+    <div class="fp-text">
+      A reader lives a thousand lives<br>
+      before he dies.<br>
+      The man who never reads<br>
+      lives only one.
+    </div>
+    <div style="font-size: 8pt; color: #bbb; margin-bottom: 12px;">&mdash; George R.R. Martin</div>
+    <div class="fp-line"></div>
+    <div class="fp-logo">More Shine Press</div>
+    <div class="fp-line"></div>
+  </div>
+</div>
+</body>
+</html>
