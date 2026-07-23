@@ -68,9 +68,11 @@ Royalty (60% of list - print cost): $7.99 x 0.60 - $1.44 = $3.35 per copy
 FILES
 ------------------------------------------------------------
 Interior:  ~/sports_handbook_us/sports_handbook_us_V2.0_interior.pdf (37 pages)
-Cover:    ~/sports_handbook_us/cover.pdf (full wrap)
+Cover:    ~/sports_handbook_us/sports_handbook_full_cover_V1.0.pdf (full wrap)
 HTML:     ~/sports_handbook_us/sports_handbook_us_V2.0.html
-          ~/sports_handbook_us/cover.html
+          ~/sports_handbook_us/sports_handbook_full_cover_V1.0.html
+Spine:    0.0925in (37pp × 0.0025 white)
+Cover Size: 17.343in × 11.25in (back 8.625 + spine 0.0925 + front 8.625 + 0.25in bleed)
 
 COMPLIANCE STATUS
 ------------------------------------------------------------
