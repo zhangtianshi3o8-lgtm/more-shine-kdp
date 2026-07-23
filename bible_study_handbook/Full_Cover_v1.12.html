@@ -74,18 +74,23 @@
     text-transform: uppercase; margin-top: 0.1in;
   }
 
-  /* Bottom strip for wheat */
+  /* Bottom strip — colored band across full width */
   .back-bottom {
-    height: 2.2in; position: relative;
-    display: flex; align-items: flex-end;
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1.8in;
+    background: linear-gradient(180deg, rgba(90,128,144,0.12) 0%, rgba(90,128,144,0.25) 100%);
+    border-top: 1px solid rgba(90,128,144,0.2);
   }
-  .back-wheat { width: 2in; height: 2in; margin: 0 0 0 0.3in; opacity: 0.45; }
+  .back-wheat {
+    position: absolute; bottom: 0; left: 0.3in;
+    width: 2in; height: 2in; opacity: 0.45;
+  }
   .back-imprint {
-    position: absolute; bottom: 0.3in; left: 2.5in;
+    position: absolute; bottom: 0.3in; left: 0; right: 0;
+    text-align: center;
     font-family: Georgia, serif; font-size: 8pt;
     color: #8a7a6a; letter-spacing: 1.5pt;
   }
-  /* Barcode area: leave empty for KDP auto-placement (no white box) */
 
   /* ═══ SPINE ═══ */
   .spine {
@@ -332,7 +337,8 @@
         </g>
       </svg>
       <div class="back-imprint">More Shine Press</div>
-      <!-- Barcode area: KDP auto-places barcode here -->
+      <!-- Mirror wheat on right side to fill empty space -->
+      <!-- Right wheat removed from back-bottom, placed on back-cover directly -->
     </div>
   </div>
 
