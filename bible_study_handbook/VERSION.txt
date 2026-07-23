@@ -1,0 +1,48 @@
+Bible Study Handbook — Version 1.12
+===================================
+
+更新日期: 2026-07-23
+
+变更内容 (v1.11 → v1.12)
+------------------------
+1. 封面更新:
+   - 书脊底部新增 "MORE SHINE PRESS" 出版社名
+   - 封底底部新增 "More Shine Press" 出版社名
+   - 删除条码区占位文字 ("Barcode Area / KDP Auto-Generated")
+   - 条码区改为纯白底（KDP上传后自动覆盖条码）
+
+2. KDP_LISTING 更新:
+   - 删除旧品牌名(Hope Well Press)的定位分析段落
+   - 印刷成本修正: $3.99 → $3.11 ($0.012/页 正确费率)
+   - 版税重算: $6.60 → $7.13 (定价$14.99)
+   - 封面文件引用更新为 Full_Cover_v1.12_KDP.pdf
+
+3. 正文内容: 无变化（与v1.11完全一致）
+
+规格
+----
+尺寸: 8.5 x 11 in
+纸张: Cream (米白纸)
+墨水: Black & White
+页数: 176
+书脊: 0.440 in (176 x 0.0025)
+定价: $14.99 USD
+印刷成本: $3.11
+版税: $7.13/本
+
+最终文件清单
+-----------
+Bible_Study_Handbook_v1.11.html      — 正文HTML源文件
+Bible_Study_Handbook_v1.11.pdf       — 正文PDF (176页)
+Full_Cover_v1.1.html                 — 封面HTML源文件 (已更新v1.12内容)
+Full_Cover_v1.12_KDP.pdf             — 封面PDF (KDP上传用)
+KDP_LISTING_v1.11.txt                — KDP上架文案 (已更新)
+curriculum_data_v1.1.json            — 52周课程数据
+generate_full_handbook_v1.1.py       — 生成器脚本
+
+历史版本
+--------
+v1.0 (07-16): 初始版本, 178页, White纸
+v1.1 (07-17): 封面重设计（灰蓝色+写实圣经元素）, 正文不变
+v1.11 (07-19): 正文微调至176页, 改Cream纸, KDP_LISTING关键词优化
+v1.12 (07-23): 封面补出版社名, 删条码占位, LISTING修正成本/清理旧品牌

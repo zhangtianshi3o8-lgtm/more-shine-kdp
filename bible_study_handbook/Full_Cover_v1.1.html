@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bible Study Handbook — Full Cover v4 (KDP)</title>
+<style>
+  @page { size: 17.690in 11.25in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { -webkit-print-color-adjust: exact; }
+
+  .full-cover {
+    width: 17.690in; height: 11.25in;
+    position: relative; display: flex;
+  }
+
+  /* ═══ BACK COVER ═══ */
+  .back-cover {
+    width: 8.625in; height: 11.25in;
+    background: #f5ebe6;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+
+  /* Top strip for dove */
+  .back-top {
+    height: 1.8in;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .back-dove { width: 1.4in; height: 1.1in; }
+
+  /* Middle text zone */
+  .back-mid {
+    flex: 1; padding: 0 1.1in;
+    display: flex; flex-direction: column;
+    justify-content: flex-start;
+  }
+  .back-quote-text {
+    font-family: Georgia, serif;
+    font-size: 13pt; font-style: italic;
+    color: #6b8e9e; line-height: 1.7;
+    text-align: center; margin-bottom: 0.5in;
+  }
+  .back-features-title {
+    font-family: Arial, sans-serif;
+    font-size: 9pt; font-weight: 600;
+    color: #6b8e9e; letter-spacing: 4pt;
+    text-transform: uppercase;
+    text-align: center; margin-bottom: 0.3in;
+  }
+  .back-features ul { list-style: none; }
+  .back-features li {
+    font-family: Georgia, serif;
+    font-size: 10.5pt; color: #7a6a5a;
+    line-height: 1.8; padding-left: 0.3in;
+    position: relative; margin-bottom: 0.08in;
+  }
+  .back-features li::before {
+    content: '✦'; color: #6b8e9e; font-size: 8pt;
+    position: absolute; left: 0; top: 3px;
+  }
+  .back-verse {
+    text-align: center; padding: 0 1in; margin-top: 0.4in;
+  }
+  .back-verse-text {
+    font-family: Georgia, serif;
+    font-size: 11pt; font-style: italic;
+    color: #6b8e9e; line-height: 1.6;
+  }
+  .back-verse-ref {
+    font-family: Arial, sans-serif;
+    font-size: 8pt; font-weight: 600;
+    color: #b89860; letter-spacing: 3pt;
+    text-transform: uppercase; margin-top: 0.1in;
+  }
+
+  /* Bottom strip for wheat */
+  .back-bottom {
+    height: 2.2in; position: relative;
+    display: flex; align-items: flex-end;
+  }
+  .back-wheat { width: 2in; height: 2in; margin: 0 0 0 0.3in; opacity: 0.45; }
+  .back-imprint {
+    position: absolute; bottom: 0.25in; left: 0.3in;
+    font-family: Georgia, serif; font-size: 8pt;
+    color: #8a7a6a; letter-spacing: 1.5pt;
+  }
+  .barcode-area {
+    position: absolute; bottom: 0.3in; right: 0.3in;
+    width: 2in; height: 1.2in; background: white;
+  }
+
+  /* ═══ SPINE ═══ */
+  .spine {
+    width: 0.440in; height: 11.25in;
+    background: linear-gradient(180deg, #5a8090 0%, #456878 50%, #5a8090 100%);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .spine-text {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: Georgia, serif; font-size: 11pt; font-weight: bold;
+    color: #ffffff; letter-spacing: 3pt; white-space: nowrap;
+  }
+  .spine-sub {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: Arial, sans-serif; font-size: 7pt;
+    color: #ffffff; letter-spacing: 2pt;
+    position: absolute; bottom: 1.2in;
+  }
+  .spine-pub {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: Arial, sans-serif; font-size: 6.5pt;
+    color: rgba(255,255,255,0.8); letter-spacing: 1.5pt;
+    position: absolute; bottom: 0.4in;
+  }
+
+  /* ═══ FRONT COVER — solid color block, no arch ═══ */
+  .front-cover {
+    width: 8.625in; height: 11.25in;
+    position: relative; overflow: hidden;
+  }
+
+  /* Top 70% = solid dark blue. Bottom 30% = cream. */
+  /* Guarantees: every white pixel of text sits on #456878 */
+  .front-top-block {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 7.8in;
+    background: linear-gradient(170deg, #5a8090 0%, #456878 60%, #3a5a6a 100%);
+    z-index: 1;
+  }
+
+  /* Decorative arch OUTLINE only — sits on top of the blue, doesn't contain text */
+  .front-arch-outline {
+    position: absolute; top: 0.3in; left: 50%;
+    transform: translateX(-50%);
+    width: 7in; height: 6.5in;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    border-radius: 0 0 3.5in 3.5in;
+    z-index: 2; pointer-events: none;
+  }
+
+  /* Inner arch outline */
+  .front-arch-outline2 {
+    position: absolute; top: 0.45in; left: 50%;
+    transform: translateX(-50%);
+    width: 6.7in; height: 6.2in;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 0 0 3.35in 3.35in;
+    z-index: 2; pointer-events: none;
+  }
+
+  /* Bottom cream zone */
+  .front-bottom-block {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3.45in;
+    background: linear-gradient(180deg, #f5ebe6 0%, #e8ddd4 100%);
+    z-index: 1;
+  }
+
+  /* Text content — centered in the blue block */
+  .front-content {
+    position: absolute; top: 1.3in; left: 0; right: 0;
+    text-align: center; z-index: 5; padding: 0 0.6in;
+  }
+  .overline {
+    font-family: Arial, sans-serif;
+    font-size: 9pt; font-weight: 600;
+    color: #ffffff; letter-spacing: 4pt;
+    text-transform: uppercase; margin-bottom: 0.4in;
+  }
+  .title-serif {
+    font-family: Georgia, serif;
+    font-size: 38pt; font-weight: 700;
+    color: #ffffff; line-height: 1.15;
+  }
+  .title-script {
+    font-family: Georgia, serif;
+    font-size: 44pt; font-style: italic;
+    color: #ffffff; line-height: 1.1; margin-top: 0.08in;
+  }
+  .divider-w {
+    width: 1.5in; height: 1.5px;
+    background: rgba(255,255,255,0.7);
+    margin: 0.3in auto;
+  }
+  .subtitle {
+    font-family: Arial, sans-serif;
+    font-size: 10pt; font-weight: 500;
+    color: #ffffff; letter-spacing: 3pt;
+    text-transform: uppercase;
+  }
+
+  /* Info block on cream zone */
+  .info-block {
+    position: absolute; bottom: 0.5in; left: 0; right: 0;
+    text-align: center; z-index: 5; padding: 0 0.5in;
+  }
+  .badges {
+    display: flex; gap: 8px; margin-bottom: 0.25in;
+    justify-content: center;
+  }
+  .badge {
+    font-family: Arial, sans-serif;
+    font-size: 8pt; font-weight: 600;
+    color: #456878; letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid rgba(90,128,144,0.4);
+    padding: 5px 12px; border-radius: 15px;
+  }
+  .front-verse {
+    font-family: Georgia, serif;
+    font-size: 11pt; font-style: italic;
+    color: #5a6a5a; line-height: 1.6;
+  }
+  .front-verse-ref {
+    font-family: Arial, sans-serif;
+    font-size: 8pt; font-weight: 600;
+    color: #6b8e9e; letter-spacing: 2.5pt;
+    text-transform: uppercase; margin-top: 5px;
+  }
+
+  /* Decorations — only in the cream zone */
+  .olive-branch { position: absolute; bottom: 0; left: 0; width: 1.3in; height: 2.2in; z-index: 4; opacity: 0.5; }
+  .grape-vine { position: absolute; bottom: 0.1in; right: 0; width: 1.2in; height: 2in; z-index: 4; opacity: 0.45; }
+  .lily-deco { position: absolute; bottom: 1.6in; left: 50%; transform: translateX(-50%); width: 1.5in; height: 0.9in; z-index: 4; opacity: 0.4; }
+
+  /* Soft transition strip between blue and cream */
+  .transition-strip {
+    position: absolute; top: 7.5in; left: 0; right: 0;
+    height: 0.6in; z-index: 3;
+    background: linear-gradient(180deg, #3a5a6a 0%, #f5ebe6 100%);
+    opacity: 0.3;
+  }
+</style>
+</head>
+<body>
+
+<div class="full-cover">
+
+  <!-- ═══ BACK COVER ═══ -->
+  <div class="back-cover">
+    <div class="back-top">
+      <svg class="back-dove" viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#9aa49a" opacity="0.75">
+          <ellipse cx="85" cy="60" rx="32" ry="22"/>
+          <circle cx="115" cy="44" r="14"/>
+          <path d="M68,50 Q53,22 43,36 Q48,56 73,60 Z" fill="#8a948a"/>
+          <path d="M64,52 Q52,32 46,40 Q50,52 68,58 Z" fill="#9aa298"/>
+          <path d="M46,58 Q30,54 25,64 Q35,66 50,62 Z"/>
+          <path d="M44,62 Q32,64 29,72 Q39,72 49,68 Z" fill="#8a948a"/>
+          <path d="M130,44 L140,42 L130,47 Z" fill="#b89860"/>
+          <circle cx="119" cy="42" r="2.5" fill="#4a4a4a"/>
+        </g>
+        <g fill="none" stroke="#8a9a6a" stroke-width="1" stroke-linecap="round" opacity="0.65">
+          <path d="M140,42 Q153,36 160,26"/>
+        </g>
+        <g fill="#9aa87a" opacity="0.55">
+          <ellipse cx="155" cy="31" rx="6" ry="2.5" transform="rotate(-30 155 31)"/>
+          <ellipse cx="151" cy="36" rx="5" ry="2" transform="rotate(-20 151 36)"/>
+        </g>
+        <g fill="#6a7a4a" opacity="0.45">
+          <circle cx="154" cy="33" r="2"/>
+          <circle cx="158" cy="29" r="1.5"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="back-mid">
+      <div class="back-quote-text">
+        &ldquo;A beautiful, deeply thoughtful guide that takes you through the entire Bible in one year. Every page is designed to help you slow down, reflect, and encounter God&rsquo;s Word in a fresh way.&rdquo;
+      </div>
+      <div class="back-features">
+        <div class="back-features-title">What&rsquo;s Inside</div>
+        <ul>
+          <li>52 weeks of curated Scripture covering all 66 books</li>
+          <li>3 rotating study methods: SOAP, Verse Mapping, Inductive</li>
+          <li>Generous journaling space for reflection and prayer</li>
+          <li>10 epoch dividers tracing God&rsquo;s redemptive story</li>
+          <li>Small group guide &amp; sermon notes pages</li>
+          <li>Translation-neutral &mdash; use with any Bible version</li>
+        </ul>
+      </div>
+      <div class="back-verse">
+        <div class="back-verse-text">
+          &ldquo;All Scripture is breathed out by God<br/>and profitable for teaching, for reproof,<br/>for correction, and for training in righteousness.&rdquo;
+        </div>
+        <div class="back-verse-ref">2 Timothy 3:16</div>
+      </div>
+    </div>
+
+    <div class="back-bottom">
+      <svg class="back-wheat" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="wG" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#c4a860;stop-opacity:0.8"/>
+            <stop offset="100%" style="stop-color:#a08840;stop-opacity:0.5"/>
+          </linearGradient>
+        </defs>
+        <g transform="translate(70,0) rotate(-8)">
+          <line x1="0" y1="70" x2="0" y2="195" stroke="#a89858" stroke-width="1" opacity="0.5"/>
+          <g fill="url(#wG)">
+            <line x1="0" y1="12" x2="0" y2="75" stroke="#a89858" stroke-width="0.8" opacity="0.6"/>
+            <ellipse cx="-4" cy="22" rx="3.5" ry="7" transform="rotate(-20 -4 22)"/>
+            <ellipse cx="4" cy="25" rx="3.5" ry="7" transform="rotate(20 4 25)"/>
+            <ellipse cx="-4" cy="36" rx="4" ry="8" transform="rotate(-20 -4 36)"/>
+            <ellipse cx="4" cy="39" rx="4" ry="8" transform="rotate(20 4 39)"/>
+            <ellipse cx="-4.5" cy="52" rx="4.5" ry="9" transform="rotate(-20 -4.5 52)"/>
+            <ellipse cx="4.5" cy="55" rx="4.5" ry="9" transform="rotate(20 4.5 55)"/>
+            <ellipse cx="-4.5" cy="70" rx="4.5" ry="9" transform="rotate(-20 -4.5 70)"/>
+            <ellipse cx="4.5" cy="73" rx="4.5" ry="9" transform="rotate(20 4.5 73)"/>
+            <line x1="-3" y1="18" x2="-10" y2="5" stroke="#b8a868" stroke-width="0.5"/>
+            <line x1="0" y1="15" x2="0" y2="0" stroke="#b8a868" stroke-width="0.5"/>
+            <line x1="3" y1="18" x2="10" y2="5" stroke="#b8a868" stroke-width="0.5"/>
+            <line x1="-4" y1="32" x2="-12" y2="20" stroke="#b8a868" stroke-width="0.4"/>
+            <line x1="4" y1="34" x2="12" y2="22" stroke="#b8a868" stroke-width="0.4"/>
+            <line x1="-5" y1="48" x2="-14" y2="38" stroke="#b8a868" stroke-width="0.4"/>
+            <line x1="5" y1="50" x2="14" y2="40" stroke="#b8a868" stroke-width="0.4"/>
+          </g>
+        </g>
+        <g transform="translate(115,5) rotate(6)" opacity="0.7">
+          <line x1="0" y1="80" x2="0" y2="195" stroke="#a89858" stroke-width="0.8" opacity="0.5"/>
+          <g fill="url(#wG)">
+            <line x1="0" y1="18" x2="0" y2="85" stroke="#a89858" stroke-width="0.6" opacity="0.5"/>
+            <ellipse cx="-3.5" cy="27" rx="3" ry="6" transform="rotate(-20 -3.5 27)"/>
+            <ellipse cx="3.5" cy="30" rx="3" ry="6" transform="rotate(20 3.5 30)"/>
+            <ellipse cx="-4" cy="42" rx="3.5" ry="7" transform="rotate(-20 -4 42)"/>
+            <ellipse cx="4" cy="45" rx="3.5" ry="7" transform="rotate(20 4 45)"/>
+            <ellipse cx="-4" cy="58" rx="3.5" ry="7" transform="rotate(-20 -4 58)"/>
+            <ellipse cx="4" cy="61" rx="3.5" ry="7" transform="rotate(20 4 61)"/>
+            <ellipse cx="-4" cy="74" rx="3.5" ry="7" transform="rotate(-20 -4 74)"/>
+            <ellipse cx="4" cy="77" rx="3.5" ry="7" transform="rotate(20 4 77)"/>
+            <line x1="-2.5" y1="23" x2="-8" y2="12" stroke="#b8a868" stroke-width="0.4"/>
+            <line x1="0" y1="20" x2="0" y2="7" stroke="#b8a868" stroke-width="0.4"/>
+            <line x1="2.5" y1="23" x2="8" y2="12" stroke="#b8a868" stroke-width="0.4"/>
+          </g>
+        </g>
+      </svg>
+      <div class="back-imprint">More Shine Press</div>
+      <div class="barcode-area"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SPINE ═══ -->
+  <div class="spine">
+    <div class="spine-text">BIBLE STUDY HANDBOOK</div>
+    <div class="spine-sub">52-WEEK GUIDE</div>
+    <div class="spine-pub">MORE SHINE PRESS</div>
+  </div>
+
+  <!-- ═══ FRONT COVER ═══ -->
+  <div class="front-cover">
+    <!-- Solid blue top block — ALL white text lives here -->
+    <div class="front-top-block"></div>
+
+    <!-- Decorative arch outlines (visual only, not text container) -->
+    <div class="front-arch-outline"></div>
+    <div class="front-arch-outline2"></div>
+
+    <!-- Bottom cream block -->
+    <div class="front-bottom-block"></div>
+    <div class="transition-strip"></div>
+
+    <!-- ALL white text — guaranteed on solid blue -->
+    <div class="front-content">
+      <div class="overline">A 52-Week Guide Through Scripture</div>
+      <div class="title-serif">Bible Study</div>
+      <div class="title-script">Handbook</div>
+      <div class="divider-w"></div>
+      <div class="subtitle">Reflect &middot; Pray &middot; Grow</div>
+    </div>
+
+    <!-- Cream zone: badges, verse, decorations -->
+    <div class="info-block">
+      <div class="badges">
+        <span class="badge">10 Epochs</span>
+        <span class="badge">66 Books</span>
+        <span class="badge">52 Weeks</span>
+      </div>
+      <div class="front-verse">&ldquo;Your word is a lamp to my feet<br/>and a light to my path.&rdquo;</div>
+      <div class="front-verse-ref">Psalm 119:105</div>
+    </div>
+
+    <!-- Olive branch — bottom left of cream zone -->
+    <svg class="olive-branch" viewBox="0 0 130 220" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30,215 Q38,160 50,90 Q58,45 68,10" fill="none" stroke="#8a8a6a" stroke-width="1.2" opacity="0.7"/>
+      <path d="M48,100 Q38,88 28,78" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+      <path d="M55,65 Q65,55 75,48" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+      <path d="M45,145 Q35,138 25,132" fill="none" stroke="#8a8a6a" stroke-width="0.8" opacity="0.6"/>
+      <g fill="#9aa87a" opacity="0.6">
+        <ellipse cx="28" cy="78" rx="12" ry="3.5" transform="rotate(-25 28 78)"/>
+        <ellipse cx="75" cy="48" rx="12" ry="3.5" transform="rotate(25 75 48)"/>
+        <ellipse cx="25" cy="132" rx="12" ry="3.5" transform="rotate(-30 25 132)"/>
+        <ellipse cx="42" cy="125" rx="11" ry="3" transform="rotate(20 42 125)"/>
+        <ellipse cx="58" cy="170" rx="10" ry="3" transform="rotate(15 58 170)"/>
+      </g>
+      <g fill="#7a7a4a" opacity="0.55">
+        <ellipse cx="42" cy="110" rx="3.5" ry="5"/>
+        <ellipse cx="62" cy="80" rx="3.5" ry="5"/>
+        <ellipse cx="38" cy="160" rx="4" ry="5.5"/>
+      </g>
+    </svg>
+
+    <!-- Grape vine — bottom right of cream zone -->
+    <svg class="grape-vine" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100,195 Q88,145 92,80 Q96,40 82,8" fill="none" stroke="#8a7a5a" stroke-width="1.2" opacity="0.55"/>
+      <g fill="#8aa87a" opacity="0.5">
+        <path d="M90,55 Q74,47 70,58 Q68,67 76,65 Q74,72 80,70 Q78,76 85,70 Q82,65 84,60 Q78,63 90,55 Z"/>
+      </g>
+      <g fill="#7a5a7a" opacity="0.45">
+        <circle cx="85" cy="88" r="4"/>
+        <circle cx="92" cy="86" r="4"/>
+        <circle cx="99" cy="89" r="4"/>
+        <circle cx="81" cy="96" r="4.5"/>
+        <circle cx="88" cy="95" r="4.5"/>
+        <circle cx="95" cy="97" r="4.5"/>
+        <circle cx="102" cy="98" r="4"/>
+        <circle cx="84" cy="105" r="4"/>
+        <circle cx="91" cy="106" r="4"/>
+        <circle cx="98" cy="107" r="4"/>
+        <circle cx="88" cy="114" r="3.5"/>
+        <circle cx="95" cy="115" r="3.5"/>
+      </g>
+    </svg>
+
+    <!-- Lily — center, just above badges -->
+    <svg class="lily-deco" viewBox="0 0 150 90" xmlns="http://www.w3.org/2000/svg">
+      <path d="M75,85 Q73,50 74,25" fill="none" stroke="#8a9a6a" stroke-width="0.8" opacity="0.45"/>
+      <g fill="#9aa87a" opacity="0.35">
+        <ellipse cx="60" cy="60" rx="4" ry="18" transform="rotate(-20 60 60)"/>
+        <ellipse cx="90" cy="58" rx="4" ry="16" transform="rotate(20 90 58)"/>
+      </g>
+      <g transform="translate(74,22)">
+        <g fill="#f0e6e8" opacity="0.6" stroke="#d4b8ba" stroke-width="0.4">
+          <ellipse cx="0" cy="-10" rx="6" ry="15" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-10" rx="6" ry="15" transform="rotate(60)"/>
+          <ellipse cx="0" cy="-10" rx="6" ry="15" transform="rotate(-60)"/>
+          <ellipse cx="0" cy="-8" rx="7" ry="13" transform="rotate(30)" fill="#f5ece8"/>
+          <ellipse cx="0" cy="-8" rx="7" ry="13" transform="rotate(-30)" fill="#f5ece8"/>
+        </g>
+        <g stroke="#e8c850" stroke-width="0.6" opacity="0.4" stroke-linecap="round">
+          <line x1="0" y1="-3" x2="-3" y2="-12"/>
+          <line x1="0" y1="-3" x2="3" y2="-12"/>
+          <line x1="0" y1="-3" x2="0" y2="-14"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+</div>
+
+</body>
+</html>

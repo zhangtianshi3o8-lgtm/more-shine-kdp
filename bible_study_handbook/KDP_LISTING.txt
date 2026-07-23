@@ -1,112 +1,222 @@
 ============================================================
-  KDP 上架文案清单 — Bible Study Handbook
-  最后更新: 2026-07-16
+  KDP 上架文案清单 — Bible Study Handbook V1.11
+  最后更新: 2026-07-19
+  基于亚马逊 US 市场关键词调研
 ============================================================
 
-【1. 书名 Title】
-Bible Study Handbook
+【1. 书名 Title】（KDP 限制: 最多50字符）
 
-【2. 副标题 Subtitle】（KDP字段，最多200字符，搜索权重极高）
-A 52-Week Guide Through Scripture: Reflection Journal for Women
+Bible Study Handbook: 52-Week Scripture Journal
 
+  说明:
+  - "Bible Study Handbook" = 品牌定位词（高端、全面）
+  - "52-Week" = 核心卖点前置
+  - "Scripture Journal" = 高搜索量关键词（搜索池 >12,000）
+  - 总字符: 47（含空格）
+  - 封面副标题改为: "A 52-Week Guide Through Scripture"（与封面印刷一致）
+  - DB/独立站副标题也同步为此值
+
+------------------------------------------------------------
+【2. 副标题 Subtitle】（KDP 限制: 最多200字符，搜索权重极高）
+
+A Guided Notebook Through All 66 Books — With SOAP, Verse Mapping & Inductive Study Methods for Women and Men
+
+  说明:
+  - "Guided Notebook" = 中等搜索量，区别于普通空白笔记本
+  - "All 66 Books" = 差异化卖点（多数竞品只覆盖部分）
+  - "SOAP, Verse Mapping & Inductive" = 蓝海关键词 + 方法论卖点
+  - "for Women and Men" = 双性别覆盖（扩大受众）
+  - 总字符: 119
+
+------------------------------------------------------------
 【3. 作者 Author】
-（你确认后再填写，可以笔名/品牌名/留空选 Anonymous）
 
-【4. 简介 Description】（KDP商品页面展示，支持基础HTML）
+  More Shine Press
 
-<i>Your word is a lamp to my feet and a light to my path. — Psalm 119:105</i>
+  亚马逊搜索确认: 无同名作者/出版社（35个搜索结果均为模糊匹配）
+  DuckDuckGo 确认: 无同名实体
 
-<b>A complete 52-week journey through all 66 books of the Bible.</b>
+  --- Author Bio (Author Central 页面用) ---
 
-This handbook guides you through God's redemptive story — from Genesis to Revelation — in 10 connected epochs. Each week, you'll study a major passage, reflect on its theme, and encounter how it points to Jesus.
+  More Shine Press creates practical, beautifully designed handbooks
+  that help readers grow in faith, learning, and daily life. Each
+  book is built on a simple belief: well-crafted tools make
+  meaningful habits easier to sustain. From year-long Bible study
+  journeys to skill-building guides for families, every title is
+  designed to be used, written in, and returned to — not just read
+  once and shelved.
 
-<h2>What's Inside</h2>
+------------------------------------------------------------
+【4. 描述 Description】（KDP 商品页面展示，支持 HTML）
+
+<i>"Your word is a lamp to my feet and a light to my path." — Psalm 119:105</i>
+
+<b>A complete 52-week journey through all 66 books of the Bible — with three guided study methods to keep you engaged all year long.</b>
+
+This handbook walks you through God's redemptive story in 10 connected epochs — from Genesis to Revelation. Each week, you'll study a major Scripture passage, reflect on its theme, and discover how every part of the Bible points to Jesus.
+
+<h2>What Makes This Handbook Different</h2>
 <ul>
-<li><b>52 Weeks of Teaching</b> — A full year of curated Scripture passages with theme overviews, key verses, and "Christ Connection" callouts showing how every part of the Bible points to Jesus</li>
-<li><b>3 Rotating Journal Methods</b> — SOAP method, Verse Mapping, and Inductive Study keep your experience fresh all year long</li>
-<li><b>Generous Writing Space</b> — Each week includes a full journaling page with scripture writing area, gratitude prompts, prayer space, and reflection questions</li>
-<li><b>10 Epoch Dividers</b> — Beautiful full-page section markers tracing the biblical timeline from Creation to New Creation</li>
-<li><b>Decorative Verse Pages</b> — Anti-bleed pages between weeks feature key verses in elegant typography</li>
-<li><b>Small Group Guide</b> — A complete meeting format for groups using this handbook together</li>
-<li><b>Sermon Notes Pages</b> — 4 bonus templates for Sunday worship</li>
+<li><b>3 Rotating Study Methods</b> — Most journals use just one method. This handbook cycles through SOAP, Verse Mapping, and Inductive Study every three weeks, keeping your study fresh and deepening your engagement all year long</li>
+<li><b>52 Weeks of Guided Teaching</b> — Not just blank prompts. Each week includes a theme overview, key verse, reflection questions, a Christ Connection callout, and an action step</li>
+<li><b>All 66 Books Covered</b> — A complete journey from Genesis to Revelation across 10 biblical epochs, with no book left behind</li>
+<li><b>Anti-Bleed Design</b> — Decorative Scripture pages between weeks serve as elegant meditation breaks while preventing ink bleed-through to the next page</li>
+<li><b>Built for Groups & Sundays</b> — Includes a small group discussion guide and 4 sermon notes templates for Sunday worship</li>
 </ul>
 
-<h2>Designed for You</h2>
+<h2>What's Inside Each Week</h2>
 <ul>
-<li><b>Wide margins & generous gutter</b> designed for comfortable writing</li>
-<li><b>Clear pen guide</b> showing which pens work best on KDP paper</li>
-<li><b>Large, readable fonts</b> (minimum 10pt) — no squinting</li>
-<li><b>Translation-neutral</b> — uses verse references only, so you can study with any Bible translation you prefer (ESV, NIV, KJV, NLT, CSB, NASB, and more)</li>
+<li>A study page with Scripture reference, theme, key verse, and reflection questions</li>
+<li>A journal page using one of three rotating methods (SOAP, Verse Mapping, or Inductive)</li>
+<li>A decorative Scripture verse page for meditation and memorization</li>
+<li>Gratitude prompts and prayer space on every journal page</li>
+</ul>
+
+<h2>Designed for Quality</h2>
+<ul>
+<li><b>8.5 x 11 inches</b> — generous writing space on every page</li>
+<li><b>Wide gutter margins</b> — write comfortably near the spine</li>
+<li><b>Large readable fonts</b> — minimum 10pt body text, no squinting</li>
+<li><b>Translation-neutral</b> — uses verse references only, so you can study with any Bible translation (ESV, NIV, KJV, NLT, CSB, NASB, and more)</li>
+<li><b>Pen guide included</b> — know which pens work best before you write</li>
+<li><b>Undated format</b> — start any week of the year</li>
 </ul>
 
 <h2>Perfect For</h2>
-Personal devotions, women's Bible study groups, church small groups, Sunday school classes, and anyone who wants to go deeper into God's Word over the course of a year.
+Personal devotions, women's and men's Bible study groups, church small groups, Sunday school, and anyone who wants to go deeper into God's Word over the course of a year.
 
-<b>10 Epochs · 66 Books · 52 Weeks · One Story.</b>
+<b>10 Epochs - 66 Books - 52 Weeks - 3 Study Methods - One Story.</b>
 
-------------------------------------------
+------------------------------------------------------------
 【5. 关键词 Keywords】（KDP后台，7个槽位，每个最多50字符）
 
-Slot 1: bible study guide for women
-Slot 2: scripture journal notebook reflection
-Slot 3: christian workbook devotional journal
-Slot 4: 52 week bible study plan
-Slot 5: bible study journal for women small group
-Slot 6: genesis to revelation study guide
-Slot 7: christian gifts for women spiritual growth
+  --- 基于亚马逊搜索竞争度调研 ---
 
-------------------------------------------
-【6. 分类建议 Categories】（KDP, 选2个）
+Slot 1: verse mapping journal bible study workbook
+  (蓝海！该词搜索结果仅212个，你的笔记页B=Verse Mapping直接匹配)
+  竞争度: 极低
+
+Slot 2: inductive bible study notebook method
+  (归纳法笔记页C匹配，目标受众=认真学习者)
+  竞争度: 低
+
+Slot 3: 52 week bible reading plan journal
+  (52周是核心卖点，1,487结果，中价区$14.99)
+  竞争度: 中等
+
+Slot 4: scripture writing journal guided notebook
+  (经文抄写功能，中高搜索量)
+  竞争度: 中等
+
+Slot 5: sermon notes notebook for church
+  (讲道笔记页匹配，多用途搜索)
+  竞争度: 中等
+
+Slot 6: bible study gifts for women and men christian
+  (礼品搜索词，节日季流量大，双性别)
+  竞争度: 中等
+
+Slot 7: prayer gratitude journal devotional reflection
+  (祷告感恩区匹配，灵修搜索池)
+  竞争度: 中等
+
+  说明:
+  - 不重复标题/副标题中已有的词（亚马逊已自动索引）
+  - 每个槽位放完整搜索短语，不放单词
+  - 第1-2槽位是最大机会（低竞争蓝海）
+
+------------------------------------------------------------
+【6. 分类建议 Categories】（KDP 选2个，可申请第3个）
 
 主分类 (Primary):
-Books > Christian Books & Bibles > Christian Living > Devotional
+  Books > Christian Books & Bibles > Bible Study
+  > Study & Reference
+  (你的核心受众在这里搜索)
 
 副分类 (Secondary):
-Books > Christian Books & Bibles > Bible Study > Reference
+  Books > Christian Books & Bibles > Christian Living
+  > Devotional
+  (灵修类买家是交叉客户，搜索量大)
 
-备选分类（如果名额允许）:
-- Books > Christian Books & Bibles > Christian Living > Spiritual Growth
-- Books > Crafts, Hobbies & Home > Crafts & Hobbies > Crafts
+申请第3分类（上架后联系 KDP Support）:
+  Books > Christian Books & Bibles > Christian Living
+  > Spiritual Growth
 
-------------------------------------------
-【7. 尺寸与规格】
+  策略提示:
+  - 不选最热门的大类（竞争太激烈）
+  - 选最具体的叶子类目，容易拿 Best Seller 标签
+  - Spiral Bible 的策略是放 Office Products 类目避开图书竞争，
+    你也可以考虑: Office Products > Paper Products > Notebooks
+
+------------------------------------------------------------
+【7. 规格 Specs】
 
 Trim Size: 8.5 x 11 in (21.59 x 27.94 cm)
-Paper: White (KDP标准白纸)
-Ink: Black & White
-Page Count: 178（确定后核实）
-Bleed: No Bleed（内容均在安全区内）
+Ink: Black & White (黑白)
+Paper: Cream (米白纸 — 书写手感更柔和)
+Page Count: 176
+Bleed: No Bleed
 
-------------------------------------------
-【8. 定价建议】
+  书脊计算 (Cream 纸张):
+  176 页 x 0.0025 in/页 = 0.440 in
 
-KDP 标准色（黑白）印刷 + 40%版税：
-- 178页印刷成本约 $5.15
-- 建议零售价 $14.99 - $16.99
-- 40%版税计算：$14.99 × 40% - 印刷分摊 ≈ $3.49/本
-- $16.99 × 40% ≈ $4.49/本
+  封面总尺寸 (含出血):
+  8.625 (后封面) + 0.440 (书脊) + 8.625 (前封面) = 17.690 x 11.25 in
 
-竞品定价参考：
-- 100-150页 guide 类: $8.99 - $12.99
-- 150-200页 handbook 类: $13.99 - $19.99
-- 咱们178页+52周+66卷，建议 $15.99 起步
+------------------------------------------------------------
+【8. 定价 Pricing】
 
-------------------------------------------
-【9. 封面文件说明】
+  页数: 176 | 黑白印刷
+  印刷成本: $3.11（固定$1.00 + 176 x $0.012/页）
+  KDP版税率: 60%（平装标准）
 
-封面已集成在 HTML 中（浏览器打印为PDF时包含）。
-KDP需要单独上传封面PDF（含书脊）：
-- 前封面: 可从 cover_preview.html 截图导出
-- 全封面: 需要拼接 前+书脊+后封面
-- 178页书脊宽度: 约 0.375 in（KDP计算器）
-- 完整封面尺寸: 17.625 x 11.25 in (含出血)
+  上架价 $14.99:
+    版税 = ($14.99 - $3.11) x 60% = $7.13/本
 
-------------------------------------------
-【10. A+ Content 建议（上架后）】
+  对比 $12.99:
+    版税 = ($12.99 - $3.11) x 60% = $5.93/本
 
-如果申请到 A+ Content，建议模块：
-1. 全书结构图（10 Epochs 时间线）
-2. 内页展示（教学页 + 日志页 + 装饰页 三种）
-3. 三种笔记法对比图（SOAP / Verse Mapping / Inductive）
-4. 尺寸对比图（手持效果）
-5. 使用场景图（咖啡桌/书桌/教会小组）
+  对比 $16.99:
+    版税 = ($16.99 - $3.11) x 60% = $8.33/本
+
+  推荐策略:
+  - 上架价 $14.99（中价位甜蜜点）
+  - 竞品中位价 $12-15，你176页+3方法+52周完整课程支撑溢价
+  - 前2周可降到 $9.99 冲初期销量（版税$4.13/本）
+  - 积累评论后回调到 $14.99
+
+------------------------------------------------------------
+【9. 封面文件 Cover】
+
+  当前文件: Full_Cover_v1.12_KDP.pdf
+  尺寸: 17.690 x 11.25 in (含出血)
+  书脊: 0.440 in (176页 Cream 纸张)
+  字体: Georgia + Arial (全部 KDP 安全)
+  出版社名: 书脊底部"MORE SHINE PRESS" + 封底底部"More Shine Press"
+
+  KDP 封面要求:
+  - 全封面 = 后封面 + 书脊 + 前封面（一个连续PDF）
+  - 300 DPI，CMYK 优先（RGB可接受）
+  - 含 0.125in 出血边
+  - 条码区域（2x1.2in白框）在右下角后封面
+
+------------------------------------------------------------
+【10. A+ Content 建议（上架后申请）】
+
+  模块规划:
+  1. 全书结构图 — 10 Epochs 时间线 + 52周进度
+  2. 三种笔记法对比 — SOAP / Verse Mapping / Inductive 各一页示例
+  3. 内页展示 — 学习页 + 日志页 + 装饰页 三种风格
+  4. 防透印设计说明 — 装饰页如何防止墨水渗透
+  5. 使用场景 — 晨间灵修 / 小组学习 / 教会做笔记
+  6. 尺寸参考 — 手持效果 / 与 Bible 并排对比
+
+------------------------------------------------------------
+【11. 上架后推广建议】
+
+  前30天优先级:
+  1. Author Central — 认领笔名，完善作者页面
+  2. 初期评论 — 首批5条评论决定产品走向
+  3. Amazon Ads (AMS) — 前30天投放精准关键词广告
+  4. Pinterest — 产品效果图钉（基督教审美内容传播力强）
+  5. Etsy 数字版 — 同款可作为可打印PDF出售 ($5-12)
