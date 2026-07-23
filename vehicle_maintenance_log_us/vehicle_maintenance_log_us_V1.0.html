@@ -1,0 +1,3702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Maintenance Log Book</title>
+  <style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.5in 0.5in 0.4in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print { .page { border: none; margin: 0; } }
+
+/* ================ INTERIOR TITLE PAGE ================ */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, #121826 0%, #1A2332 30%, #121826 65%, #0A0F1A 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cover .glow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #3D6FA8, transparent),
+    radial-gradient(ellipse 26px 16px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 70% 70%, #3D6FA8, transparent),
+    radial-gradient(ellipse 22px 14px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 50% 45%, #3D6FA8, transparent);
+}
+
+.cover .title-main {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1.2;
+  letter-spacing: 0.5pt;
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.cover .accent-bar {
+  width: 100px; height: 2px;
+  background: #3D6FA8;
+  margin: 20px auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .subtitle {
+  font-size: 12pt;
+  color: #D4B896;
+  font-style: italic;
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .pub {
+  position: absolute;
+  bottom: 0.6in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #C4A04A;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ================ PAGE HEADER ================ */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #eee;
+}
+
+.page-header .ph-left {
+  font-size: 8pt;
+  color: #3D6FA8;
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-weight: 700;
+}
+
+.page-header .ph-right {
+  font-size: 8pt;
+  color: #999;
+}
+
+/* ================ SECTION HEADERS ================ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #121826;
+  letter-spacing: 0.5pt;
+  text-transform: uppercase;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #3D6FA8;
+  margin: 0 12px;
+  opacity: 0.4;
+}
+
+/* ================ HOW TO USE ================ */
+.howto-text { font-size: 10pt; line-height: 1.7; }
+.howto-text p { margin-bottom: 8px; }
+.howto-text .ht-title {
+  font-size: 11pt; font-weight: 700; color: #121826;
+  margin-bottom: 4px; margin-top: 6px;
+}
+.howto-text .ht-icon { color: #3D6FA8; font-weight: 700; margin-right: 4px; }
+
+/* ================ INFO FIELDS ================ */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin-bottom: 8px;
+}
+
+.info-field .if-label {
+  font-size: 6.5pt;
+  color: #3D6FA8;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.info-field .if-write {
+  height: 16px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ SERVICE TABLE ================ */
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.service-table th {
+  font-size: 6.5pt;
+  color: #3D6FA8;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  padding: 5px 3px;
+  border-bottom: 1.5px solid #3D6FA8;
+  text-align: center;
+}
+
+.service-table th:first-child { text-align: left; }
+
+.service-table td {
+  padding: 4px 3px;
+  border-bottom: 1px solid #eee;
+  height: 26px;
+  font-size: 9pt;
+}
+
+/* ================ TYPE CHECKBOXES ================ */
+.type-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.type-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7.5pt;
+  color: #555;
+}
+
+.type-box {
+  width: 10px; height: 10px;
+  border: 1.5px solid #3D6FA8;
+  border-radius: 2px;
+}
+
+/* ================ WRITE BOX ================ */
+.write-box {
+  border: 1px solid #C4A04A;
+  border-radius: 3px;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+
+.write-box .wb-label {
+  font-size: 7pt;
+  color: #3D6FA8;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.write-box .wb-area {
+  height: 28px;
+}
+
+/* ================ SERVICE BANNER ================ */
+.service-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1.5px solid #3D6FA8;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.service-banner .sb-num {
+  display: inline-block;
+  border: 1.5px solid #3D6FA8;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 8pt;
+  color: #3D6FA8;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.service-banner .sb-label {
+  font-size: 8pt;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.service-banner .sb-line {
+  flex: 1;
+  height: 12px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ NOTES ================ */
+.notes-line { border-bottom: 1px solid #ddd; height: 22px; }
+
+/* ================ FUEL LOG ================ */
+.fuel-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.fuel-table th {
+  font-size: 6pt;
+  color: #3D6FA8;
+  text-transform: uppercase;
+  padding: 4px 2px;
+  border-bottom: 1.5px solid #3D6FA8;
+  text-align: center;
+}
+
+.fuel-table th:first-child { text-align: left; }
+
+.fuel-table td {
+  padding: 3px 2px;
+  border-bottom: 1px solid #eee;
+  height: 20px;
+}
+
+/* ================ FINAL PAGE ================ */
+.final-page {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; height: 100%;
+}
+.final-page .fp-text {
+  font-size: 12pt; color: #999; font-style: italic;
+  line-height: 1.8; margin-bottom: 20px;
+}
+.final-page .fp-logo {
+  font-size: 11pt; color: #C4A04A;
+  letter-spacing: 2.5pt; text-transform: uppercase;
+  font-weight: 700;
+}
+.final-page .fp-line {
+  width: 60px; height: 1.5px; background: #3D6FA8;
+  margin: 12px auto; opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<!-- PAGE 1: Interior Title -->
+<div class="cover">
+  <div class="glow-bg"></div>
+
+  <div style="position: relative; z-index: 2; margin-bottom: 20px;">
+    <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Wrench icon -->
+      <g transform="translate(50,50)">
+        <path d="M -28 -10 L -20 -18 A 8 8 0 0 1 -8 -10 L -10 -2 L -2 -10 A 8 8 0 0 1 -10 -22 L -2 -30"
+              stroke="#3D6FA8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="-4" y="-4" width="28" height="8" rx="2"
+              stroke="#3D6FA8" stroke-width="2" fill="none" transform="rotate(45 10 0)"/>
+        <circle cx="22" cy="22" r="6" stroke="#3D6FA8" stroke-width="2" fill="none"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="title-main">Vehicle<br>Maintenance Log</div>
+  <div class="accent-bar"></div>
+  <div class="subtitle">Track Every Service, Every Mile, Every Repair</div>
+
+  <div class="pub">More Shine Press</div>
+</div>
+<!-- PAGE 2: How to Use -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">How to Use This Log Book</span>
+    <span class="ph-right">Page 2</span>
+  </div>
+
+  <div class="howto-text">
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Your Vehicle Journal</div>
+    <p>This log book is your vehicle's complete service history. Record every oil
+    change, tire rotation, brake job, and repair. Over time, these records
+    protect your investment and boost resale value.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> The Service Log</div>
+    <p>Each service entry uses a <strong>two-page spread</strong>. The left page
+    captures the date, mileage, service type, shop or DIY details, and parts used.
+    The right page tracks costs, labor, fluid checks, tire condition, and notes
+    for next time.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Tips</div>
+    <p>&#9679; <strong>Log it immediately.</strong> Write entries the same day as service.</p>
+    <p>&#9679; <strong>Keep receipts.</strong> Note where you filed them for warranty claims.</p>
+    <p>&#9679; <strong>Track mileage.</strong> Knowing your mileage patterns helps predict
+    when services are due.</p>
+    <p>&#9679; <strong>Note recalls.</strong> Record any recall work performed by dealerships.</p>
+  </div>
+</div>
+<!-- PAGE 3: Vehicle Info -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Vehicle Information</span>
+    <span class="ph-right">Page 3</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Vehicle</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Year / Make / Model</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Trim / Submodel</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">VIN</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">License Plate</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Color</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Purchase Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Purchase Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Purchase Price</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Engine / Displacement</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Transmission</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insurance Company / Policy Number</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Preferred Mechanic / Dealership / Contact</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Tire Size / Pressure (PSI)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Oil Type / Viscosity / Filter Part Number</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 4: Service Left #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 4</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #001</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 5: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 5</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 6: Service Left #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 6</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #002</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 7: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 7</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 8: Service Left #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 8</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #003</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 9: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 9</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 10: Service Left #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 10</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #004</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 11: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 11</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 12: Service Left #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 12</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #005</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 13: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 13</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 14: Service Left #6 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 14</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #006</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 15: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 15</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 16: Service Left #7 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 16</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #007</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 17: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 17</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 18: Service Left #8 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 18</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #008</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 19: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 19</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 20: Service Left #9 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 20</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #009</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 21: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 21</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 22: Service Left #10 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 22</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #010</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 23: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 23</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 24: Annual Summary -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Annual Summary</span>
+    <span class="ph-right">Page 24</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Year: __________</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Start Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">End Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Miles Driven</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Average MPG</span><div class="if-write"></div></div>
+  </div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Service Category</th>
+        <th>Times Done</th>
+        <th>Total Cost</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Oil Changes</td><td></td><td></td><td></td></tr>
+      <tr><td>Tire Service / Replacement</td><td></td><td></td><td></td></tr>
+      <tr><td>Brake Service</td><td></td><td></td><td></td></tr>
+      <tr><td>Fluids / Filters</td><td></td><td></td><td></td></tr>
+      <tr><td>Repairs</td><td></td><td></td><td></td></tr>
+      <tr><td>Inspections / Registration</td><td></td><td></td><td></td></tr>
+      <tr style="font-weight: 700;"><td>Annual Total</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Biggest Repair This Year</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Plans for Next Year</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 25: Service Left #11 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 25</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #011</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 26: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 26</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 27: Service Left #12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 27</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #012</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 28: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 28</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 29: Service Left #13 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 29</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #013</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 30: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 30</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 31: Service Left #14 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 31</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #014</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 32: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 32</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 33: Service Left #15 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 33</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #015</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 34: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 34</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 35: Service Left #16 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 35</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #016</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 36: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 36</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 37: Service Left #17 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 37</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #017</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 38: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 38</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 39: Service Left #18 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 39</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #018</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 40: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 40</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 41: Service Left #19 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 41</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #019</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 42: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 42</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 43: Service Left #20 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 43</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #020</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 44: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 44</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 45: Annual Summary -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Annual Summary</span>
+    <span class="ph-right">Page 45</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Year: __________</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Start Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">End Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Miles Driven</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Average MPG</span><div class="if-write"></div></div>
+  </div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Service Category</th>
+        <th>Times Done</th>
+        <th>Total Cost</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Oil Changes</td><td></td><td></td><td></td></tr>
+      <tr><td>Tire Service / Replacement</td><td></td><td></td><td></td></tr>
+      <tr><td>Brake Service</td><td></td><td></td><td></td></tr>
+      <tr><td>Fluids / Filters</td><td></td><td></td><td></td></tr>
+      <tr><td>Repairs</td><td></td><td></td><td></td></tr>
+      <tr><td>Inspections / Registration</td><td></td><td></td><td></td></tr>
+      <tr style="font-weight: 700;"><td>Annual Total</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Biggest Repair This Year</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Plans for Next Year</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 46: Service Left #21 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 46</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #021</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 47: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 47</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 48: Service Left #22 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 48</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #022</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 49: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 49</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 50: Service Left #23 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 50</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #023</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 51: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 51</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 52: Service Left #24 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 52</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #024</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 53: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 53</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 54: Service Left #25 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 54</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #025</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 55: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 55</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 56: Service Left #26 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 56</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #026</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 57: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 57</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 58: Service Left #27 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 58</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #027</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 59: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 59</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 60: Service Left #28 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 60</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #028</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 61: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 61</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 62: Service Left #29 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 62</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #029</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 63: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 63</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 64: Service Left #30 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Service Log</span>
+    <span class="ph-right">Page 64</span>
+  </div>
+
+  <div class="service-banner">
+    <span class="sb-num">Service #030</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Next Service Due</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Performed By</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Shop / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Service Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Oil Change</span> <span class="type-check"><span class="type-box"></span>Tire Rotation</span> <span class="type-check"><span class="type-box"></span>Brakes</span> <span class="type-check"><span class="type-box"></span>Fluid Check</span> <span class="type-check"><span class="type-box"></span>Filter</span> <span class="type-check"><span class="type-box"></span>Battery</span> <span class="type-check"><span class="type-box"></span>Alignment</span> <span class="type-check"><span class="type-box"></span>Inspection</span> <span class="type-check"><span class="type-box"></span>Repair</span> <span class="type-check"><span class="type-box"></span>Recall</span> <span class="type-check"><span class="type-box"></span>Other</span></div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Work Performed / Part Replaced</th>
+        <th>Part Number</th>
+        <th>Qty</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box">
+    <div class="wb-label">Fluid Levels Checked (Oil / Coolant / Brake / Transmission / Washer)</div>
+    <div class="wb-area" style="height: 22px;"></div>
+  </div>
+</div>
+<!-- PAGE 65: Service Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Costs &amp; Notes</span>
+    <span class="ph-right">Page 65</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Parts Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Labor Total</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Tax / Fees</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Grand Total</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #3D6FA8; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">
+    Tire Condition (LF / RF / LR / RR)
+  </div>
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>Tread Depth</th>
+        <th>Pressure (PSI)</th>
+        <th>Brand / Model</th>
+        <th>Replace?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Left Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Front</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Left Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Right Rear</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Spare</td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Notes &amp; Observations</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Reminder for Next Service</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 66: Annual Summary -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Annual Summary</span>
+    <span class="ph-right">Page 66</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Year: __________</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Start Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">End Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Miles Driven</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Average MPG</span><div class="if-write"></div></div>
+  </div>
+
+  <table class="service-table">
+    <thead>
+      <tr>
+        <th>Service Category</th>
+        <th>Times Done</th>
+        <th>Total Cost</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Oil Changes</td><td></td><td></td><td></td></tr>
+      <tr><td>Tire Service / Replacement</td><td></td><td></td><td></td></tr>
+      <tr><td>Brake Service</td><td></td><td></td><td></td></tr>
+      <tr><td>Fluids / Filters</td><td></td><td></td><td></td></tr>
+      <tr><td>Repairs</td><td></td><td></td><td></td></tr>
+      <tr><td>Inspections / Registration</td><td></td><td></td><td></td></tr>
+      <tr style="font-weight: 700;"><td>Annual Total</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="border-color: #3D6FA8;">
+    <div class="wb-label">Biggest Repair This Year</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Plans for Next Year</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 67: Fuel Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Fuel &amp; Mileage Log</span>
+    <span class="ph-right">Page 67</span>
+  </div>
+
+  <table class="fuel-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Mileage</th>
+        <th>Gallons</th>
+        <th>Price/Gal</th>
+        <th>Total</th>
+        <th>MPG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 10px;">
+    <div class="wb-label">Notes (Best / Worst MPG, Fuel Brand, Driving Conditions)</div>
+    <div class="wb-area" style="height: 60px;"></div>
+  </div>
+</div>
+<!-- PAGE 68: Fuel Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Fuel &amp; Mileage Log</span>
+    <span class="ph-right">Page 68</span>
+  </div>
+
+  <table class="fuel-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Mileage</th>
+        <th>Gallons</th>
+        <th>Price/Gal</th>
+        <th>Total</th>
+        <th>MPG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 10px;">
+    <div class="wb-label">Notes (Best / Worst MPG, Fuel Brand, Driving Conditions)</div>
+    <div class="wb-area" style="height: 60px;"></div>
+  </div>
+</div>
+<!-- PAGE 69: Fuel Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Fuel &amp; Mileage Log</span>
+    <span class="ph-right">Page 69</span>
+  </div>
+
+  <table class="fuel-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Mileage</th>
+        <th>Gallons</th>
+        <th>Price/Gal</th>
+        <th>Total</th>
+        <th>MPG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 10px;">
+    <div class="wb-label">Notes (Best / Worst MPG, Fuel Brand, Driving Conditions)</div>
+    <div class="wb-area" style="height: 60px;"></div>
+  </div>
+</div>
+<!-- PAGE 70: Fuel Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Fuel &amp; Mileage Log</span>
+    <span class="ph-right">Page 70</span>
+  </div>
+
+  <table class="fuel-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Mileage</th>
+        <th>Gallons</th>
+        <th>Price/Gal</th>
+        <th>Total</th>
+        <th>MPG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 10px;">
+    <div class="wb-label">Notes (Best / Worst MPG, Fuel Brand, Driving Conditions)</div>
+    <div class="wb-area" style="height: 60px;"></div>
+  </div>
+</div>
+<!-- PAGE 71: Fuel Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Fuel &amp; Mileage Log</span>
+    <span class="ph-right">Page 71</span>
+  </div>
+
+  <table class="fuel-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Mileage</th>
+        <th>Gallons</th>
+        <th>Price/Gal</th>
+        <th>Total</th>
+        <th>MPG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 10px;">
+    <div class="wb-label">Notes (Best / Worst MPG, Fuel Brand, Driving Conditions)</div>
+    <div class="wb-area" style="height: 60px;"></div>
+  </div>
+</div>
+<!-- PAGE 72: Fuel Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Fuel &amp; Mileage Log</span>
+    <span class="ph-right">Page 72</span>
+  </div>
+
+  <table class="fuel-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Mileage</th>
+        <th>Gallons</th>
+        <th>Price/Gal</th>
+        <th>Total</th>
+        <th>MPG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 10px;">
+    <div class="wb-label">Notes (Best / Worst MPG, Fuel Brand, Driving Conditions)</div>
+    <div class="wb-area" style="height: 60px;"></div>
+  </div>
+</div>
+<!-- PAGE 73: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 73</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 74: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 74</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 75: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 75</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 76: Final -->
+<div class="page">
+  <div class="final-page">
+    <div class="fp-text">
+      A well-maintained vehicle<br>
+      is a reliable vehicle.<br>
+      Keep this log. Drive with confidence.
+    </div>
+    <div class="fp-line"></div>
+    <div class="fp-logo">More Shine Press</div>
+    <div class="fp-line"></div>
+  </div>
+</div>
+</body>
+</html>
