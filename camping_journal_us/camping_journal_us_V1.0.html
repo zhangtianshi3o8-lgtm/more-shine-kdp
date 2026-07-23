@@ -1,0 +1,4835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camping Journal - Interior</title>
+  
+<style>
+  @page { size: 5in 8in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #2c2c2c;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* --- PAGE BASE --- */
+  .page {
+    width: 5in; height: 8in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Alternating gutter margins for facing pages */
+  .page.recto {   /* odd page, right side - gutter on left */
+    padding: 0.45in 0.38in 0.4in 0.65in;
+  }
+  .page.verso {   /* even page, left side - gutter on right */
+    padding: 0.45in 0.65in 0.4in 0.38in;
+  }
+
+  /* --- HEADERS --- */
+  .hike-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #1a2418;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hike-header .title {
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: #1a2418;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hike-header .number {
+    font-size: 18pt;
+    font-weight: bold;
+    color: #C4A04A;
+  }
+
+  .page-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1a2418;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #1a2418;
+    margin-bottom: 10px;
+  }
+  .page-subtitle {
+    font-size: 8pt;
+    text-align: center;
+    color: #999;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  /* --- FORM FIELDS --- */
+  .field-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 7px;
+  }
+  .field {
+    flex: 1;
+  }
+  .field-label {
+    font-size: 6.5pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .field-line {
+    border-bottom: 1px solid #d0d0d0;
+    height: 16px;
+  }
+
+  /* --- KEY-VALUE TABLE --- */
+  .kv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+  }
+  .kv-table td {
+    border: 1px solid #ccc;
+    padding: 4px 5px;
+    height: 22px;
+  }
+  .kv-table td.label {
+    background: #e8e2d4;
+    font-weight: bold;
+    color: #555;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    width: 30%;
+    white-space: nowrap;
+  }
+  .kv-table td.fill { }
+
+  /* --- CHECKBOXES --- */
+  .check-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    margin-bottom: 7px;
+  }
+  .check-item {
+    font-size: 7.5pt;
+    color: #555;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .check-box {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border: 1.2px solid #999;
+    border-radius: 2px;
+  }
+
+  /* --- STAR RATING --- */
+  .rating-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+  }
+  .rating-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .rating-label {
+    font-size: 7pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    margin-right: 4px;
+  }
+  .star {
+    font-size: 12pt;
+    color: #ddd;
+    letter-spacing: 1px;
+  }
+
+  /* --- SECTION DIVIDER --- */
+  .section-bar {
+    background: #1a2418;
+    color: white;
+    font-size: 7.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    margin: 8px 0 6px 0;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    border-radius: 2px;
+  }
+
+  /* --- TRAIL SKETCH AREA (dotted grid) --- */
+  .trail-map {
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+    background-size: 0.16in 0.16in;
+    background-position: 0.08in 0.08in;
+  }
+
+  /* --- LINED NOTES --- */
+  .write-line {
+    border-bottom: 1px solid #d0d0d0;
+    height: 18px;
+  }
+
+  /* --- FOOTER --- */
+  .page-footer {
+    position: absolute;
+    bottom: 0.22in;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 6.5pt;
+    color: #bbb;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- TITLE PAGE --- */
+  .title-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 8in;
+    padding: 1in;
+    text-align: center;
+  }
+  .title-page .boot-icon {
+    font-size: 48pt;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  .title-page h1 {
+    font-size: 24pt;
+    color: #1a2418;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .title-page .subtitle {
+    font-size: 11pt;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+  .title-page .divider {
+    width: 2in;
+    height: 2px;
+    background: #C4A04A;
+    margin: 15px 0;
+  }
+  .title-page .publisher {
+    font-size: 9pt;
+    color: #999;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 40px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+
+  /* --- HOW TO USE --- */
+  .htu-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 9px;
+    font-size: 8pt;
+    line-height: 1.4;
+  }
+  .htu-num {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1a2418;
+    color: white;
+    font-size: 8pt;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .htu-text {
+    color: #444;
+    padding-top: 1px;
+  }
+
+  /* --- TRAIL INFO CARD --- */
+  .trail-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .trail-card-title {
+    font-size: 9pt;
+    font-weight: bold;
+    color: #1a2418;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* --- REFERENCE LIST (Leave No Trace, Ten Essentials) --- */
+  .lnt-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 7.5pt;
+    line-height: 1.4;
+  }
+  .lnt-num {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #C4A04A;
+    color: #121612;
+    font-size: 8pt;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .lnt-text {
+    color: #444;
+    padding-top: 1px;
+  }
+  .lnt-text strong {
+    color: #1a2418;
+    font-size: 8pt;
+  }
+
+  /* --- ESSENTIALS GRID --- */
+  .essentials-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .essential-card {
+    border: 1px solid #8a7430;
+    border-radius: 4px;
+    padding: 6px 8px;
+    width: calc(50% - 3px);
+    font-size: 7.5pt;
+  }
+  .essential-card .ec-num {
+    font-size: 7pt;
+    font-weight: bold;
+    color: #C4A04A;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .essential-card .ec-name {
+    font-size: 8pt;
+    font-weight: bold;
+    color: #1a2418;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .essential-card .ec-desc {
+    font-size: 6.5pt;
+    color: #888;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* --- PACKING CHECKLIST --- */
+  .pack-category {
+    margin-bottom: 8px;
+  }
+  .pack-cat-title {
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: #1a2418;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #d0d0d0;
+    padding-bottom: 2px;
+    margin-bottom: 4px;
+  }
+  .pack-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 12px;
+  }
+  .pack-item {
+    font-size: 7pt;
+    color: #555;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  /* --- TRAIL LOG TABLE --- */
+  .log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7pt;
+  }
+  .log-table th {
+    background: #1a2418;
+    color: white;
+    font-size: 6.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 3px;
+    text-align: left;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .log-table td {
+    border: 1px solid #ccc;
+    padding: 3px;
+    height: 20px;
+  }
+
+  /* Screen preview border */
+  .page {
+    border: 1px dashed #e0e0e0;
+  }
+  @media print {
+    .page { border: none; }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="page recto" style="padding:0;">
+  <div class="title-page">
+    <div class="boot-icon">&#9978;</div>
+    <h1>Camping<br>Journal</h1>
+    <div class="divider"></div>
+    <div class="subtitle">Capture Every Campfire, Every Starry Night, Every Adventure</div>
+    <div class="publisher">More Shine Press</div>
+  </div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">This Journal Belongs To</div>
+  <div style="margin-top: 20px;">
+    <table class="kv-table">
+      <tr><td class="label">Name</td><td class="fill"></td></tr>
+      <tr><td class="label">Email</td><td class="fill"></td></tr>
+      <tr><td class="label">Phone</td><td class="fill"></td></tr>
+      <tr><td class="label">Home Base</td><td class="fill"></td></tr>
+      <tr><td class="label">Emergency Contact</td><td class="fill"></td></tr>
+      <tr><td class="label">Emergency Phone</td><td class="fill"></td></tr>
+      <tr><td class="label">Blood Type</td><td class="fill"></td></tr>
+      <tr><td class="label">Allergies / Medical</td><td class="fill"></td></tr>
+    </table>
+  </div>
+  <div style="margin-top: 16px; font-size: 7.5pt; color: #888; font-style: italic; text-align: center; line-height: 1.5;">
+    Take this journal on every camping trip.<br>
+    In case of emergency, the information above could help first responders.
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">How to Use This Journal</div>
+  <div style="margin-top: 6px;">
+    <div class="htu-item"><div class="htu-num">1</div><div class="htu-text">Record each camping trip as soon as you arrive or right after setup while details are fresh. Fill in the fields on the left page, then write your story on the right.</div></div><div class="htu-item"><div class="htu-num">2</div><div class="htu-text">Use the campsite sketch area to draw your site layout, mark nearby trails, or note where you pitched your shelter.</div></div><div class="htu-item"><div class="htu-num">3</div><div class="htu-text">Rate your trips by difficulty and overall enjoyment. Over time you will discover your favorite campsites and conditions.</div></div><div class="htu-item"><div class="htu-num">4</div><div class="htu-text">Log details about your favorite campsites on the next page so you can track which spots suit different seasons and setups.</div></div><div class="htu-item"><div class="htu-num">5</div><div class="htu-text">Use the summary pages at the back to tally your nights, miles, and memorable moments at season's end.</div></div><div class="htu-item"><div class="htu-num">6</div><div class="htu-text">This journal fits 35 camping trips. Keep it in your gear bin or pack pocket.</div></div>
+  </div>
+  <div style="margin-top: 14px; padding: 8px 10px; background: #e8e2d4; border-radius: 4px; border-left: 3px solid #C4A04A;">
+    <div style="font-size: 7pt; color: #888; text-transform: uppercase; letter-spacing: 1px; font-family: 'Helvetica Neue', 'Arial', sans-serif; margin-bottom: 3px;">Pro Tip</div>
+    <div style="font-size: 7.5pt; color: #555; line-height: 1.4; font-style: italic;">
+      Take a moment after each trip to jot down not just the numbers, but how the campsite made you feel.
+      Years from now, those notes will be the most valuable part of this journal.
+    </div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Favorite Campsites</div>
+  <div class="page-subtitle">Record your go-to campsites and conditions</div>
+  
+    <div class="trail-card">
+      <div class="trail-card-title">Favorite Campsite 1</div>
+      <table class="kv-table">
+        <tr>
+          <td class="label" style="width:35%">Campsite Name</td><td class="fill"></td>
+          <td class="label" style="width:35%">Location</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Type</td><td class="fill"></td>
+          <td class="label" style="width:35%">Best Season</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Notes</td><td class="fill" colspan="3"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="trail-card">
+      <div class="trail-card-title">Favorite Campsite 2</div>
+      <table class="kv-table">
+        <tr>
+          <td class="label" style="width:35%">Campsite Name</td><td class="fill"></td>
+          <td class="label" style="width:35%">Location</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Type</td><td class="fill"></td>
+          <td class="label" style="width:35%">Best Season</td><td class="fill"></td>
+        </tr>
+        <tr>
+          <td class="label" style="width:35%">Notes</td><td class="fill" colspan="3"></td>
+        </tr>
+      </table>
+    </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#01</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #01</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#01</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #01</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#02</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #02</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#02</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #02</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#03</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #03</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#03</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #03</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#04</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #04</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#04</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #04</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#05</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #05</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#05</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #05</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#06</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #06</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#06</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #06</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#07</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #07</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#07</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #07</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#08</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #08</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#08</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #08</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#09</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #09</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#09</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #09</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#10</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #10</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#10</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #10</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#11</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #11</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#11</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #11</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#12</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #12</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#12</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #12</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#13</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #13</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#13</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #13</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#14</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #14</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#14</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #14</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#15</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #15</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#15</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #15</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#16</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #16</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#16</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #16</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#17</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #17</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#17</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #17</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#18</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #18</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#18</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #18</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#19</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #19</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#19</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #19</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#20</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #20</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#20</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #20</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#21</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #21</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#21</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #21</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#22</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #22</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#22</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #22</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#23</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #23</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#23</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #23</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#24</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #24</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#24</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #24</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#25</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #25</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#25</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #25</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#26</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #26</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#26</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #26</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#27</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #27</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#27</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #27</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#28</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #28</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#28</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #28</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#29</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #29</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#29</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #29</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#30</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #30</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#30</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #30</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#31</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #31</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#31</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #31</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#32</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #32</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#32</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #32</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#33</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #33</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#33</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #33</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#34</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #34</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#34</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #34</div>
+</div>
+
+<div class="page recto">
+  <div class="hike-header">
+    <span class="title">Camp Log</span>
+    <span class="number">#35</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Campsite Name</td><td class="fill"></td>
+      <td class="label">Location</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Site Number</td><td class="fill" colspan="3"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Wind</span>
+    <span class="check-item"><span class="check-box"></span>Fog</span>
+    <span class="check-item"><span class="check-box"></span>Snow</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Wind</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Camp Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Tent</span>
+    <span class="check-item"><span class="check-box"></span>RV</span>
+    <span class="check-item"><span class="check-box"></span>Cabin</span>
+    <span class="check-item"><span class="check-box"></span>Hammock</span>
+    <span class="check-item"><span class="check-box"></span>Backpack</span>
+  </div>
+
+  <div class="section-bar">Campground Type</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>National Park</span>
+    <span class="check-item"><span class="check-box"></span>State Park</span>
+    <span class="check-item"><span class="check-box"></span>Private</span>
+    <span class="check-item"><span class="check-box"></span>Dispersed</span>
+    <span class="check-item"><span class="check-box"></span>Public Land</span>
+  </div>
+
+  <div class="section-bar">Stats</div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Nights</td><td class="fill"></td>
+      <td class="label">Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Distance from Home</td><td class="fill"></td>
+      <td class="label">Drive Time</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label">Setup Time</td><td class="fill"></td>
+      <td class="label">Campmates</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="rating-row" style="margin-top: 8px;">
+    <div class="rating-group">
+      <span class="rating-label">Difficulty</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+    <div class="rating-group">
+      <span class="rating-label">Overall</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Camp #35</div>
+</div>
+
+<div class="page verso">
+  <div class="hike-header">
+    <span class="title">Camp Notes</span>
+    <span class="number">#35</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Campsite Sketch &amp; Map</div>
+  <div class="trail-map" style="width: 100%; height: 2.1in;"></div>
+
+  <div class="section-bar">Camp Highlights</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <table class="kv-table" style="margin-top: 4px;">
+    <tr><td class="label">Wildlife Spotted</td><td class="fill"></td></tr>
+    <tr><td class="label">Camp Conditions</td><td class="fill"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Campfire?</span>
+  </div>
+  <div class="field-label" style="margin-top: 4px;">Would return to this campsite?</div>
+  <div class="check-row" style="margin-top: 2px;">
+    <span class="check-item"><span class="check-box"></span>Absolutely</span>
+    <span class="check-item"><span class="check-box"></span>Maybe</span>
+    <span class="check-item"><span class="check-box"></span>No</span>
+  </div>
+
+  <div class="page-footer">Camp #35</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Camping Summary</div>
+  <div class="page-subtitle">Tally your season at a glance</div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label" style="width:50%">Total Trips</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Nights</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Campers</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Longest Trip</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Favorite Campsite</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Most Adventurous</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Top 5 Camping Trips</div>
+  <table class="kv-table">
+    <tr><td class="label" style="width:12%">#</td><td class="label" style="width:30%">Date</td><td class="label" style="width:58%">Campsite / Why</td></tr>
+    <tr><td>1</td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td></tr>
+  </table>
+
+  <div class="section-bar">Goals for Next Season</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Leave No Trace</div>
+  <div class="page-subtitle">Seven Principles for Outdoor Ethics</div>
+  <div style="margin-top: 4px;">
+    <div class="lnt-item"><div class="lnt-num">1</div><div class="lnt-text"><strong>Plan Ahead and Prepare</strong><br>Know the regulations and prepare for extreme weather, hazards, and emergencies. Schedule your trip to avoid times of high use.</div></div><div class="lnt-item"><div class="lnt-num">2</div><div class="lnt-text"><strong>Travel and Camp on Durable Surfaces</strong><br>Use established trails and campsites. Walk single file in the middle of the trail. Keep campsites small and at least 200 feet from water.</div></div><div class="lnt-item"><div class="lnt-num">3</div><div class="lnt-text"><strong>Dispose of Waste Properly</strong><br>Pack it in, pack it out. Inspect your campsite for trash or spilled foods. Deposit solid human waste in catholes 6-8 inches deep, 200 feet from water.</div></div><div class="lnt-item"><div class="lnt-num">4</div><div class="lnt-text"><strong>Leave What You Find</strong><br>Preserve the past: examine but do not touch cultural or historic structures and artifacts. Leave rocks, plants, and other natural objects as you find them.</div></div><div class="lnt-item"><div class="lnt-num">5</div><div class="lnt-text"><strong>Minimize Campfire Impacts</strong><br>Use a lightweight stove for cooking and a candle lantern for light. Where fires are permitted, use established fire rings, fire pans, or mound fires.</div></div><div class="lnt-item"><div class="lnt-num">6</div><div class="lnt-text"><strong>Respect Wildlife</strong><br>Observe wildlife from a distance. Never feed animals. Store food securely and keep wildlife wild. Control pets at all times.</div></div><div class="lnt-item"><div class="lnt-num">7</div><div class="lnt-text"><strong>Be Considerate of Other Visitors</strong><br>Respect other visitors and protect the quality of their experience. Yield to other users on the trail. Let nature's sounds prevail.</div></div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Camping Essentials</div>
+  <div class="page-subtitle">Ten categories every camper should pack</div>
+  <div class="essentials-grid">
+    <div class="essential-card"><span class="ec-num">01</span> <span class="ec-name">Shelter</span><div class="ec-desc">Tent, tarp, or hammock setup</div></div><div class="essential-card"><span class="ec-num">02</span> <span class="ec-name">Sleep System</span><div class="ec-desc">Sleeping bag, pad, pillow</div></div><div class="essential-card"><span class="ec-num">03</span> <span class="ec-name">Kitchen</span><div class="ec-desc">Stove, fuel, cookware, utensils</div></div><div class="essential-card"><span class="ec-num">04</span> <span class="ec-name">Water</span><div class="ec-desc">Bottles, filter, or purification tablets</div></div><div class="essential-card"><span class="ec-num">05</span> <span class="ec-name">Fire</span><div class="ec-desc">Matches, lighter, fire starter, kindling</div></div><div class="essential-card"><span class="ec-num">06</span> <span class="ec-name">Lighting</span><div class="ec-desc">Headlamp, lantern, extra batteries</div></div><div class="essential-card"><span class="ec-num">07</span> <span class="ec-name">First-Aid</span><div class="ec-desc">Bandages, antiseptic, medications</div></div><div class="essential-card"><span class="ec-num">08</span> <span class="ec-name">Navigation</span><div class="ec-desc">Map, compass, GPS device</div></div><div class="essential-card"><span class="ec-num">09</span> <span class="ec-name">Clothing</span><div class="ec-desc">Layers, rain gear, extra socks</div></div><div class="essential-card"><span class="ec-num">10</span> <span class="ec-name">Tools</span><div class="ec-desc">Knife, multi-tool, cordage, repair tape</div></div>
+  </div>
+  <div style="margin-top: 14px; padding: 8px 10px; background: #e8e2d4; border-radius: 4px; border-left: 3px solid #C4A04A;">
+    <div style="font-size: 7pt; color: #888; text-transform: uppercase; letter-spacing: 1px; font-family: 'Helvetica Neue', 'Arial', sans-serif; margin-bottom: 3px;">Safety First</div>
+    <div style="font-size: 7.5pt; color: #555; line-height: 1.4; font-style: italic;">
+      These ten categories form the foundation of every camping trip.
+      Customize your gear for the terrain, weather, and length of your stay.
+    </div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Packing Checklist</div>
+  <div class="page-subtitle">Gear up before you head to camp</div>
+  <div style="margin-top: 2px;">
+    <div class="pack-category"><div class="pack-cat-title">Shelter</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Tent</span><span class="pack-item"><span class="check-box"></span>Tarp / footprint</span><span class="pack-item"><span class="check-box"></span>Stakes</span><span class="pack-item"><span class="check-box"></span>Guy lines</span><span class="pack-item"><span class="check-box"></span>Mallet</span></div></div><div class="pack-category"><div class="pack-cat-title">Sleep</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Sleeping bag</span><span class="pack-item"><span class="check-box"></span>Sleeping pad</span><span class="pack-item"><span class="check-box"></span>Pillow</span><span class="pack-item"><span class="check-box"></span>Extra blanket</span><span class="pack-item"><span class="check-box"></span>Ear plugs</span></div></div><div class="pack-category"><div class="pack-cat-title">Kitchen / Cooking</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Stove</span><span class="pack-item"><span class="check-box"></span>Fuel</span><span class="pack-item"><span class="check-box"></span>Cookware</span><span class="pack-item"><span class="check-box"></span>Utensils</span><span class="pack-item"><span class="check-box"></span>Plates / cups</span><span class="pack-item"><span class="check-box"></span>Coffee press</span><span class="pack-item"><span class="check-box"></span>Trash bags</span></div></div><div class="pack-category"><div class="pack-cat-title">Water</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Water bottles</span><span class="pack-item"><span class="check-box"></span>Hydration bladder</span><span class="pack-item"><span class="check-box"></span>Water filter</span><span class="pack-item"><span class="check-box"></span>Purification tablets</span></div></div><div class="pack-category"><div class="pack-cat-title">Fire</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Matches (waterproof)</span><span class="pack-item"><span class="check-box"></span>Lighter</span><span class="pack-item"><span class="check-box"></span>Fire starter</span><span class="pack-item"><span class="check-box"></span>Kindling</span><span class="pack-item"><span class="check-box"></span>Axe / saw</span></div></div><div class="pack-category"><div class="pack-cat-title">Lighting</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Headlamp</span><span class="pack-item"><span class="check-box"></span>Lantern</span><span class="pack-item"><span class="check-box"></span>Extra batteries</span><span class="pack-item"><span class="check-box"></span>Glow sticks</span></div></div><div class="pack-category"><div class="pack-cat-title">First-Aid</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Bandages</span><span class="pack-item"><span class="check-box"></span>Antiseptic wipes</span><span class="pack-item"><span class="check-box"></span>Blister kit</span><span class="pack-item"><span class="check-box"></span>Pain reliever</span><span class="pack-item"><span class="check-box"></span>Tweezers</span><span class="pack-item"><span class="check-box"></span>Medical tape</span></div></div><div class="pack-category"><div class="pack-cat-title">Navigation</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Map</span><span class="pack-item"><span class="check-box"></span>Compass</span><span class="pack-item"><span class="check-box"></span>GPS device</span><span class="pack-item"><span class="check-box"></span>Trail guide</span><span class="pack-item"><span class="check-box"></span>Pencil / pen</span></div></div><div class="pack-category"><div class="pack-cat-title">Clothing</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Base layer</span><span class="pack-item"><span class="check-box"></span>Insulating jacket</span><span class="pack-item"><span class="check-box"></span>Rain shell</span><span class="pack-item"><span class="check-box"></span>Warm hat</span><span class="pack-item"><span class="check-box"></span>Gloves</span><span class="pack-item"><span class="check-box"></span>Extra socks</span><span class="pack-item"><span class="check-box"></span>Sturdy shoes</span></div></div><div class="pack-category"><div class="pack-cat-title">Personal</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Journal & pen</span><span class="pack-item"><span class="check-box"></span>Camera</span><span class="pack-item"><span class="check-box"></span>Phone</span><span class="pack-item"><span class="check-box"></span>Insect repellent</span><span class="pack-item"><span class="check-box"></span>Sunscreen</span><span class="pack-item"><span class="check-box"></span>Toiletries</span><span class="pack-item"><span class="check-box"></span>Towel</span></div></div><div class="pack-category"><div class="pack-cat-title">Tools / Misc</div><div class="pack-items"><span class="pack-item"><span class="check-box"></span>Multi-tool / knife</span><span class="pack-item"><span class="check-box"></span>Duct tape</span><span class="pack-item"><span class="check-box"></span>Cordage / paracord</span><span class="pack-item"><span class="check-box"></span>Whistle</span><span class="pack-item"><span class="check-box"></span>Cooler</span><span class="pack-item"><span class="check-box"></span>Camp chairs</span></div></div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+</body>
+</html>

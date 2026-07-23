@@ -1,0 +1,4579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gardening Journal - Interior</title>
+  
+<style>
+  @page { size: 5in 8in; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #2c2c2c;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* --- PAGE BASE --- */
+  .page {
+    width: 5in; height: 8in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* Alternating gutter margins for facing pages */
+  .page.recto {   /* odd page, right side - gutter on left */
+    padding: 0.45in 0.38in 0.4in 0.65in;
+  }
+  .page.verso {   /* even page, left side - gutter on right */
+    padding: 0.45in 0.65in 0.4in 0.38in;
+  }
+
+  /* --- HEADERS --- */
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #2A3320;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .entry-header .title {
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: #2A3320;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .entry-header .number {
+    font-size: 18pt;
+    font-weight: bold;
+    color: #C4A04A;
+  }
+
+  .page-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #2A3320;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #2A3320;
+    margin-bottom: 10px;
+  }
+  .page-subtitle {
+    font-size: 8pt;
+    text-align: center;
+    color: #999;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  /* --- FORM FIELDS --- */
+  .field-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 7px;
+  }
+  .field {
+    flex: 1;
+  }
+  .field-label {
+    font-size: 6.5pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .field-line {
+    border-bottom: 1px solid #d0d0d0;
+    height: 16px;
+  }
+
+  /* --- KEY-VALUE TABLE --- */
+  .kv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+  }
+  .kv-table td {
+    border: 1px solid #ccc;
+    padding: 4px 5px;
+    height: 22px;
+  }
+  .kv-table td.label {
+    background: #e8e2d4;
+    font-weight: bold;
+    color: #555;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    width: 30%;
+    white-space: nowrap;
+  }
+  .kv-table td.fill { }
+
+  /* --- CHECKBOXES --- */
+  .check-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    margin-bottom: 7px;
+  }
+  .check-item {
+    font-size: 7.5pt;
+    color: #555;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .check-box {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border: 1.2px solid #999;
+    border-radius: 2px;
+  }
+
+  /* --- STAR RATING --- */
+  .rating-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+  }
+  .rating-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .rating-label {
+    font-size: 7pt;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    margin-right: 4px;
+  }
+  .star {
+    font-size: 12pt;
+    color: #ddd;
+    letter-spacing: 1px;
+  }
+
+  /* --- SECTION DIVIDER --- */
+  .section-bar {
+    background: #2A3320;
+    color: white;
+    font-size: 7.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    margin: 8px 0 6px 0;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    border-radius: 2px;
+  }
+
+  /* --- GARDEN SKETCH AREA (dotted grid) --- */
+  .garden-sketch {
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+    background-size: 0.16in 0.16in;
+    background-position: 0.08in 0.08in;
+  }
+
+  /* --- LINED NOTES --- */
+  .write-line {
+    border-bottom: 1px solid #d0d0d0;
+    height: 18px;
+  }
+
+  /* --- FOOTER --- */
+  .page-footer {
+    position: absolute;
+    bottom: 0.22in;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 6.5pt;
+    color: #bbb;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- TITLE PAGE --- */
+  .title-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 8in;
+    padding: 1in;
+    text-align: center;
+  }
+  .title-page .seedling-icon {
+    font-size: 48pt;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  .title-page h1 {
+    font-size: 24pt;
+    color: #2A3320;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .title-page .subtitle {
+    font-size: 11pt;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+  .title-page .divider {
+    width: 2in;
+    height: 2px;
+    background: #C4A04A;
+    margin: 15px 0;
+  }
+  .title-page .publisher {
+    font-size: 9pt;
+    color: #999;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 40px;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+
+  /* --- HOW TO USE --- */
+  .htu-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 9px;
+    font-size: 8pt;
+    line-height: 1.4;
+  }
+  .htu-num {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #2A3320;
+    color: white;
+    font-size: 8pt;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .htu-text {
+    color: #444;
+    padding-top: 1px;
+  }
+
+  /* --- GARDEN INFO CARD --- */
+  .garden-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  .garden-card-title {
+    font-size: 9pt;
+    font-weight: bold;
+    color: #2A3320;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* --- COMPANION PAIR LIST --- */
+  .companion-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 7.5pt;
+    line-height: 1.4;
+  }
+  .companion-num {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #C4A04A;
+    color: #12160E;
+    font-size: 8pt;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .companion-text {
+    color: #444;
+    padding-top: 1px;
+  }
+  .companion-text strong {
+    color: #2A3320;
+    font-size: 8pt;
+  }
+
+  /* --- ESSENTIALS GRID --- */
+  .essentials-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .essential-card {
+    border: 1px solid #8a7430;
+    border-radius: 4px;
+    padding: 6px 8px;
+    width: calc(50% - 3px);
+    font-size: 7.5pt;
+  }
+  .essential-card .ec-num {
+    font-size: 7pt;
+    font-weight: bold;
+    color: #C4A04A;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .essential-card .ec-name {
+    font-size: 8pt;
+    font-weight: bold;
+    color: #2A3320;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .essential-card .ec-desc {
+    font-size: 6.5pt;
+    color: #888;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* --- PLANTING CALENDAR --- */
+  .cal-category {
+    margin-bottom: 8px;
+  }
+  .cal-cat-title {
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: #2A3320;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #d0d0d0;
+    padding-bottom: 2px;
+    margin-bottom: 4px;
+  }
+  .cal-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 12px;
+  }
+  .cal-item {
+    font-size: 7pt;
+    color: #555;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  /* --- PLANT LOG TABLE --- */
+  .log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7pt;
+  }
+  .log-table th {
+    background: #2A3320;
+    color: white;
+    font-size: 6.5pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 3px;
+    text-align: left;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+  .log-table td {
+    border: 1px solid #ccc;
+    padding: 3px;
+    height: 20px;
+  }
+
+  /* Screen preview border */
+  .page {
+    border: 1px dashed #e0e0e0;
+  }
+  @media print {
+    .page { border: none; }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="page recto" style="padding:0;">
+  <div class="title-page">
+    <div class="seedling-icon">&#127793;</div>
+    <h1>Gardening<br>Journal</h1>
+    <div class="divider"></div>
+    <div class="subtitle">Track Every Seed, Every Bloom, Every Harvest</div>
+    <div class="publisher">More Shine Press</div>
+  </div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">This Journal Belongs To</div>
+  <div style="margin-top: 20px;">
+    <table class="kv-table">
+      <tr><td class="label">Name</td><td class="fill"></td></tr>
+      <tr><td class="label">Email</td><td class="fill"></td></tr>
+      <tr><td class="label">Phone</td><td class="fill"></td></tr>
+      <tr><td class="label">Garden Location</td><td class="fill"></td></tr>
+      <tr><td class="label">USDA Hardiness Zone</td><td class="fill"></td></tr>
+      <tr><td class="label">Garden Type</td><td class="fill"></td></tr>
+      <tr><td class="label">Garden Size</td><td class="fill"></td></tr>
+    </table>
+  </div>
+  <div style="margin-top: 16px; font-size: 7.5pt; color: #888; font-style: italic; text-align: center; line-height: 1.5;">
+    Record your garden journey through every season.<br>
+    Each entry builds a growing record you will treasure for years.
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">How to Use This Journal</div>
+  <div style="margin-top: 6px;">
+    <div class="htu-item"><div class="htu-num">1</div><div class="htu-text">Record each garden entry as soon as you finish your session while memories are fresh. Fill in the fields on the left page, then write your observations on the right.</div></div><div class="htu-item"><div class="htu-num">2</div><div class="htu-text">Use the garden sketch area to draw your bed layout, mark where you planted, or plan where new plants will go.</div></div><div class="htu-item"><div class="htu-num">3</div><div class="htu-text">Track your garden through all four seasons. Note the weather, soil moisture, and which tasks you completed each time you visit the garden.</div></div><div class="htu-item"><div class="htu-num">4</div><div class="htu-text">Use the companion planting guide to plan which plants grow best side by side, and the planting calendar to know when to sow each crop.</div></div><div class="htu-item"><div class="htu-num">5</div><div class="htu-text">At season's end, use the summary pages to tally your harvest, count your gardening days, and set goals for next year.</div></div><div class="htu-item"><div class="htu-num">6</div><div class="htu-text">This journal fits 35 garden entries. Keep it with your garden tools so it is always ready for your next visit.</div></div>
+  </div>
+  <div style="margin-top: 14px; padding: 8px 10px; background: #e8e2d4; border-radius: 4px; border-left: 3px solid #C4A04A;">
+    <div style="font-size: 7pt; color: #888; text-transform: uppercase; letter-spacing: 1px; font-family: 'Helvetica Neue', 'Arial', sans-serif; margin-bottom: 3px;">Garden Wisdom</div>
+    <div style="font-size: 7.5pt; color: #555; line-height: 1.4; font-style: italic;">
+      The best fertilizer is the gardener's shadow. Visit your garden often, observe closely,
+      and this journal will become a living record of everything you grow.
+    </div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Garden Overview</div>
+  <div class="page-subtitle">Your garden at a glance</div>
+  <div style="margin-top: 10px;">
+    <table class="kv-table">
+      <tr>
+        <td class="label">Garden Name</td><td class="fill"></td>
+        <td class="label">Location</td><td class="fill"></td>
+      </tr>
+      <tr>
+        <td class="label">Zone</td><td class="fill"></td>
+        <td class="label">Size</td><td class="fill"></td>
+      </tr>
+      <tr>
+        <td class="label">Soil Type</td><td class="fill"></td>
+        <td class="label">Sun Exposure</td><td class="fill"></td>
+      </tr>
+      <tr>
+        <td class="label">Water Source</td><td class="fill"></td>
+        <td class="label">Years Gardening</td><td class="fill"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#01</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #01</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#01</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #01</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#02</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #02</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#02</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #02</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#03</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #03</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#03</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #03</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#04</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #04</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#04</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #04</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#05</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #05</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#05</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #05</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#06</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #06</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#06</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #06</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#07</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #07</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#07</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #07</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#08</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #08</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#08</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #08</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#09</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #09</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#09</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #09</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#10</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #10</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#10</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #10</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#11</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #11</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#11</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #11</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#12</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #12</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#12</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #12</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#13</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #13</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#13</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #13</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#14</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #14</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#14</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #14</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#15</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #15</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#15</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #15</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#16</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #16</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#16</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #16</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#17</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #17</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#17</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #17</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#18</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #18</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#18</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #18</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#19</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #19</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#19</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #19</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#20</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #20</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#20</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #20</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#21</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #21</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#21</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #21</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#22</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #22</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#22</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #22</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#23</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #23</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#23</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #23</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#24</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #24</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#24</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #24</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#25</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #25</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#25</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #25</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#26</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #26</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#26</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #26</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#27</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #27</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#27</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #27</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#28</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #28</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#28</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #28</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#29</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #29</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#29</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #29</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#30</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #30</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#30</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #30</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#31</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #31</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#31</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #31</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#32</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #32</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#32</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #32</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#33</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #33</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#33</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #33</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#34</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #34</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#34</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #34</div>
+</div>
+
+<div class="page recto">
+  <div class="entry-header">
+    <span class="title">Garden Entry</span>
+    <span class="number">#35</span>
+  </div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label">Date</td><td class="fill"></td>
+      <td class="label">Day</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Season</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Spring</span>
+    <span class="check-item"><span class="check-box"></span>Summer</span>
+    <span class="check-item"><span class="check-box"></span>Fall</span>
+    <span class="check-item"><span class="check-box"></span>Winter</span>
+  </div>
+
+  <div class="section-bar">Weather</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Sunny</span>
+    <span class="check-item"><span class="check-box"></span>Cloudy</span>
+    <span class="check-item"><span class="check-box"></span>Rain</span>
+    <span class="check-item"><span class="check-box"></span>Overcast</span>
+    <span class="check-item"><span class="check-box"></span>Hot</span>
+    <span class="check-item"><span class="check-box"></span>Cool</span>
+    <span class="check-item"><span class="check-box"></span>Frost</span>
+  </div>
+  <table class="kv-table">
+    <tr>
+      <td class="label">Temp</td><td class="fill"></td>
+      <td class="label">Soil Moisture</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Tasks Done</div>
+  <div class="check-row">
+    <span class="check-item"><span class="check-box"></span>Planted</span>
+    <span class="check-item"><span class="check-box"></span>Watered</span>
+    <span class="check-item"><span class="check-box"></span>Weeded</span>
+    <span class="check-item"><span class="check-box"></span>Pruned</span>
+    <span class="check-item"><span class="check-box"></span>Fertilized</span>
+    <span class="check-item"><span class="check-box"></span>Harvested</span>
+    <span class="check-item"><span class="check-box"></span>Composted</span>
+    <span class="check-item"><span class="check-box"></span>Mulched</span>
+  </div>
+
+  <div class="section-bar">Plants Today</div>
+  <table class="log-table">
+    <tr><th>Plant / Variety</th><th>Action</th><th>Qty</th><th>Location / Bed</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+  <table class="kv-table" style="margin-top: 7px;">
+    <tr>
+      <td class="label">Time Spent</td><td class="fill"></td>
+      <td class="label">Helpers</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="page-footer">Entry #35</div>
+</div>
+
+<div class="page verso">
+  <div class="entry-header">
+    <span class="title">Garden Notes</span>
+    <span class="number">#35</span>
+  </div>
+
+  <div class="field-label" style="margin-bottom: 3px;">Garden Sketch &amp; Bed Layout</div>
+  <div class="garden-sketch" style="width: 100%; height: 1.8in;"></div>
+
+  <div class="section-bar">Observations &amp; Growth Notes</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="section-bar">Pests / Diseases Spotted</div>
+  <table class="kv-table">
+    <tr><td class="label">Pest</td><td class="fill"></td><td class="label">Affected Plant</td><td class="fill"></td></tr>
+    <tr><td class="label">Treatment</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Harvest Today</div>
+  <table class="kv-table">
+    <tr><td class="label">Plant</td><td class="fill"></td><td class="label">Amount</td><td class="fill"></td></tr>
+    <tr><td class="label">Quality</td><td class="fill" colspan="3"></td></tr>
+  </table>
+
+  <div class="section-bar">Challenges &amp; Lessons</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="check-row" style="margin-top: 6px;">
+    <span class="check-item"><span class="check-box"></span>Bloom / Fruit Photos Taken</span>
+  </div>
+
+  <div class="rating-row" style="margin-top: 6px;">
+    <div class="rating-group">
+      <span class="rating-label">Enjoyment</span>
+      <span class="star">&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+    </div>
+  </div>
+
+  <div class="page-footer">Entry #35</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Season Summary</div>
+  <div class="page-subtitle">Tally your garden season at a glance</div>
+
+  <table class="kv-table">
+    <tr>
+      <td class="label" style="width:50%">Total Gardening Days</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Hours</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Plants Started</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Plants Harvested</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Total Harvest Weight</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Most Successful Crop</td><td class="fill"></td>
+    </tr>
+    <tr>
+      <td class="label" style="width:50%">Biggest Challenge</td><td class="fill"></td>
+    </tr>
+  </table>
+
+  <div class="section-bar">Top 5 Crops</div>
+  <table class="kv-table">
+    <tr><td class="label" style="width:12%">#</td><td class="label" style="width:30%">Crop</td><td class="label" style="width:58%">Why / Notes</td></tr>
+    <tr><td>1</td><td></td><td></td></tr>
+    <tr><td>2</td><td></td><td></td></tr>
+    <tr><td>3</td><td></td><td></td></tr>
+    <tr><td>4</td><td></td><td></td></tr>
+    <tr><td>5</td><td></td><td></td></tr>
+  </table>
+
+  <div class="section-bar">Goals for Next Season</div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+  <div class="write-line"></div>
+
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Companion Planting Guide</div>
+  <div class="page-subtitle">Plants that grow better together</div>
+  <div style="margin-top: 4px;">
+    <div class="companion-item"><div class="companion-num">1</div><div class="companion-text"><strong>Tomato + Basil</strong><br>Basil repels pests that trouble tomatoes and is said to improve flavor. Plant them as close neighbors.</div></div><div class="companion-item"><div class="companion-num">2</div><div class="companion-text"><strong>Carrot + Onion</strong><br>Onions deter carrot flies, and carrots deter onion flies. A classic mutual-protection pairing.</div></div><div class="companion-item"><div class="companion-num">3</div><div class="companion-text"><strong>Bean + Corn</strong><br>Beans fix nitrogen in the soil, feeding the tall corn, while corn stalks give beans a natural pole to climb.</div></div><div class="companion-item"><div class="companion-num">4</div><div class="companion-text"><strong>Cucumber + Radish</strong><br>Radishes repel cucumber beetles. Sow radishes around cucumbers and let them go to seed as a trap crop.</div></div><div class="companion-item"><div class="companion-num">5</div><div class="companion-text"><strong>Lettuce + Strawberry</strong><br>Lettuce grows low and shades strawberry roots, keeping soil cool and moist while deterring weeds.</div></div><div class="companion-item"><div class="companion-num">6</div><div class="companion-text"><strong>Pepper + Okra</strong><br>Okra's tall stems provide wind protection for peppers, and peppers help repel some okra pests.</div></div><div class="companion-item"><div class="companion-num">7</div><div class="companion-text"><strong>Marigold + Tomato</strong><br>Marigolds repel nematodes in the soil and discourage many common tomato pests with their scent.</div></div><div class="companion-item"><div class="companion-num">8</div><div class="companion-text"><strong>Nasturtium + Cucumber</strong><br>Nasturtiums act as a trap crop for aphids and crawling pests, drawing them away from cucumbers.</div></div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Garden Essentials</div>
+  <div class="page-subtitle">Tools every gardener should have</div>
+  <div class="essentials-grid">
+    <div class="essential-card"><span class="ec-num">01</span> <span class="ec-name">Quality Soil / Compost</span><div class="ec-desc">Foundation of every healthy garden</div></div><div class="essential-card"><span class="ec-num">02</span> <span class="ec-name">Hand Trowel</span><div class="ec-desc">For digging, transplanting, and potting</div></div><div class="essential-card"><span class="ec-num">03</span> <span class="ec-name">Pruning Shears</span><div class="ec-desc">For trimming, deadheading, and harvesting</div></div><div class="essential-card"><span class="ec-num">04</span> <span class="ec-name">Watering Can / Hose</span><div class="ec-desc">Gentle, consistent watering for young plants</div></div><div class="essential-card"><span class="ec-num">05</span> <span class="ec-name">Garden Gloves</span><div class="ec-desc">Protect your hands from thorns and soil</div></div><div class="essential-card"><span class="ec-num">06</span> <span class="ec-name">Seeds / Seedlings</span><div class="ec-desc">The starts of everything you will grow</div></div><div class="essential-card"><span class="ec-num">07</span> <span class="ec-name">Plant Markers</span><div class="ec-desc">Label what you planted and where</div></div><div class="essential-card"><span class="ec-num">08</span> <span class="ec-name">Sun Hat</span><div class="ec-desc">Shade for long hours in the garden</div></div><div class="essential-card"><span class="ec-num">09</span> <span class="ec-name">Knee Pad</span><div class="ec-desc">Comfort for planting and weeding low</div></div><div class="essential-card"><span class="ec-num">10</span> <span class="ec-name">Garden Fork</span><div class="ec-desc">For turning compost and aerating soil</div></div>
+  </div>
+  <div style="margin-top: 14px; padding: 8px 10px; background: #e8e2d4; border-radius: 4px; border-left: 3px solid #C4A04A;">
+    <div style="font-size: 7pt; color: #888; text-transform: uppercase; letter-spacing: 1px; font-family: 'Helvetica Neue', 'Arial', sans-serif; margin-bottom: 3px;">Gardener's Rule</div>
+    <div style="font-size: 7.5pt; color: #555; line-height: 1.4; font-style: italic;">
+      Take care of your tools and they will take care of your garden.
+      Clean, sharpen, and store them properly after every use.
+    </div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page verso">
+  <div class="page-title">Planting Calendar</div>
+  <div class="page-subtitle">When to plant your favorite crops</div>
+  <div style="margin-top: 2px;">
+    <div class="cal-category"><div class="cal-cat-title">Spring</div><div class="cal-items"><span class="cal-item"><span class="check-box"></span>Peas</span><span class="cal-item"><span class="check-box"></span>Lettuce</span><span class="cal-item"><span class="check-box"></span>Spinach</span><span class="cal-item"><span class="check-box"></span>Radish</span><span class="cal-item"><span class="check-box"></span>Carrot</span><span class="cal-item"><span class="check-box"></span>Onion</span></div></div><div class="cal-category"><div class="cal-cat-title">Summer</div><div class="cal-items"><span class="cal-item"><span class="check-box"></span>Tomato</span><span class="cal-item"><span class="check-box"></span>Pepper</span><span class="cal-item"><span class="check-box"></span>Cucumber</span><span class="cal-item"><span class="check-box"></span>Bean</span><span class="cal-item"><span class="check-box"></span>Squash</span><span class="cal-item"><span class="check-box"></span>Corn</span></div></div><div class="cal-category"><div class="cal-cat-title">Fall</div><div class="cal-items"><span class="cal-item"><span class="check-box"></span>Kale</span><span class="cal-item"><span class="check-box"></span>Broccoli</span><span class="cal-item"><span class="check-box"></span>Cabbage</span><span class="cal-item"><span class="check-box"></span>Garlic</span><span class="cal-item"><span class="check-box"></span>Beet</span><span class="cal-item"><span class="check-box"></span>Turnip</span></div></div>
+  </div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+
+<div class="page recto">
+  <div class="page-title">Notes</div>
+  <div style="margin-top: 6px;"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="page-footer">More Shine Press</div>
+</div>
+</body>
+</html>
