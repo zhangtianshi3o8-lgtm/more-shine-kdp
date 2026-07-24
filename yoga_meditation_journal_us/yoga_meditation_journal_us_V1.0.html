@@ -1,0 +1,3711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yoga and Meditation Journal</title>
+  <style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.5in 0.5in 0.4in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print { .page { border: none; margin: 0; } }
+
+/* ================ INTERIOR TITLE PAGE ================ */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, #161616 0%, #232323 30%, #161616 65%, #0E0E0E 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cover .glow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #7A9A7E, transparent),
+    radial-gradient(ellipse 26px 16px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 70% 70%, #7A9A7E, transparent),
+    radial-gradient(ellipse 22px 14px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 50% 45%, #7A9A7E, transparent);
+}
+
+.cover .title-main {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1.2;
+  letter-spacing: 0.5pt;
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.cover .accent-bar {
+  width: 100px; height: 2px;
+  background: #7A9A7E;
+  margin: 20px auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .subtitle {
+  font-size: 12pt;
+  color: #D4B896;
+  font-style: italic;
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .pub {
+  position: absolute;
+  bottom: 0.6in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #C4A04A;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ================ PAGE HEADER ================ */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #eee;
+}
+
+.page-header .ph-left {
+  font-size: 8pt;
+  color: #7A9A7E;
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-weight: 700;
+}
+
+.page-header .ph-right {
+  font-size: 8pt;
+  color: #999;
+}
+
+/* ================ SECTION HEADERS ================ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #161616;
+  letter-spacing: 0.5pt;
+  text-transform: uppercase;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #7A9A7E;
+  margin: 0 12px;
+  opacity: 0.4;
+}
+
+/* ================ HOW TO USE ================ */
+.howto-text { font-size: 10pt; line-height: 1.7; }
+.howto-text p { margin-bottom: 8px; }
+.howto-text .ht-title {
+  font-size: 11pt; font-weight: 700; color: #161616;
+  margin-bottom: 4px; margin-top: 6px;
+}
+.howto-text .ht-icon { color: #7A9A7E; font-weight: 700; margin-right: 4px; }
+
+/* ================ INFO FIELDS ================ */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin-bottom: 8px;
+}
+
+.info-field .if-label {
+  font-size: 6.5pt;
+  color: #7A9A7E;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.info-field .if-write {
+  height: 16px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ SESSION BANNER ================ */
+.session-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1.5px solid #7A9A7E;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.session-banner .sb-num {
+  display: inline-block;
+  border: 1.5px solid #7A9A7E;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 8pt;
+  color: #7A9A7E;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.session-banner .sb-label {
+  font-size: 8pt;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.session-banner .sb-line {
+  flex: 1;
+  height: 12px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ TYPE CHECKBOXES ================ */
+.type-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.type-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7.5pt;
+  color: #555;
+}
+
+.type-box {
+  width: 10px; height: 10px;
+  border: 1.5px solid #7A9A7E;
+  border-radius: 2px;
+}
+
+/* ================ DATA TABLE ================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.data-table th {
+  font-size: 6.5pt;
+  color: #7A9A7E;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  padding: 5px 3px;
+  border-bottom: 1.5px solid #7A9A7E;
+  text-align: center;
+}
+
+.data-table th:first-child { text-align: left; }
+
+.data-table td {
+  padding: 4px 3px;
+  border-bottom: 1px solid #eee;
+  height: 24px;
+  font-size: 9pt;
+}
+
+/* ================ WRITE BOX ================ */
+.write-box {
+  border: 1px solid #C4A04A;
+  border-radius: 3px;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+
+.write-box .wb-label {
+  font-size: 7pt;
+  color: #7A9A7E;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.write-box .wb-area {
+  height: 28px;
+}
+
+/* ================ METRIC ROWS ================ */
+.metric-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.metric-field .mf-label {
+  font-size: 6.5pt;
+  color: #7A9A7E;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.metric-field .mf-write {
+  height: 18px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ SCORE DOTS ================ */
+.score-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.score-dot {
+  width: 12px; height: 12px;
+  border: 1.5px solid #7A9A7E;
+  border-radius: 50%;
+}
+
+/* ================ NOTES ================ */
+.notes-line { border-bottom: 1px solid #ddd; height: 22px; }
+
+/* ================ FINAL PAGE ================ */
+.final-page {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; height: 100%;
+}
+.final-page .fp-text {
+  font-size: 12pt; color: #999; font-style: italic;
+  line-height: 1.8; margin-bottom: 20px;
+}
+.final-page .fp-logo {
+  font-size: 11pt; color: #C4A04A;
+  letter-spacing: 2.5pt; text-transform: uppercase;
+  font-weight: 700;
+}
+.final-page .fp-line {
+  width: 60px; height: 1.5px; background: #7A9A7E;
+  margin: 12px auto; opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<!-- PAGE 1: Interior Title -->
+<div class="cover">
+  <div class="glow-bg"></div>
+
+  <div style="position: relative; z-index: 2; margin-bottom: 20px;">
+    <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lotus flower outline -->
+      <g transform="translate(50,52)" stroke="#7A9A7E" stroke-width="1.8" fill="none" stroke-linejoin="round">
+        <!-- Center petal -->
+        <path d="M0,-32 C-6,-18 -6,-6 0,0 C6,-6 6,-18 0,-32 Z"/>
+        <!-- Inner side petals -->
+        <path d="M-18,-24 C-16,-12 -10,-4 0,0 C-4,-10 -8,-20 -18,-24 Z"/>
+        <path d="M18,-24 C16,-12 10,-4 0,0 C4,-10 8,-20 18,-24 Z"/>
+        <!-- Outer side petals -->
+        <path d="M-30,-14 C-22,-6 -14,-2 0,0 C-8,-8 -16,-14 -30,-14 Z"/>
+        <path d="M30,-14 C22,-6 14,-2 0,0 C8,-8 16,-14 30,-14 Z"/>
+        <!-- Base line -->
+        <line x1="-24" y1="6" x2="24" y2="6" stroke="#C4A04A" stroke-width="1" opacity="0.5"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="title-main">Yoga &amp;<br>Meditation<br>Journal</div>
+  <div class="accent-bar"></div>
+  <div class="subtitle">Track Your Practice,<br>Nurture Your Inner Peace</div>
+
+  <div class="pub">More Shine Press</div>
+</div>
+<!-- PAGE 2: How to Use -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">How to Use This Journal</span>
+    <span class="ph-right">Page 2</span>
+  </div>
+
+  <div class="howto-text">
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Your Practice Companion</div>
+    <p>This journal is designed to help you build a consistent,
+    mindful yoga and meditation practice. Every dedicated
+    practitioner keeps records -- not because it is a chore, but
+    because reflecting on your practice is the surest path to
+    inner growth and lasting peace.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> The Two-Page Practice Spread</div>
+    <p>Each session uses a <strong>two-page spread</strong>. The left
+    page captures the essentials: date, day, practice type, duration,
+    location, time of day, and your teacher or source. The right page
+    is for your inner experience: poses practiced, breathwork,
+    meditation length, how you felt before and after, energy and
+    mind-chatter levels, emotions, insights, and gratitude.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> The Weekly Reflection</div>
+    <p>After every 5 sessions, a <strong>weekly reflection page</strong>
+    helps you spot patterns: total practice time, breakthrough moments,
+    challenging poses, the week's theme, and what to focus on next.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Guidelines to Follow</div>
+    <p>&#9679; <strong>Fill it in right after practice</strong>, while
+    the experience is still fresh in body and mind.</p>
+    <p>&#9679; <strong>Be honest.</strong> Record how you truly felt,
+    not how you wish you had felt.</p>
+    <p>&#9679; <strong>Reflect weekly.</strong> Patterns emerge over
+    many sessions.</p>
+    <p>&#9679; <strong>Set intentions monthly.</strong> Clarity of
+    purpose deepens every practice.</p>
+  </div>
+</div>
+<!-- PAGE 3: Intention Setting -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Intention Setting</span>
+    <span class="ph-right">Page 3</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Monthly Intentions</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Month / Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Sessions Goal</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Goal (min/day)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Days Per Week</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Areas to Focus</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Flexibility</span> <span class="type-check"><span class="type-box"></span>Strength</span> <span class="type-check"><span class="type-box"></span>Mindfulness</span> <span class="type-check"><span class="type-box"></span>Stress Relief</span> <span class="type-check"><span class="type-box"></span>Spiritual Growth</span></div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">My Intention for This Month</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses I Want to Master</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Habits I Want to Build</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">What Does Inner Peace Mean to Me Right Now?</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+</div>
+<!-- PAGE 4: Practice Left #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 4</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #001</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 5: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 5</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 6: Practice Left #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 6</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #002</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 7: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 7</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 8: Practice Left #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 8</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #003</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 9: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 9</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 10: Practice Left #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 10</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #004</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 11: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 11</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 12: Practice Left #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 12</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #005</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 13: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 13</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 14: Weekly Reflection #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Reflection</span>
+    <span class="ph-right">Page 14</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Reflection #01</span>
+    <span class="sb-label">Week of:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Sessions</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Practice Time (min)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Meditation (min)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Most Impactful Session (What Made It So)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Breakthrough Moments</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Challenging Poses or Moments</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Theme of the Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What to Focus on Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 15: Practice Left #6 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 15</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #006</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 16: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 16</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 17: Practice Left #7 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 17</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #007</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 18: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 18</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 19: Practice Left #8 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 19</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #008</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 20: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 20</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 21: Practice Left #9 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 21</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #009</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 22: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 22</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 23: Practice Left #10 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 23</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #010</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 24: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 24</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 25: Weekly Reflection #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Reflection</span>
+    <span class="ph-right">Page 25</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Reflection #02</span>
+    <span class="sb-label">Week of:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Sessions</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Practice Time (min)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Meditation (min)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Most Impactful Session (What Made It So)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Breakthrough Moments</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Challenging Poses or Moments</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Theme of the Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What to Focus on Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 26: Practice Left #11 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 26</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #011</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 27: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 27</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 28: Practice Left #12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 28</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #012</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 29: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 29</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 30: Practice Left #13 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 30</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #013</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 31: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 31</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 32: Practice Left #14 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 32</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #014</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 33: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 33</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 34: Practice Left #15 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 34</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #015</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 35: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 35</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 36: Weekly Reflection #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Reflection</span>
+    <span class="ph-right">Page 36</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Reflection #03</span>
+    <span class="sb-label">Week of:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Sessions</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Practice Time (min)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Meditation (min)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Most Impactful Session (What Made It So)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Breakthrough Moments</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Challenging Poses or Moments</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Theme of the Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What to Focus on Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 37: Practice Left #16 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 37</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #016</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 38: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 38</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 39: Practice Left #17 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 39</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #017</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 40: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 40</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 41: Practice Left #18 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 41</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #018</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 42: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 42</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 43: Practice Left #19 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 43</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #019</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 44: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 44</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 45: Practice Left #20 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 45</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #020</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 46: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 46</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 47: Weekly Reflection #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Reflection</span>
+    <span class="ph-right">Page 47</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Reflection #04</span>
+    <span class="sb-label">Week of:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Sessions</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Practice Time (min)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Meditation (min)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Most Impactful Session (What Made It So)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Breakthrough Moments</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Challenging Poses or Moments</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Theme of the Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What to Focus on Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 48: Practice Left #21 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 48</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #021</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 49: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 49</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 50: Practice Left #22 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 50</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #022</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 51: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 51</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 52: Practice Left #23 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 52</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #023</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 53: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 53</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 54: Practice Left #24 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 54</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #024</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 55: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 55</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 56: Practice Left #25 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Log</span>
+    <span class="ph-right">Page 56</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Session #025</span>
+    <span class="sb-label">Date:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Duration (min)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Teacher / Source</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Practice Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Hatha</span> <span class="type-check"><span class="type-box"></span>Vinyasa</span> <span class="type-check"><span class="type-box"></span>Ashtanga</span> <span class="type-check"><span class="type-box"></span>Yin</span> <span class="type-check"><span class="type-box"></span>Restorative</span> <span class="type-check"><span class="type-box"></span>Kundalini</span> <span class="type-check"><span class="type-box"></span>Meditation</span> <span class="type-check"><span class="type-box"></span>Pranayama</span> <span class="type-check"><span class="type-box"></span>Bikram</span></div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Location</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Home</span> <span class="type-check"><span class="type-box"></span>Studio</span> <span class="type-check"><span class="type-box"></span>Outdoors</span></div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Time of Day</div>
+      <div class="type-row" style="margin-bottom: 0;"><span class="type-check"><span class="type-box"></span>Morning</span> <span class="type-check"><span class="type-box"></span>Afternoon</span> <span class="type-check"><span class="type-box"></span>Evening</span></div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">How I Felt Before Practice</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Setting the Scene (Music, Candle, Props, Mood)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 57: Practice Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Practice Reflection</span>
+    <span class="ph-right">Page 57</span>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Poses Practiced (Sequence / Flow)</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="info-row" style="margin-bottom: 8px;">
+    <div class="info-field"><span class="if-label">Breathwork / Pranayama Done</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Duration (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 4px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt Before (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Restless &#160; 5 = Centered</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Felt After (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Renewed</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Sluggish &#160; 5 = Vibrant</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #7A9A7E; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Mind Chatter (1-5)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Busy &#160; 5 = Still</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What Arose Emotionally</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Insights / Intuitive Messages</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">Gratitude from Today's Practice</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 58: Weekly Reflection #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Reflection</span>
+    <span class="ph-right">Page 58</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Reflection #05</span>
+    <span class="sb-label">Week of:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Sessions</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Practice Time (min)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Meditation (min)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Most Impactful Session (What Made It So)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Breakthrough Moments</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Challenging Poses or Moments</div>
+    <div class="wb-area" style="height: 28px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Theme of the Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">What to Focus on Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 59: Pose Progress Tracker -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Pose Progress Tracker</span>
+    <span class="ph-right">Page 59</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Pose Name</th>
+        <th>Date First Attempted</th>
+        <th>Alignment Notes</th>
+        <th>Progress (1-5)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 60: Pose Progress Tracker -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Pose Progress Tracker</span>
+    <span class="ph-right">Page 60</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Pose Name</th>
+        <th>Date First Attempted</th>
+        <th>Alignment Notes</th>
+        <th>Progress (1-5)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 61: Monthly Reflection -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Monthly Reflection</span>
+    <span class="ph-right">Page 61</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Monthly Reflection</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Month / Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Sessions</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Minutes</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Total (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">New Poses Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Biggest Breakthrough</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Areas of Growth (Body, Mind, Spirit)</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Month</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 62: Monthly Reflection -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Monthly Reflection</span>
+    <span class="ph-right">Page 62</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Monthly Reflection</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Month / Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Sessions</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Total Minutes</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Meditation Total (min)</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">New Poses Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Biggest Breakthrough</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #7A9A7E;">
+    <div class="wb-label">Areas of Growth (Body, Mind, Spirit)</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Month</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 63: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes &amp; Reflections</span>
+    <span class="ph-right">Page 63</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 64: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes &amp; Reflections</span>
+    <span class="ph-right">Page 64</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 65: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes &amp; Reflections</span>
+    <span class="ph-right">Page 65</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 66: Final -->
+<div class="page">
+  <div class="final-page">
+    <div class="fp-text">
+      The body benefits from movement.<br>
+      The mind benefits from stillness.<br>
+      Breathe. Flow. Return to center.
+    </div>
+    <div class="fp-line"></div>
+    <div class="fp-logo">More Shine Press</div>
+    <div class="fp-line"></div>
+  </div>
+</div>
+</body>
+</html>
