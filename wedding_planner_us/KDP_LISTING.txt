@@ -1,0 +1,108 @@
+==========================================================
+KDP LISTING: Wedding Planner
+==========================================================
+
+TITLE:        Wedding Planner
+SUBTITLE:     Your Complete Guide to the Perfect Day
+AUTHOR:       More Shine Press
+PUBLISHER:    More Shine Press
+LANGUAGE:     English
+ISBN:         (KDP will assign)
+
+==========================================================
+BOOK DETAILS
+==========================================================
+
+TRIM SIZE:        8" x 10" (20.32 x 25.4 cm)
+INTERIOR:         Black & White (Cream paper)
+PAGE COUNT:       78 pages
+BLEED:            Yes (0.125" on all outer edges)
+READING AGE:      Adult
+GRADE LEVEL:      9+
+
+==========================================================
+DESCRIPTION (for Amazon listing)
+==========================================================
+
+Plan the wedding of your dreams—one beautiful detail at a time.
+
+The Wedding Planner is your all-in-one companion for creating the perfect day without the stress. Whether you are planning an intimate ceremony or a grand celebration, this thoughtfully designed planner keeps every vendor, every dollar, and every decision beautifully organized.
+
+Inside you will discover:
+
+• 25 two-page vendor and planning spreads—capture company details, contact info, quotes, deposit status, and personal notes for every category from venue and caterer to florist, photographer, and beyond
+• A stunning wedding overview page to record your date, venue, colors, theme, and what the day means to you as a couple
+• A vision and inspiration section to define your dream atmosphere, must-have moments, and decor ideas
+• A comprehensive budget tracker with 17 categories, deposit tracking, and payment scheduling
+• 5 milestone review pages to reflect on progress, check stress levels, and set goals for each planning phase
+• A guest list manager with space for 100+ guests, including RSVP tracking, plus-one status, and meal preferences
+• A seating arrangement planner with table-by-table guest assignment
+• A detailed day-of timeline covering every moment from hair and makeup to the grand send-off
+• A wedding party roster for bridesmaids, groomsmen, ushers, and special roles
+• A final countdown checklist for 2 weeks, 1 week, day-before, and morning-of tasks
+
+Premium Design Features:
+★ Elegant charcoal and gold Moleskine-inspired aesthetic
+★ Generous 8" x 10" format with ample writing space
+★ Lay-flat binding compatible design
+★ High-quality cream paper for smooth writing
+★ Section dividers, rating dots, and visual budget bars
+★ Gold-accent interior with timeless Georgia serif typography
+
+Perfect for engagements, bridal showers, or as a gift for the newly engaged couple.
+
+Plan with love. Celebrate with joy. Cherish every moment.
+
+==========================================================
+7 KEYWORDS (KDP backend)
+==========================================================
+
+1. wedding planner book
+2. wedding planning organizer
+3. wedding planner journal
+4. wedding planner notebook
+5. wedding planning checklist
+6. engagement gift
+7. wedding planner workbook
+
+==========================================================
+ADDITIONAL KEYWORDS (for broad matching)
+==========================================================
+
+wedding budget tracker, bride to be gift, wedding guest book,
+wedding planning journal, bridal planner, wedding organizer book,
+wedding vendor tracker, wedding timeline planner, seating chart planner,
+marriage planning, wedding planning diary, wedding day planner
+
+==========================================================
+CATEGORIES
+==========================================================
+
+Primary:    Crafts, Hobbies & Home > Weddings & Events
+Secondary:  Crafts, Hobbies & Home > Decorating & Design
+
+==========================================================
+ADULT CONTENT
+==========================================================
+
+No adult content.
+
+==========================================================
+PRICING (KDP Paperback)
+==========================================================
+
+List Price:      $14.99 USD
+Print Cost:      $1.94 ($1.00 + $0.012 x 78 pages)
+Royalty (60%):   $14.99 x 0.60 - $1.94 = $7.06 per book
+
+==========================================================
+FILE INVENTORY
+==========================================================
+
+Interior PDF:    wedding_planner_us_V1.0.pdf
+Cover PDF:       wedding_planner_us_cover_V1.0.pdf
+Interior HTML:   wedding_planner_us_V1.0.html
+Cover HTML:      wedding_planner_us_cover_V1.0.html
+Generator:       generate.py, generate_cover.py
+
+==========================================================
