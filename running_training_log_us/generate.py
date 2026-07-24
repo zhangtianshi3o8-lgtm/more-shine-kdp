@@ -420,7 +420,7 @@ def how_to_use_page():
 
     <div class="ht-title"><span class="ht-icon">&#9758;</span> The Two-Page Run Spread</div>
     <p>Each run uses a <strong>two-page spread</strong>. The left page
-    captures the basics: date, distance, duration, pace, route,
+    captures the essentials: date, distance, duration, pace, route,
     weather, effort, heart rate, and calories. The right page is for
     your reflections: how it felt, what went well, what to improve,
     shoes worn, route notes, and workout type.</p>

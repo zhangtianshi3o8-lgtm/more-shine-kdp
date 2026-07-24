@@ -1,0 +1,3658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running Training Log</title>
+  <style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.5in 0.5in 0.4in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print { .page { border: none; margin: 0; } }
+
+/* ================ INTERIOR TITLE PAGE ================ */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, #161616 0%, #2A2A2A 30%, #161616 65%, #0E0E0E 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cover .glow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15%% 20%%, #E85D2A, transparent),
+    radial-gradient(ellipse 26px 16px at 80%% 15%%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 70%% 70%%, #E85D2A, transparent),
+    radial-gradient(ellipse 22px 14px at 25%% 80%%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 50%% 45%%, #E85D2A, transparent);
+}
+
+.cover .title-main {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1.2;
+  letter-spacing: 0.5pt;
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.cover .accent-bar {
+  width: 100px; height: 2px;
+  background: #E85D2A;
+  margin: 20px auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .subtitle {
+  font-size: 12pt;
+  color: #D4B896;
+  font-style: italic;
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .pub {
+  position: absolute;
+  bottom: 0.6in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #C4A04A;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ================ PAGE HEADER ================ */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #eee;
+}
+
+.page-header .ph-left {
+  font-size: 8pt;
+  color: #E85D2A;
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-weight: 700;
+}
+
+.page-header .ph-right {
+  font-size: 8pt;
+  color: #999;
+}
+
+/* ================ SECTION HEADERS ================ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #161616;
+  letter-spacing: 0.5pt;
+  text-transform: uppercase;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #E85D2A;
+  margin: 0 12px;
+  opacity: 0.4;
+}
+
+/* ================ HOW TO USE ================ */
+.howto-text { font-size: 10pt; line-height: 1.7; }
+.howto-text p { margin-bottom: 8px; }
+.howto-text .ht-title {
+  font-size: 11pt; font-weight: 700; color: #161616;
+  margin-bottom: 4px; margin-top: 6px;
+}
+.howto-text .ht-icon { color: #E85D2A; font-weight: 700; margin-right: 4px; }
+
+/* ================ INFO FIELDS ================ */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin-bottom: 8px;
+}
+
+.info-field .if-label {
+  font-size: 6.5pt;
+  color: #E85D2A;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.info-field .if-write {
+  height: 16px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ RUN BANNER ================ */
+.run-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1.5px solid #E85D2A;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.run-banner .rb-num {
+  display: inline-block;
+  border: 1.5px solid #E85D2A;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 8pt;
+  color: #E85D2A;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.run-banner .rb-label {
+  font-size: 8pt;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.run-banner .rb-line {
+  flex: 1;
+  height: 12px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ TYPE CHECKBOXES ================ */
+.type-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.type-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7.5pt;
+  color: #555;
+}
+
+.type-box {
+  width: 10px; height: 10px;
+  border: 1.5px solid #E85D2A;
+  border-radius: 2px;
+}
+
+/* ================ DATA TABLE ================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.data-table th {
+  font-size: 6.5pt;
+  color: #E85D2A;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  padding: 5px 3px;
+  border-bottom: 1.5px solid #E85D2A;
+  text-align: center;
+}
+
+.data-table th:first-child { text-align: left; }
+
+.data-table td {
+  padding: 4px 3px;
+  border-bottom: 1px solid #eee;
+  height: 24px;
+  font-size: 9pt;
+}
+
+/* ================ WRITE BOX ================ */
+.write-box {
+  border: 1px solid #C4A04A;
+  border-radius: 3px;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+
+.write-box .wb-label {
+  font-size: 7pt;
+  color: #E85D2A;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.write-box .wb-area {
+  height: 28px;
+}
+
+/* ================ METRIC ROWS ================ */
+.metric-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.metric-field .mf-label {
+  font-size: 6.5pt;
+  color: #E85D2A;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.metric-field .mf-write {
+  height: 18px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ SCORE DOTS ================ */
+.score-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.score-dot {
+  width: 12px; height: 12px;
+  border: 1.5px solid #E85D2A;
+  border-radius: 50%;
+}
+
+/* ================ NOTES ================ */
+.notes-line { border-bottom: 1px solid #ddd; height: 22px; }
+
+/* ================ FINAL PAGE ================ */
+.final-page {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; height: 100%;
+}
+.final-page .fp-text {
+  font-size: 12pt; color: #999; font-style: italic;
+  line-height: 1.8; margin-bottom: 20px;
+}
+.final-page .fp-logo {
+  font-size: 11pt; color: #C4A04A;
+  letter-spacing: 2.5pt; text-transform: uppercase;
+  font-weight: 700;
+}
+.final-page .fp-line {
+  width: 60px; height: 1.5px; background: #E85D2A;
+  margin: 12px auto; opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<!-- PAGE 1: Interior Title -->
+<div class="cover">
+  <div class="glow-bg"></div>
+
+  <div style="position: relative; z-index: 2; margin-bottom: 20px;">
+    <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Running shoe silhouette (minimal line art) -->
+      <g transform="translate(50,52)">
+        <!-- Sole -->
+        <path d="M -35,18 Q -36,22 -30,22 L 28,22 Q 34,22 34,17 L 34,13 L -34,13 Z"
+              fill="none" stroke="#E85D2A" stroke-width="2" stroke-linejoin="round"/>
+        <!-- Upper shoe body -->
+        <path d="M -32,13 L -32,2 Q -30,-4 -22,-6 L -8,-10 Q 2,-12 10,-8 Q 20,-3 28,3 L 32,8 L 32,13"
+              fill="none" stroke="#E85D2A" stroke-width="2" stroke-linejoin="round"/>
+        <!-- Laces detail -->
+        <line x1="-14" y1="-4" x2="-4" y2="-2" stroke="#E85D2A" stroke-width="1" opacity="0.6"/>
+        <line x1="-12" y1="1" x2="-2" y2="3" stroke="#E85D2A" stroke-width="1" opacity="0.6"/>
+        <line x1="-10" y1="6" x2="0" y2="7" stroke="#E85D2A" stroke-width="1" opacity="0.6"/>
+        <!-- Heel curve -->
+        <path d="M -32,2 Q -34,8 -32,13" fill="none" stroke="#E85D2A" stroke-width="2"/>
+        <!-- Accent dot -->
+        <circle cx="20" cy="0" r="2" fill="#C4A04A"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="title-main">Running<br>Training<br>Log</div>
+  <div class="accent-bar"></div>
+  <div class="subtitle">Track Every Run, Every Mile,<br>Every Goal</div>
+
+  <div class="pub">More Shine Press</div>
+</div>
+<!-- PAGE 2: How to Use -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">How to Use This Log</span>
+    <span class="ph-right">Page 2</span>
+  </div>
+
+  <div class="howto-text">
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Your Training Partner</div>
+    <p>This log is designed to make you a stronger, smarter runner.
+    Every serious runner keeps records -- not because they enjoy
+    paperwork, but because reviewing past training is the fastest
+    path to consistent improvement and fewer injuries.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> The Two-Page Run Spread</div>
+    <p>Each run uses a <strong>two-page spread</strong>. The left page
+    captures the essentials: date, distance, duration, pace, route,
+    weather, effort, heart rate, and calories. The right page is for
+    your reflections: how it felt, what went well, what to improve,
+    shoes worn, route notes, and workout type.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> The Weekly Summary</div>
+    <p>After every 5 runs, a <strong>weekly summary page</strong> helps
+    you track total mileage, average pace, longest and shortest runs,
+    elevation gain, rest days, and notes on how the week went.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#9758;</span> Tips for Success</div>
+    <p>&#9679; <strong>Log it right away.</strong> Fill in each run while
+    the details are fresh in your mind.</p>
+    <p>&#9679; <strong>Be honest about effort.</strong> Record how hard
+    the run truly felt, not just the numbers.</p>
+    <p>&#9679; <strong>Watch your shoes.</strong> Track mileage on each
+    pair so you know when to replace them.</p>
+    <p>&#9679; <strong>Review regularly.</strong> Patterns and progress
+    emerge over weeks, not single runs.</p>
+  </div>
+</div>
+<!-- PAGE 3: Season Goals -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Season Goals</span>
+    <span class="ph-right">Page 3</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">Season Goals</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Season / Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Season Start Date</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Current Weekly Mileage</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Target Weekly Mileage</span><div class="if-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin: 10px 0 6px;">Goal Races</div>
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Race 1 Name</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Distance</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Race 2 Name</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Distance</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Race 3 Name</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Distance</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin: 10px 0 6px;">Target Times</div>
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">5K Target</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">10K Target</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Half Marathon Target</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Marathon Target</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Custom Distance</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Custom Target</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Personal Goals for This Season</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Key Workouts to Focus On</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 4: Run Left #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 4</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #001</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 5: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 5</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 6: Run Left #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 6</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #002</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 7: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 7</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 8: Run Left #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 8</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #003</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 9: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 9</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 10: Run Left #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 10</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #004</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 11: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 11</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 12: Run Left #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 12</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #005</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 13: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 13</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 14: Weekly Summary #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Summary</span>
+    <span class="ph-right">Page 14</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Week #01</span>
+    <span class="rb-label">Week of:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Shortest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Best Run This Week (What Made It Great)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Toughest Run This Week (What Was Hard)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Body / Health Notes (Aches, Soreness, Sleep)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Focus for Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 4px;">
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Overall Fitness</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Motivation</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Recovery</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 15: Run Left #6 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 15</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #006</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 16: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 16</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 17: Run Left #7 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 17</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #007</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 18: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 18</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 19: Run Left #8 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 19</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #008</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 20: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 20</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 21: Run Left #9 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 21</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #009</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 22: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 22</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 23: Run Left #10 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 23</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #010</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 24: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 24</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 25: Weekly Summary #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Summary</span>
+    <span class="ph-right">Page 25</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Week #02</span>
+    <span class="rb-label">Week of:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Shortest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Best Run This Week (What Made It Great)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Toughest Run This Week (What Was Hard)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Body / Health Notes (Aches, Soreness, Sleep)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Focus for Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 4px;">
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Overall Fitness</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Motivation</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Recovery</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 26: Run Left #11 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 26</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #011</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 27: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 27</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 28: Run Left #12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 28</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #012</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 29: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 29</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 30: Run Left #13 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 30</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #013</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 31: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 31</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 32: Run Left #14 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 32</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #014</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 33: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 33</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 34: Run Left #15 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 34</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #015</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 35: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 35</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 36: Weekly Summary #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Summary</span>
+    <span class="ph-right">Page 36</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Week #03</span>
+    <span class="rb-label">Week of:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Shortest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Best Run This Week (What Made It Great)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Toughest Run This Week (What Was Hard)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Body / Health Notes (Aches, Soreness, Sleep)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Focus for Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 4px;">
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Overall Fitness</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Motivation</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Recovery</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 37: Run Left #16 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 37</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #016</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 38: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 38</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 39: Run Left #17 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 39</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #017</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 40: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 40</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 41: Run Left #18 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 41</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #018</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 42: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 42</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 43: Run Left #19 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 43</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #019</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 44: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 44</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 45: Run Left #20 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 45</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #020</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 46: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 46</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 47: Weekly Summary #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Summary</span>
+    <span class="ph-right">Page 47</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Week #04</span>
+    <span class="rb-label">Week of:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Shortest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Best Run This Week (What Made It Great)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Toughest Run This Week (What Was Hard)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Body / Health Notes (Aches, Soreness, Sleep)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Focus for Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 4px;">
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Overall Fitness</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Motivation</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Recovery</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 48: Run Left #21 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 48</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #021</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 49: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 49</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 50: Run Left #22 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 50</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #022</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 51: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 51</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 52: Run Left #23 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 52</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #023</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 53: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 53</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 54: Run Left #24 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 54</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #024</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 55: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 55</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 56: Run Left #25 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Record</span>
+    <span class="ph-right">Page 56</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Run #025</span>
+    <span class="rb-label">Date:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Day of Week</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Route / Location</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Duration</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Effort (1-10)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Max Heart Rate</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Calories</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Temp (&#176;F)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Weather Conditions</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sunny</span> <span class="type-check"><span class="type-box"></span>Cloudy</span> <span class="type-check"><span class="type-box"></span>Rain</span> <span class="type-check"><span class="type-box"></span>Wind</span> <span class="type-check"><span class="type-box"></span>Snow</span> <span class="type-check"><span class="type-box"></span>Hot</span> <span class="type-check"><span class="type-box"></span>Cold</span></div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Warmup / Cooldown Notes</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Splits (Mile 1 / 2 / 3 / 4 / 5 / 6+)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 57: Run Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Run Reflection</span>
+    <span class="ph-right">Page 57</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">How Did It Feel? (1-10)</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Terrible &#160; 10 = Amazing</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Energy Level</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Drained &#160; 5 = Full</div>
+    </div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">What Went Well</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">What to Improve</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Workout Type</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Easy</span> <span class="type-check"><span class="type-box"></span>Tempo</span> <span class="type-check"><span class="type-box"></span>Intervals</span> <span class="type-check"><span class="type-box"></span>Long</span> <span class="type-check"><span class="type-box"></span>Recovery</span> <span class="type-check"><span class="type-box"></span>Race</span></div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Shoes Worn</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Time of Day</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Route Notes / Terrain Details</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C4A04A;">
+    <div class="wb-label">General Notes</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 58: Weekly Summary #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Weekly Summary</span>
+    <span class="ph-right">Page 58</span>
+  </div>
+
+  <div class="run-banner">
+    <span class="rb-num">Week #05</span>
+    <span class="rb-label">Week of:</span>
+    <div class="rb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Shortest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Heart Rate</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Best Run This Week (What Made It Great)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Toughest Run This Week (What Was Hard)</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Body / Health Notes (Aches, Soreness, Sleep)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Focus for Next Week</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 4px;">
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Overall Fitness</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Motivation</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size: 6.5pt; font-weight: 700; color: #E85D2A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Recovery</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 59: Shoe Tracking -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Shoe Tracking</span>
+    <span class="ph-right">Page 59</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Shoe Name / Model</th>
+        <th>Brand</th>
+        <th>Date Started</th>
+        <th>Miles Logged</th>
+        <th>Retire At (mi)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 8px; border-color: #E85D2A;">
+    <div class="wb-label">Shoe Rotation Notes</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+</div>
+<!-- PAGE 60: Shoe Tracking -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Shoe Tracking</span>
+    <span class="ph-right">Page 60</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Shoe Name / Model</th>
+        <th>Brand</th>
+        <th>Date Started</th>
+        <th>Miles Logged</th>
+        <th>Retire At (mi)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 8px; border-color: #E85D2A;">
+    <div class="wb-label">Shoe Rotation Notes</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+</div>
+<!-- PAGE 61: Race Results -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Race Results</span>
+    <span class="ph-right">Page 61</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Race Name</th>
+        <th>Date</th>
+        <th>Distance</th>
+        <th>Time</th>
+        <th>Pace</th>
+        <th>Place</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 8px; border-color: #E85D2A;">
+    <div class="wb-label">PR (Personal Record) Highlights</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+</div>
+<!-- PAGE 62: Race Results -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Race Results</span>
+    <span class="ph-right">Page 62</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Race Name</th>
+        <th>Date</th>
+        <th>Distance</th>
+        <th>Time</th>
+        <th>Pace</th>
+        <th>Place</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="write-box" style="margin-top: 8px; border-color: #E85D2A;">
+    <div class="wb-label">PR (Personal Record) Highlights</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+</div>
+<!-- PAGE 63: Monthly Summary -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Monthly Summary</span>
+    <span class="ph-right">Page 63</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Month / Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Races Run</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Miles</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Injuries / Issues</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Goals Met</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Biggest Win This Month</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Biggest Challenge / Setback</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Goal for Next Month</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Notes / Observations</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 64: Monthly Summary -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Monthly Summary</span>
+    <span class="ph-right">Page 64</span>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Month / Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Races Run</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Total Miles</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Runs</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Distance (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Longest Run (mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Avg Pace (min/mi)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Elevation (ft)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Rest Days</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Injuries / Issues</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Goals Met</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Biggest Win This Month</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #C0392B;">
+    <div class="wb-label">Biggest Challenge / Setback</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #E85D2A;">
+    <div class="wb-label">Goal for Next Month</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Notes / Observations</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 65: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 65</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 66: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 66</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 67: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes</span>
+    <span class="ph-right">Page 67</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 68: Final -->
+<div class="page">
+  <div class="final-page">
+    <div class="fp-text">
+      Every mile counts.<br>
+      Every run builds the next.<br>
+      Keep showing up.
+    </div>
+    <div class="fp-line"></div>
+    <div class="fp-logo">More Shine Press</div>
+    <div class="fp-line"></div>
+  </div>
+</div>
+</body>
+</html>
