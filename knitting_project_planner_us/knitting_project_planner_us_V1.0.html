@@ -1,0 +1,3972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knitting Project Planner</title>
+  <style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.5in 0.5in 0.4in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print { .page { border: none; margin: 0; } }
+
+/* ================ INTERIOR TITLE PAGE ================ */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, #0F0E0C 0%, #1A1612 30%, #0F0E0C 65%, #080706 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cover .glow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #B8860B, transparent),
+    radial-gradient(ellipse 26px 16px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 70% 70%, #B8860B, transparent),
+    radial-gradient(ellipse 22px 14px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 50% 45%, #B8860B, transparent);
+}
+
+.cover .title-main {
+  font-size: 30pt;
+  font-weight: 700;
+  color: #FAF6F0;
+  line-height: 1.2;
+  letter-spacing: 0.5pt;
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.cover .accent-bar {
+  width: 100px; height: 2px;
+  background: #B8860B;
+  margin: 20px auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .subtitle {
+  font-size: 12pt;
+  color: #D4B896;
+  font-style: italic;
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
+}
+
+.cover .pub {
+  position: absolute;
+  bottom: 0.6in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #C4A04A;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ================ PAGE HEADER ================ */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid #eee;
+}
+
+.page-header .ph-left {
+  font-size: 8pt;
+  color: #B8860B;
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-weight: 700;
+}
+
+.page-header .ph-right {
+  font-size: 8pt;
+  color: #999;
+}
+
+/* ================ SECTION HEADERS ================ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #161616;
+  letter-spacing: 0.5pt;
+  text-transform: uppercase;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #B8860B;
+  margin: 0 12px;
+  opacity: 0.4;
+}
+
+/* ================ HOW TO USE ================ */
+.howto-text { font-size: 10pt; line-height: 1.7; }
+.howto-text p { margin-bottom: 8px; }
+.howto-text .ht-title {
+  font-size: 11pt; font-weight: 700; color: #161616;
+  margin-bottom: 4px; margin-top: 6px;
+}
+.howto-text .ht-icon { color: #B8860B; font-weight: 700; margin-right: 4px; }
+
+/* ================ INFO FIELDS ================ */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin-bottom: 8px;
+}
+
+.info-field .if-label {
+  font-size: 6.5pt;
+  color: #B8860B;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.info-field .if-write {
+  height: 16px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ SESSION BANNER ================ */
+.session-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1.5px solid #B8860B;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.session-banner .sb-num {
+  display: inline-block;
+  border: 1.5px solid #B8860B;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 8pt;
+  color: #B8860B;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.session-banner .sb-label {
+  font-size: 8pt;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+}
+
+.session-banner .sb-line {
+  flex: 1;
+  height: 12px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ TYPE CHECKBOXES ================ */
+.type-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.type-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7.5pt;
+  color: #555;
+}
+
+.type-box {
+  width: 10px; height: 10px;
+  border: 1.5px solid #B8860B;
+  border-radius: 2px;
+}
+
+/* ================ DATA TABLE ================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.data-table th {
+  font-size: 6.5pt;
+  color: #B8860B;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  padding: 5px 3px;
+  border-bottom: 1.5px solid #B8860B;
+  text-align: center;
+}
+
+.data-table th:first-child { text-align: left; }
+
+.data-table td {
+  padding: 4px 3px;
+  border-bottom: 1px solid #eee;
+  height: 24px;
+  font-size: 9pt;
+}
+
+/* ================ WRITE BOX ================ */
+.write-box {
+  border: 1px solid #C4A04A;
+  border-radius: 3px;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+}
+
+.write-box .wb-label {
+  font-size: 7pt;
+  color: #B8860B;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.write-box .wb-area {
+  height: 28px;
+}
+
+/* ================ METRIC ROWS ================ */
+.metric-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.metric-field .mf-label {
+  font-size: 6.5pt;
+  color: #B8860B;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.metric-field .mf-write {
+  height: 18px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ GAUGE BOX ================ */
+.gauge-box {
+  border: 1.5px solid #B8860B;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.gauge-box .gb-label {
+  font-size: 7pt;
+  color: #B8860B;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.gauge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.gauge-field .gf-label {
+  font-size: 6pt;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.gauge-field .gf-write {
+  height: 16px;
+  border-bottom: 1px dotted #ccc;
+}
+
+/* ================ SCORE DOTS ================ */
+.score-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.score-dot {
+  width: 12px; height: 12px;
+  border: 1.5px solid #B8860B;
+  border-radius: 50%;
+}
+
+/* ================ HABIT TRACKER ================ */
+.habit-track {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.habit-day {
+  width: 22px; height: 22px;
+  border: 1px solid #B8860B;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6pt;
+  color: #999;
+}
+
+/* ================ NOTES ================ */
+.notes-line { border-bottom: 1px solid #ddd; height: 22px; }
+
+/* ================ FINAL PAGE ================ */
+.final-page {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; height: 100%;
+}
+.final-page .fp-text {
+  font-size: 12pt; color: #999; font-style: italic;
+  line-height: 1.8; margin-bottom: 20px;
+}
+.final-page .fp-logo {
+  font-size: 11pt; color: #C4A04A;
+  letter-spacing: 2.5pt; text-transform: uppercase;
+  font-weight: 700;
+}
+.final-page .fp-line {
+  width: 60px; height: 1.5px; background: #B8860B;
+  margin: 12px auto; opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<!-- PAGE 1: Interior Title -->
+<div class="cover">
+  <div class="glow-bg"></div>
+
+  <div style="position: relative; z-index: 2; margin-bottom: 20px;">
+    <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Two crossed knitting needles with a yarn ball -->
+      <g transform="translate(50,50)">
+        <!-- Needle 1 (diagonal) -->
+        <line x1="-32" y1="28" x2="28" y2="-30" stroke="#B8860B" stroke-width="2" stroke-linecap="round"/>
+        <!-- Needle 1 tip -->
+        <circle cx="28" cy="-30" r="2.5" fill="#C4A04A"/>
+        <!-- Needle 2 (diagonal opposite) -->
+        <line x1="32" y1="28" x2="-28" y2="-30" stroke="#B8860B" stroke-width="2" stroke-linecap="round"/>
+        <!-- Needle 2 tip -->
+        <circle cx="-28" cy="-30" r="2.5" fill="#C4A04A"/>
+        <!-- Yarn ball (center) -->
+        <circle cx="0" cy="0" r="14" stroke="#B8860B" stroke-width="2" fill="none"/>
+        <path d="M -10,-6 Q 0,-10 10,-4" stroke="#C4A04A" stroke-width="1.5" fill="none"/>
+        <path d="M -8,2 Q 2,8 9,0" stroke="#C4A04A" stroke-width="1.5" fill="none"/>
+        <path d="M -5,8 Q 3,4 7,9" stroke="#B8860B" stroke-width="1.2" fill="none"/>
+        <!-- Yarn strand trailing -->
+        <path d="M 14,0 Q 28,4 36,-8 Q 40,-16 34,-22" stroke="#B8860B" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="title-main">Knitting<br>Project<br>Planner</div>
+  <div class="accent-bar"></div>
+  <div class="subtitle">Track Every Stitch,<br>Finish Every Project</div>
+
+  <div class="pub">More Shine Press</div>
+</div>
+<!-- PAGE 2: How to Use -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">How to Use This Planner</span>
+    <span class="ph-right">Page 2</span>
+  </div>
+
+  <div class="howto-text">
+    <div class="ht-title"><span class="ht-icon">&#10058;</span> Your Knitting Companion</div>
+    <p>This planner is designed to help you stay organized from
+    cast-on to bind-off. Whether you knit sweaters, scarves, socks,
+    blankets, or amigurumi, keeping detailed project records is the
+    key to finishing what you start and repeating what works.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#10058;</span> The Two-Page Project Spread</div>
+    <p>Each project uses a <strong>two-page spread</strong>. The left
+    page captures the project overview: name, pattern, yarn details,
+    needle sizes, gauge swatch, start and end dates, and a project
+    checklist. The right page is for your notes: stitch pattern
+    details, adjustments made, rows completed per session, problems
+    solved, and what you would do differently next time.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#10058;</span> The Progress Review</div>
+    <p>After every 5 projects, a <strong>progress review page</strong>
+    helps you reflect on your knitting journey: total time invested,
+    techniques learned, favorite projects, and goals for the next
+    batch.</p>
+
+    <div class="ht-title"><span class="ht-icon">&#10058;</span> Additional Sections</div>
+    <p>&#9679; <strong>Needle &amp; Hook Inventory</strong> -- track every
+    needle and hook you own.</p>
+    <p>&#9679; <strong>Yarn Stash Tracker</strong> -- log your yarn by
+    weight, color, fiber, and yardage.</p>
+    <p>&#9679; <strong>Pattern Library</strong> -- keep a running list
+    of patterns you want to try.</p>
+    <p>&#9679; <strong>Gift Log</strong> -- track handknit gifts and
+    who received them.</p>
+  </div>
+</div>
+<!-- PAGE 3: Knitting Goals -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Knitting Goals</span>
+    <span class="ph-right">Page 3</span>
+  </div>
+
+  <div class="section-header">
+    <div class="section-line"></div>
+    <div class="section-title">My Goals</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Year</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Start Date</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Projects I Want to Make</div>
+    <div class="wb-area" style="height: 40px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">New Techniques to Learn</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Projects Goal</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Gifts Planned</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Budget</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Challenge Project (Something New)</div>
+    <div class="wb-area" style="height: 36px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Inspiration (Designers, Patterns, Ideas)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Why I Knit -- What It Means to Me</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+</div>
+<!-- PAGE 4: Project Left #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 4</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #001</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 5: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 5</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 6: Project Left #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 6</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #002</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 7: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 7</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 8: Project Left #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 8</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #003</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 9: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 9</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 10: Project Left #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 10</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #004</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 11: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 11</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 12: Project Left #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 12</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #005</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 13: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 13</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 14: Progress Review #1 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Progress Review</span>
+    <span class="ph-right">Page 14</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Review #01</span>
+    <span class="sb-label">Period:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Projects Finished</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Projects in Progress</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Knitting Hours</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Favorite Project &amp; Why</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">New Techniques Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Biggest Challenge &amp; What I Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Period</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="margin-top: 6px;">
+    <div style="font-size: 6.5pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Habit Tracker -- Knitted X/7 Days</div>
+    <div class="habit-track"><div class="habit-day">M</div><div class="habit-day">T</div><div class="habit-day">W</div><div class="habit-day">T</div><div class="habit-day">F</div><div class="habit-day">S</div><div class="habit-day">S</div></div>
+  </div>
+</div>
+<!-- PAGE 15: Project Left #6 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 15</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #006</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 16: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 16</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 17: Project Left #7 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 17</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #007</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 18: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 18</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 19: Project Left #8 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 19</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #008</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 20: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 20</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 21: Project Left #9 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 21</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #009</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 22: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 22</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 23: Project Left #10 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 23</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #010</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 24: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 24</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 25: Progress Review #2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Progress Review</span>
+    <span class="ph-right">Page 25</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Review #02</span>
+    <span class="sb-label">Period:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Projects Finished</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Projects in Progress</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Knitting Hours</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Favorite Project &amp; Why</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">New Techniques Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Biggest Challenge &amp; What I Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Period</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="margin-top: 6px;">
+    <div style="font-size: 6.5pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Habit Tracker -- Knitted X/7 Days</div>
+    <div class="habit-track"><div class="habit-day">M</div><div class="habit-day">T</div><div class="habit-day">W</div><div class="habit-day">T</div><div class="habit-day">F</div><div class="habit-day">S</div><div class="habit-day">S</div></div>
+  </div>
+</div>
+<!-- PAGE 26: Project Left #11 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 26</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #011</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 27: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 27</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 28: Project Left #12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 28</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #012</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 29: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 29</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 30: Project Left #13 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 30</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #013</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 31: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 31</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 32: Project Left #14 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 32</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #014</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 33: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 33</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 34: Project Left #15 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 34</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #015</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 35: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 35</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 36: Progress Review #3 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Progress Review</span>
+    <span class="ph-right">Page 36</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Review #03</span>
+    <span class="sb-label">Period:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Projects Finished</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Projects in Progress</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Knitting Hours</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Favorite Project &amp; Why</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">New Techniques Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Biggest Challenge &amp; What I Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Period</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="margin-top: 6px;">
+    <div style="font-size: 6.5pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Habit Tracker -- Knitted X/7 Days</div>
+    <div class="habit-track"><div class="habit-day">M</div><div class="habit-day">T</div><div class="habit-day">W</div><div class="habit-day">T</div><div class="habit-day">F</div><div class="habit-day">S</div><div class="habit-day">S</div></div>
+  </div>
+</div>
+<!-- PAGE 37: Project Left #16 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 37</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #016</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 38: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 38</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 39: Project Left #17 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 39</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #017</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 40: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 40</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 41: Project Left #18 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 41</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #018</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 42: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 42</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 43: Project Left #19 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 43</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #019</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 44: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 44</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 45: Project Left #20 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 45</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #020</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 46: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 46</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 47: Progress Review #4 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Progress Review</span>
+    <span class="ph-right">Page 47</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Review #04</span>
+    <span class="sb-label">Period:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Projects Finished</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Projects in Progress</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Knitting Hours</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Favorite Project &amp; Why</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">New Techniques Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Biggest Challenge &amp; What I Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Period</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="margin-top: 6px;">
+    <div style="font-size: 6.5pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Habit Tracker -- Knitted X/7 Days</div>
+    <div class="habit-track"><div class="habit-day">M</div><div class="habit-day">T</div><div class="habit-day">W</div><div class="habit-day">T</div><div class="habit-day">F</div><div class="habit-day">S</div><div class="habit-day">S</div></div>
+  </div>
+</div>
+<!-- PAGE 48: Project Left #21 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 48</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #021</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 49: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 49</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 50: Project Left #22 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 50</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #022</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 51: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 51</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 52: Project Left #23 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 52</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #023</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 53: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 53</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 54: Project Left #24 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 54</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #024</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 55: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 55</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 56: Project Left #25 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Log</span>
+    <span class="ph-right">Page 56</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Project #025</span>
+    <span class="sb-label">Project Name:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">Pattern Source</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Designer</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-field"><span class="if-label">For (Recipient)</span><div class="if-write"></div></div>
+    <div class="info-field"><span class="if-label">Size</span><div class="if-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Start Date</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Target Finish</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Actual Finish</span><div class="mf-write"></div></div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Project Type (Check All)</div>
+  <div class="type-row"><span class="type-check"><span class="type-box"></span>Sweater</span> <span class="type-check"><span class="type-box"></span>Scarf</span> <span class="type-check"><span class="type-box"></span>Hat</span> <span class="type-check"><span class="type-box"></span>Socks</span> <span class="type-check"><span class="type-box"></span>Blanket</span> <span class="type-check"><span class="type-box"></span>Shawl</span> <span class="type-check"><span class="type-box"></span>Mittens</span> <span class="type-check"><span class="type-box"></span>Toy</span></div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Used</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Yarn Weight</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Skeins</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Yarn Color(s)</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Dye Lot</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Fiber Content</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="gauge-box">
+    <div class="gb-label">Gauge Swatch</div>
+    <div class="gauge-grid">
+      <div class="gauge-field"><span class="gf-label">Needle Size</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Sts / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Rows / 4 in</span><div class="gf-write"></div></div>
+      <div class="gauge-field"><span class="gf-label">Hook Size</span><div class="gf-write"></div></div>
+    </div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Total Yardage / Meterage Used</div>
+    <div class="wb-area"></div>
+  </div>
+</div>
+<!-- PAGE 57: Project Right -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Project Notes</span>
+    <span class="ph-right">Page 57</span>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Stitch Pattern(s) Used</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Cast On Sts</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Rows</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Time (hrs)</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Adjustments &amp; Modifications</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Problems Encountered &amp; Solutions</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Buttons, Zippers, or Notions</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Care Instructions (Wash, Block, Dry)</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;">
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Difficulty</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Beginner &#160; 5 = Expert</div>
+    </div>
+    <div>
+      <div style="font-size: 7pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Satisfaction</div>
+      <div class="score-dots">
+        <div class="score-dot"></div><div class="score-dot"></div><div class="score-dot"></div>
+        <div class="score-dot"></div><div class="score-dot"></div>
+      </div>
+      <div style="font-size: 5.5pt; color: #999; margin-top: 2px;">1 = Not Happy &#160; 5 = Love It</div>
+    </div>
+  </div>
+</div>
+<!-- PAGE 58: Progress Review #5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Progress Review</span>
+    <span class="ph-right">Page 58</span>
+  </div>
+
+  <div class="session-banner">
+    <span class="sb-num">Review #05</span>
+    <span class="sb-label">Period:</span>
+    <div class="sb-line"></div>
+  </div>
+
+  <div class="metric-row">
+    <div class="metric-field"><span class="mf-label">Projects Finished</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Projects in Progress</span><div class="mf-write"></div></div>
+    <div class="metric-field"><span class="mf-label">Total Knitting Hours</span><div class="mf-write"></div></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">Favorite Project &amp; Why</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #B8860B;">
+    <div class="wb-label">New Techniques Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box" style="border-color: #8B4040;">
+    <div class="wb-label">Biggest Challenge &amp; What I Learned</div>
+    <div class="wb-area" style="height: 32px;"></div>
+  </div>
+
+  <div class="write-box">
+    <div class="wb-label">Goals for Next Period</div>
+    <div class="wb-area"></div>
+  </div>
+
+  <div style="margin-top: 6px;">
+    <div style="font-size: 6.5pt; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 4px;">Habit Tracker -- Knitted X/7 Days</div>
+    <div class="habit-track"><div class="habit-day">M</div><div class="habit-day">T</div><div class="habit-day">W</div><div class="habit-day">T</div><div class="habit-day">F</div><div class="habit-day">S</div><div class="habit-day">S</div></div>
+  </div>
+</div>
+<!-- PAGE 59: Needle & Hook Inventory -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Needle &amp; Hook Inventory</span>
+    <span class="ph-right">Page 59</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Size (US)</th>
+        <th>Size (mm)</th>
+        <th>Type</th>
+        <th>Length</th>
+        <th>Material</th>
+        <th>Qty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 60: Needle & Hook Inventory -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Needle &amp; Hook Inventory</span>
+    <span class="ph-right">Page 60</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Size (US)</th>
+        <th>Size (mm)</th>
+        <th>Type</th>
+        <th>Length</th>
+        <th>Material</th>
+        <th>Qty</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 61: Yarn Stash Tracker -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Yarn Stash Tracker</span>
+    <span class="ph-right">Page 61</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Brand / Name</th>
+        <th>Weight</th>
+        <th>Color</th>
+        <th>Fiber</th>
+        <th>Skeins</th>
+        <th>Yards</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 62: Yarn Stash Tracker -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Yarn Stash Tracker</span>
+    <span class="ph-right">Page 62</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Brand / Name</th>
+        <th>Weight</th>
+        <th>Color</th>
+        <th>Fiber</th>
+        <th>Skeins</th>
+        <th>Yards</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 63: Pattern Wishlist -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Pattern Wishlist</span>
+    <span class="ph-right">Page 63</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Pattern Name</th>
+        <th>Designer</th>
+        <th>Type</th>
+        <th>Difficulty</th>
+        <th>Tried?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 64: Gift Log -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Handknit Gift Log</span>
+    <span class="ph-right">Page 64</span>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Recipient</th>
+        <th>Occasion</th>
+        <th>Date Given</th>
+        <th>Reaction</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- PAGE 65: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes &amp; Ideas</span>
+    <span class="ph-right">Page 65</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 66: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes &amp; Ideas</span>
+    <span class="ph-right">Page 66</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 67: Notes -->
+<div class="page">
+  <div class="page-header">
+    <span class="ph-left">Notes &amp; Ideas</span>
+    <span class="ph-right">Page 67</span>
+  </div>
+  <div><div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div>
+<div class="notes-line"></div></div>
+</div>
+<!-- PAGE 68: Final -->
+<div class="page">
+  <div class="final-page">
+    <div class="fp-text">
+      Every stitch tells a story.<br>
+      Every project is a journey.<br>
+      Cast on. Knit with love. Finish with pride.
+    </div>
+    <div class="fp-line"></div>
+    <div class="fp-logo">More Shine Press</div>
+    <div class="fp-line"></div>
+  </div>
+</div>
+</body>
+</html>
