@@ -3,47 +3,34 @@
 Fishing Log Book — KDP Full Wrap Cover Generator
 Zero-dependency (Python stdlib only).
 
-Generates a print-ready full wrap cover (back + spine + front) as
-standalone HTML. Export with Chrome headless to PDF.
-
 Trim: 6" x 9"
-Pages: 133 (cream paper)
-Spine: 133 × 0.0025 = 0.3325"
+Pages: 118 (cream paper)
+Spine: 118 x 0.0025 = 0.295"
 Bleed: 0.125" all outer edges
-Full cover: 12.5825 x 9.25 in
 Publisher: More Shine Press
 """
 
 import os
 
 OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_FILE = os.path.join(OUTPUT_DIR, "fishing_log_book_cover_V1.0.html")
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "fishing_log_book_us_cover_V1.0.html")
 
-# KDP cover specs
-TRIM_W = 6.0          # inches
+TRIM_W = 6.0
 TRIM_H = 9.0
-PAGES = 133
-SPINE = PAGES * 0.0025   # cream paper = 0.3325"
+PAGES = 118
+SPINE = PAGES * 0.0025
 BLEED = 0.125
-COVER_W = TRIM_W * 2 + SPINE + BLEED * 2   # 12.5825"
-COVER_H = TRIM_H + BLEED * 2               # 9.25"
+COVER_W = TRIM_W * 2 + SPINE + BLEED * 2
+COVER_H = TRIM_H + BLEED * 2
 
-# Colors — Fishing / Deep Water theme
-C_DEEP   = "#062430"    # darkest water
-C_DARK   = "#0D3B4C"    # deep water
-C_MED    = "#164E63"    # steel water
-C_BLUE   = "#1B6B8C"    # mid blue
-C_STEEL  = "#2A6F97"    # steel blue
-C_GOLD   = "#D4A017"    # gold / amber
-C_GOLD_L = "#F0CE6A"    # light gold
-C_FOAM   = "#F0F5F7"    # foam white
-C_SAND   = "#E8D5A0"    # sand
-C_WHITE  = "#ffffff"
-C_DARK2  = "#1A1A1A"
+C_CHARCOAL = "#161616"
+C_DARK     = "#1E1E1E"
+C_GOLD     = "#C4A04A"
+C_GOLD_L   = "#D4B896"
+C_WHITE    = "#ffffff"
 
 
-CSS = f"""
-<style>
+CSS = f"""<style>
 @page {{ size: {COVER_W:.4f}in {COVER_H:.4f}in; margin: 0; }}
 * {{ margin: 0; padding: 0; box-sizing: border-box; }}
 
@@ -64,37 +51,35 @@ body {{
 .back-cover {{
   width: {TRIM_W + BLEED:.4f}in;
   height: {COVER_H:.4f}in;
-  background: linear-gradient(165deg, {C_DEEP} 0%, {C_DARK} 40%, {C_MED} 100%);
-  padding: 0.55in 0.5in 0.45in {BLEED}in;
+  background: linear-gradient(165deg, {C_CHARCOAL} 0%, {C_DARK} 40%, {C_CHARCOAL} 100%);
+  padding: 0.75in 0.5in 0.45in 0.5in;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   position: relative;
   overflow: hidden;
 }}
 
-/* Water ripple texture */
 .back-cover::before {{
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   opacity: 0.04;
   background-image:
-    radial-gradient(ellipse 30px 8px at 15% 25%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 24px 6px at 80% 15%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 28px 7px at 70% 70%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 20px 6px at 25% 80%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 18px 5px at 50% 50%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 22px 6px at 10% 60%, {C_WHITE}, transparent);
+    radial-gradient(ellipse 24px 14px at 15% 25%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 22px 13px at 80% 15%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 26px 15px at 70% 70%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 20px 12px at 25% 80%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 18px 11px at 50% 50%, {C_GOLD}, transparent);
 }}
 
-/* Decorative circle */
 .back-cover::after {{
   content: '';
   position: absolute;
   top: -0.3in; right: -0.3in;
   width: 1.2in; height: 1.2in;
   border-radius: 50%;
-  background: rgba(212, 160, 23, 0.08);
+  background: rgba(196, 160, 74, 0.08);
 }}
 
 .back-text {{
@@ -139,7 +124,6 @@ body {{
 }}
 
 .back-bottom {{
-  margin-top: auto;
   padding-bottom: 0.15in;
   position: relative;
   z-index: 2;
@@ -176,7 +160,7 @@ body {{
 .spine {{
   width: {SPINE:.4f}in;
   height: {COVER_H:.4f}in;
-  background: linear-gradient(180deg, {C_DEEP} 0%, {C_DARK} 50%, {C_DEEP} 100%);
+  background: linear-gradient(180deg, {C_CHARCOAL} 0%, {C_DARK} 50%, {C_CHARCOAL} 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -185,25 +169,24 @@ body {{
   position: relative;
 }}
 
-/* Spine ripple texture */
 .spine::before {{
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   opacity: 0.03;
   background-image:
-    radial-gradient(ellipse 10px 4px at 50% 20%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 10px 4px at 50% 50%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 10px 4px at 50% 80%, {C_WHITE}, transparent);
+    radial-gradient(ellipse 10px 6px at 50% 20%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 50%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 80%, {C_GOLD}, transparent);
 }}
 
 .spine-text {{
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   color: rgba(255,255,255,0.95);
-  font-size: 8pt;
+  font-size: 7pt;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   white-space: nowrap;
   line-height: 1;
@@ -223,40 +206,11 @@ body {{
   z-index: 2;
 }}
 
-.spine-icon {{
-  width: 0.35in;
-  height: 0.35in;
-  position: relative;
-  z-index: 2;
-}}
-/* Spine hook icon */
-.spine-icon::before {{
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 1.5px;
-  height: 0.18in;
-  background: {C_GOLD};
-}}
-.spine-icon::after {{
-  content: '';
-  position: absolute;
-  top: 0.15in; left: 50%;
-  transform: translateX(-50%);
-  width: 0.14in;
-  height: 0.14in;
-  border: 1.5px solid {C_GOLD};
-  border-top: none;
-  border-left: none;
-  border-radius: 0 0 50% 0;
-}}
-
 /* ============ FRONT COVER ============ */
 .front-cover {{
   width: {TRIM_W + BLEED:.4f}in;
   height: {COVER_H:.4f}in;
-  background: linear-gradient(165deg, {C_DEEP} 0%, {C_DARK} 25%, {C_MED} 55%, {C_DARK} 85%, {C_DEEP} 100%);
+  background: linear-gradient(165deg, {C_CHARCOAL} 0%, {C_DARK} 25%, #1E1E1E 55%, {C_DARK} 85%, {C_CHARCOAL} 100%);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -264,140 +218,31 @@ body {{
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: {BLEED}in {BLEED}in {BLEED}in 0;
+  padding: {BLEED}in {BLEED}in {BLEED}in {BLEED}in;
 }}
 
-/* Water ripple texture on front */
 .front-cover::before {{
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   opacity: 0.05;
   background-image:
-    radial-gradient(ellipse 40px 10px at 15% 25%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 34px 8px at 80% 15%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 38px 9px at 70% 70%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 28px 8px at 25% 80%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 24px 7px at 50% 50%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 30px 8px at 10% 60%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 22px 7px at 90% 45%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 20px 6px at 40% 90%, {C_WHITE}, transparent),
-    radial-gradient(ellipse 18px 5px at 60% 35%, {C_WHITE}, transparent);
+    radial-gradient(ellipse 40px 24px at 15% 25%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 34px 20px at 80% 15%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 38px 22px at 70% 70%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 28px 18px at 25% 80%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 24px 15px at 50% 50%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 30px 18px at 10% 60%, {C_GOLD}, transparent),
+    radial-gradient(ellipse 22px 14px at 90% 45%, {C_GOLD}, transparent);
 }}
 
-/* ============ CSS FISH ============ */
-.fish-wrap {{
-  width: 160px; height: 80px;
+.icon-wrap {{
+  width: 120px; height: 120px;
   position: relative;
-  margin: 0 auto 25px;
+  margin: 0 auto 24px;
   z-index: 5;
 }}
-.fish-body {{
-  width: 115px; height: 48px;
-  background: {C_GOLD};
-  border-radius: 50%;
-  position: absolute;
-  top: 16px; left: 18px;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.45),
-              inset -8px -4px 10px rgba(0,0,0,0.18),
-              inset 8px 4px 10px rgba(255,255,255,0.1);
-}}
-.fish-belly {{
-  width: 92px; height: 16px;
-  background: {C_GOLD_L};
-  border-radius: 50%;
-  position: absolute;
-  top: 40px; left: 28px;
-  opacity: 0.6;
-}}
-.fish-head {{
-  width: 48px; height: 42px;
-  background: #C89010;
-  border-radius: 50%;
-  position: absolute;
-  top: 18px; left: 72px;
-  opacity: 0.5;
-}}
-.fish-tail {{
-  width: 0; height: 0;
-  border-right: 32px solid {C_GOLD};
-  border-top: 23px solid transparent;
-  border-bottom: 23px solid transparent;
-  position: absolute;
-  top: 17px; left: -12px;
-  filter: drop-shadow(-2px 1px 4px rgba(0,0,0,0.3));
-}}
-.fish-dorsal {{
-  width: 0; height: 0;
-  border-bottom: 18px solid #B8860B;
-  border-left: 10px solid transparent;
-  border-right: 20px solid transparent;
-  position: absolute;
-  top: 4px; left: 55px;
-}}
-.fish-pectoral {{
-  width: 22px; height: 11px;
-  background: #B8860B;
-  border-radius: 50% 50% 50% 0;
-  position: absolute;
-  top: 42px; left: 68px;
-  transform: rotate(15deg);
-  opacity: 0.8;
-}}
-.fish-eye {{
-  width: 7px; height: 7px;
-  background: {C_DARK2};
-  border-radius: 50%;
-  position: absolute;
-  top: 28px; left: 104px;
-}}
-.fish-eye::after {{
-  content: "";
-  width: 2.5px; height: 2.5px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 1px; left: 3px;
-}}
-.fish-gill {{
-  width: 2px; height: 32px;
-  background: #B8860B;
-  position: absolute;
-  top: 22px; left: 76px;
-  border-radius: 1px;
-  transform: rotate(5deg);
-  opacity: 0.4;
-}}
 
-/* Hook decoration */
-.hook-deco {{
-  width: 34px; height: 50px;
-  position: absolute;
-  top: 120px; left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.12;
-  z-index: 3;
-}}
-.hook-deco::before {{
-  content: "";
-  width: 2px; height: 28px;
-  background: {C_GOLD};
-  position: absolute;
-  top: 0; left: 16px;
-  border-radius: 1px;
-}}
-.hook-deco::after {{
-  content: "";
-  width: 20px; height: 20px;
-  border: 2px solid {C_GOLD};
-  border-top: none;
-  border-left: none;
-  border-radius: 0 0 50% 0;
-  position: absolute;
-  top: 24px; left: 16px;
-}}
-
-/* ============ TITLE ============ */
 .title-block {{
   position: relative;
   z-index: 5;
@@ -406,7 +251,7 @@ body {{
 
 .main-title {{
   font-family: Georgia, serif;
-  font-size: 34pt;
+  font-size: 28pt;
   font-weight: 700;
   color: {C_WHITE};
   line-height: 1.12;
@@ -421,8 +266,8 @@ body {{
 }}
 
 .subtitle {{
-  font-size: 12pt;
-  color: #A8C8D8;
+  font-size: 11pt;
+  color: {C_GOLD_L};
   font-style: italic;
   line-height: 1.5;
   margin-bottom: 22px;
@@ -438,7 +283,7 @@ body {{
 
 .feature-badge {{
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(212,160,23,0.4);
+  border: 1px solid rgba(196,160,74,0.4);
   color: {C_GOLD};
   font-size: 7.5pt;
   font-weight: 700;
@@ -450,7 +295,7 @@ body {{
 
 .tagline {{
   font-size: 9pt;
-  color: #A8C8D8;
+  color: {C_GOLD_L};
   letter-spacing: 2pt;
   text-transform: uppercase;
   margin-top: 8px;
@@ -469,12 +314,10 @@ body {{
   z-index: 5;
 }}
 
-/* Screen-only border */
 @media screen {{
   .cover-wrap {{ border: 1px solid #ccc; }}
 }}
-</style>
-"""
+</style>"""
 
 
 def generate(output_path=OUTPUT_FILE):
@@ -483,7 +326,7 @@ def generate(output_path=OUTPUT_FILE):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fishing Log Book — Cover</title>
+  <title>Fishing Log Book &mdash; Cover</title>
   {CSS}
 </head>
 <body>
@@ -493,22 +336,26 @@ def generate(output_path=OUTPUT_FILE):
   <div class="back-cover">
     <div class="back-text">
       <div class="blurb">
-        <strong>Every cast tells a story.</strong>
-        From the first light on the water to the last catch of the day,
-        this log book helps you capture the details that turn good days
-        into great seasons.
+        <strong>Track every catch and become a better angler.</strong>
+        This fishing log book gives you the space to record every
+        detail that matters &mdash; location, weather, water conditions,
+        bait, tackle, technique, and the catch itself. With 50 detailed
+        two-page catch logs, a species guide, knot reference, tackle
+        inventory, and personal records page, it's everything an angler
+        needs to turn good days into repeatable strategies.
       </div>
       <div style="margin-bottom: 8px; font-size: 8.5pt; color: {C_GOLD_L}; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt;">
         What's Inside
       </div>
       <ul class="back-features">
-        <li>52 two-page trip logs with catch details and conditions</li>
-        <li>60-species life list for freshwater and saltwater</li>
-        <li>Knot guide, species reference, and seasonal calendar</li>
-        <li>Tackle and lure inventory pages</li>
-        <li>Favorite spots log and sketch pages for maps</li>
-        <li>Season summary with personal bests tracking</li>
-        <li>Large 6" x 9" format &mdash; easy to write in</li>
+        <li>50 two-page catch logs with full condition details</li>
+        <li>Quick catch log for a bird's-eye view</li>
+        <li>Common fish species guide with lure recommendations</li>
+        <li>Essential fishing knots reference</li>
+        <li>Tackle box inventory tracker</li>
+        <li>Best fishing spots with GPS and season</li>
+        <li>Personal records and milestones page</li>
+        <li>Large 6&quot; x 9&quot; format &mdash; easy to write in</li>
       </ul>
     </div>
     <div class="back-bottom">
@@ -526,32 +373,45 @@ def generate(output_path=OUTPUT_FILE):
   <!-- ============ FRONT COVER ============ -->
   <div class="front-cover">
 
-    <!-- Fish illustration -->
-    <div class="fish-wrap">
-      <div class="fish-tail"></div>
-      <div class="fish-body"></div>
-      <div class="fish-belly"></div>
-      <div class="fish-head"></div>
-      <div class="fish-dorsal"></div>
-      <div class="fish-pectoral"></div>
-      <div class="fish-gill"></div>
-      <div class="fish-eye"></div>
+    <!-- Hook & Fish SVG Icon -->
+    <div class="icon-wrap">
+      <svg viewBox="0 0 120 120" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="56" stroke="{C_GOLD}" stroke-width="1" fill="none" opacity="0.12" stroke-dasharray="4,4"/>
+        <!-- Hook outline -->
+        <path d="M 60 20 L 60 65 Q 60 82 50 84 Q 38 84 38 73 Q 38 66 44 66"
+          stroke="{C_GOLD}" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Barb -->
+        <path d="M 44 66 L 40 62 L 47 62 Z" stroke="{C_GOLD}" stroke-width="1.5" fill="rgba(196,160,74,0.2)"/>
+        <!-- Eye/loop at top -->
+        <circle cx="60" cy="20" r="4" stroke="{C_GOLD}" stroke-width="2" fill="none"/>
+        <!-- Fish silhouette -->
+        <path d="M 55 95 Q 50 91 58 88 Q 70 86 80 89 Q 88 91 92 95 Q 88 99 80 101 Q 70 104 58 102 Q 50 99 55 95 Z"
+          stroke="{C_GOLD}" stroke-width="1.5" fill="rgba(196,160,74,0.1)"/>
+        <!-- Fish tail -->
+        <path d="M 92 95 L 102 89 L 100 95 L 102 101 Z"
+          stroke="{C_GOLD}" stroke-width="1.5" fill="rgba(196,160,74,0.08)"/>
+        <!-- Fish eye -->
+        <circle cx="62" cy="94" r="2" fill="{C_GOLD}" opacity="0.5"/>
+        <!-- Water ripples -->
+        <path d="M 30 106 Q 40 104 50 106 Q 60 108 70 106 Q 80 104 90 106"
+          stroke="{C_GOLD}" stroke-width="0.8" fill="none" opacity="0.3"/>
+        <path d="M 35 111 Q 45 109 55 111 Q 65 113 75 111 Q 85 109 95 111"
+          stroke="{C_GOLD}" stroke-width="0.6" fill="none" opacity="0.2"/>
+      </svg>
     </div>
-
-    <div class="hook-deco"></div>
 
     <!-- Title -->
     <div class="title-block">
       <div class="main-title">Fishing<br>Log Book</div>
       <div class="accent-bar"></div>
-      <div class="subtitle">Track Every Catch,<br>Every Trip, Every Story</div>
+      <div class="subtitle">Track Every Catch<br>and Become a Better Angler</div>
       <div class="features">
-        <span class="feature-badge">52 Trip Logs</span>
-        <span class="feature-badge">Species Tracker</span>
-        <span class="feature-badge">Tackle Inventory</span>
-        <span class="feature-badge">Favorite Spots</span>
+        <span class="feature-badge">50 Catch Logs</span>
+        <span class="feature-badge">Gear Tracker</span>
+        <span class="feature-badge">Best Spots</span>
+        <span class="feature-badge">Records</span>
       </div>
-      <div class="tagline">For Freshwater &amp; Saltwater Anglers</div>
+      <div class="tagline">Cast &middot; Catch &middot; Remember</div>
     </div>
 
     <div class="publisher">More Shine Press</div>

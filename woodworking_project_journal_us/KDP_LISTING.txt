@@ -1,0 +1,98 @@
+Woodworking Project Journal
+More Shine Press
+========================================================
+
+KDP LISTING DETAILS
+========================================================
+
+Title:        Woodworking Project Journal
+Subtitle:     Build It Right, Document Every Cut
+Author:       More Shine Press
+Language:     English
+Trim Size:    6" x 9"
+Pages:        104
+Paper:        Cream
+Ink:          Black & White
+Publisher:    More Shine Press
+
+Pricing:
+  Print Cost:   $2.25 (104 pages x $0.012 + $1.00)
+  List Price:   $11.99 (recommended)
+  Royalty:      $4.95 per copy
+
+Categories (KDP):
+  Primary:    Crafts, Hobbies & Home > Woodworking > Projects
+  Secondary:  Crafts, Hobbies & Home > How-to & Home Improvements
+
+Keywords (7):
+  woodworking journal
+  wood project log book
+  woodworking planner
+  carpentry project tracker
+  cut list notebook
+  woodworker reference guide
+  woodworking record book
+
+Description:
+========================================================
+Build It Right, Document Every Cut
+
+The Woodworking Project Journal is the essential companion
+for woodworkers, carpenters, and DIY makers. Every project
+teaches lessons — dimensions that worked, joints that held,
+finishes that looked beautiful. This journal captures that
+hard-won knowledge in one organized, professional system.
+
+WHAT'S INSIDE:
+
+40 Project Logs — Each project gets a full two-page spread:
+  Left page (Blueprint): Date, status, project name, client,
+  overall dimensions (width, depth, height), cut list table
+  (part name, wood species, quantity, L x W x T), and a
+  dimensioned sketch grid for your design.
+  Right page (Build Record): Joinery checklist (butt, miter,
+  dado, rabbet, mortise & tenon, dovetail, box joint, biscuit,
+  pocket hole, dowel, tongue & groove), primary tools, glue/
+  adhesive, finish schedule (type, coats, final grit), cost
+  tracking (wood, hardware, hours), quality ratings, and notes.
+
+Reference Section (6 pages):
+  • 14 common wood species with Janka hardness, workability,
+    price range, and best uses
+  • 12 joinery methods explained (from butt joint to through
+    dovetail)
+  • 9 finishing options with application notes and sanding
+    grit progression guide
+  • Measurement reference: fraction/decimal/metric conversion,
+    lumber dimensions (nominal vs actual), board foot formula
+  • 14 workshop safety rules covering personal protection,
+    power tool safety, and finishing safety
+
+Shop Management:
+  • Project overview inventory (36 entries across 3 pages)
+  • Lumber and sheet goods inventory with hardware tracking
+  • Tool inventory checklist (power tools, hand tools, jigs)
+
+Reflection & Notes:
+  • Year-in-review with best projects, skills, and milestones
+  • 2 dot-grid design sketch pads
+  • 4 lined notes pages
+
+DETAILS:
+  • 104 pages, large 6" x 9" format
+  • Professional interior design with oak brown and steel
+    blue accents
+  • Dot-grid sketch areas for project planning
+  • Cream paper, perfect binding
+  • Suitable for beginner to advanced woodworkers
+
+Measure twice, cut once. Document everything.
+========================================================
+
+FILES:
+  Interior:  woodworking_project_journal_us_V1.0.pdf
+  Cover:     woodworking_project_journal_cover_V1.0.pdf
+  Location:  ~/more-shine-kdp/woodworking_project_journal_us/
+
+COMPLIANCE: All 18 KDP checks passed. HTML source scan clean.
+Zero violations. No trademarks, no social media, no external links.

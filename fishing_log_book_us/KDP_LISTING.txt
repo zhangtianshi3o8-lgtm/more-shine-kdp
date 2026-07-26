@@ -4,81 +4,98 @@
 ============================================================
 
 PRODUCT DETAILS
-------------------------------------------------------------
+--------------------------------------------------------------
 Title:          Fishing Log Book
-Subtitle:       Track Every Catch, Every Trip, Every Story
+Subtitle:       Track Every Catch and Become a Better Angler
 Author:         More Shine Press
+Publisher:      More Shine Press
 Language:       English
-Trim Size:      6" x 9" (15.24 x 22.86 cm)
-Pages:          133
+Trim Size:      6 x 9 in (15.24 x 22.86 cm)
+Page Count:     118
 Paper:          Cream
-B&W/Color:      Black & White (Standard)
-Ink Type:       Standard
-Binding:        Paperback (Perfect Bound)
-
-CATEGORY
-------------------------------------------------------------
-Sports & Outdoors > Hunting & Fishing > Fishing
-Crafts, Hobbies & Home > Sports & Outdoors > Fishing
-
-DESCRIPTION (for Amazon listing)
-------------------------------------------------------------
-The fishing log book that captures every detail of your time on the water.
-
-From quiet dawn trips on the lake to surf casting at sunset, this journal helps you record the conditions, catches, and stories that make each outing unique. Track patterns over time and become a better angler by learning from every trip.
-
-<b>What's Inside:</b>
-
-  - 50 detailed trip log entries (two pages per trip)
-  - Catch tracking: species, length, weight, lure or bait used
-  - Weather, water, and tide conditions for each trip
-  - Location details with GPS coordinates field
-  - Knot and rig reference pages
-  - Fish species identification checklist
-  - Seasonal patterns and best-bet reference guide
-  - Annual catch summary and personal records page
-  - Tackle inventory and wish list pages
-
-<b>Designed for Anglers:</b>
-
-The two-page trip layout gives you the full picture. Left page captures the trip data — date, location, weather, water temp, tide, moon phase. Right page is for catches and the story of the day. Whether you fish freshwater bass, saltwater stripers, or trout streams, the flexible format adapts to your style.
-
-<b>Perfect For:</b>
-  - Recreational anglers building a season log
-  - Tournament fishermen tracking patterns
-  - Fly fishermen recording hatch and water data
-  - Fishing trip journals and travel adventures
-  - Gifts for the angler in your life
-
-KEYWORDS (7 backend keywords for Amazon)
-------------------------------------------------------------
-1. fishing log book journal angler record
-2. fishing trip diary catch tracker notebook
-3. freshwater fishing log book species
-4. saltwater fishing journal tackle log
-5. fly fishing trip journal logbook
-6. fishing gear inventory tracker book
-7. fisherman gift notebook men women
+Interior:       Black & White
 
 PRICING
-------------------------------------------------------------
-KDP Print Cost (B&W, cream, 133pp): $2.60
-List Price: $12.99
-Royalty (60% of list - print cost): $12.99 x 0.60 - $2.60 = $5.19 per copy
+--------------------------------------------------------------
+Print Cost:     $2.42 (118pp cream)
+List Price:     $12.99
+Royalty (60%):  $5.37 per copy
 
-FILES
-------------------------------------------------------------
-Interior:  ~/fishing_log_book_us/fishing_log_book_us_V1.0.pdf (133 pages)
-Cover:    ~/fishing_log_book_us/fishing_log_book_cover_V1.0.pdf (full wrap)
-HTML:     ~/fishing_log_book_us/fishing_log_book_us_V1.0.html
-          ~/fishing_log_book_us/fishing_log_book_cover_V1.0.html
+DESCRIPTION
+--------------------------------------------------------------
+Track Every Catch and Become a Better Angler
 
-COMPLIANCE STATUS
-------------------------------------------------------------
-✓ No external URLs
-✓ No brand names or trademarks
-✓ No copyrighted material
-✓ No medical/health claims
-✓ No social media references
-✓ No email/phone numbers
-✓ KDP compliance scan: PASSED
+This fishing log book gives you the space to record every
+detail that matters — location, weather, water conditions,
+bait, tackle, technique, and the catch itself. Whether you
+fish freshwater lakes for bass, rivers for trout, or saltwater
+for stripers, this journal helps you identify the patterns
+that lead to success.
+
+Each two-page catch log includes space for date, time, location,
+GPS coordinates, water type and temperature, depth, bottom type,
+weather conditions (with checkboxes), air temperature, wind, and
+barometric pressure. Record the species, length, weight, whether
+kept or released. The right page captures fishing method, full
+bait and tackle details, technique notes, lessons learned, and
+a catch summary.
+
+Perfect for freshwater anglers, saltwater fishermen, fly fishers,
+bass fishermen, kayak anglers, ice fishermen, and weekend warriors.
+An excellent gift for Father's Day, birthdays, retirees, and anyone
+who loves being on the water.
+
+WHAT'S INSIDE
+
+50 Two-Page Catch Log Spreads
+Each spread captures full conditions (location, GPS, water type,
+temperature, depth, bottom type, weather, wind, barometric
+pressure), catch details (species, length, weight, kept/released),
+fishing method (shore, boat, kayak, wading, pier, ice), complete
+bait and tackle info (bait, lure, hook, line, rod, rig), technique
+notes, lessons learned, and a daily catch summary.
+
+Quick Catch Log (2 pages)
+A one-line-per-catch summary table for a bird's-eye view of
+every catch — date, location, species, size, and bait.
+
+Common Fish Species Guide
+Ten popular species with descriptions, habitat preferences,
+and lure recommendations — from largemouth bass to salmon.
+
+Essential Fishing Knots Reference
+Six essential knots with step-by-step instructions — Improved
+Clinch, Palomar, Uni, Blood, Surgeon's Loop, and Snell.
+
+Tackle Box Inventory Tracker
+Three categories — hooks, lures and baits, lines and leaders —
+with size, quantity, and low-stock tracking.
+
+Best Fishing Spots
+15-entry tracker for your honey holes with GPS, best season,
+and target species.
+
+Personal Records Page
+Track your biggest catches by species, most fish in a day,
+first catch, rarest catch, and memorable stories.
+
+KEYWORDS
+--------------------------------------------------------------
+fishing log book, fishing journal, fishing diary, catch log,
+angler journal, fishing record book, bass fishing log, fly
+fishing journal, fishing tracker, fish log, fishing notebook,
+tackle log, fishing trip journal, sport fishing log, fishing
+logbook
+
+CATEGORIES
+--------------------------------------------------------------
+Sports > Outdoors > Fishing
+Crafts, Hobbies & Home > Sports & Outdoors
+Self-Help > Personal Growth
+
+ABOUT THE PUBLISHER
+--------------------------------------------------------------
+More Shine Press creates thoughtfully designed journals and log
+books that help people capture what matters most. Every book is
+made with care — clean layouts, premium formatting, and practical
+structures that enhance your daily life.

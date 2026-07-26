@@ -1,0 +1,99 @@
+Soap Making Journal
+More Shine Press
+========================================================
+
+KDP LISTING DETAILS
+========================================================
+
+Title:        Soap Making Journal
+Subtitle:     Track Every Batch, Perfect Every Bar
+Author:       More Shine Press
+Language:     English
+Trim Size:    6" x 9"
+Pages:        104
+Paper:        Cream
+Ink:          Black & White
+Publisher:    More Shine Press
+
+Pricing:
+  Print Cost:   $2.25 (104 pages x $0.012 + $1.00)
+  List Price:   $11.99 (recommended)
+  Royalty:      $4.95 per copy
+
+Categories (KDP):
+  Primary:    Crafts, Hobbies & Home > Crafts & Hobbies > Candlemaking
+  Secondary:  Crafts, Hobbies & Home > Crafts & Hobbies > Beauty
+
+Keywords (7):
+  soap making journal
+  cold process soap log
+  soap recipe tracker
+  handmade soap notebook
+  lye calculator reference
+  artisan soap making
+  soap making record book
+
+Description:
+========================================================
+Track Every Batch, Perfect Every Bar
+
+The Soap Making Journal is the essential companion for cold
+process and hot process soap makers. Every batch teaches
+lessons — from oil ratios and lye calculations to cure
+tracking and quality evaluation. This journal captures that
+hard-won knowledge in one organized, professional system.
+
+WHAT'S INSIDE:
+
+40 Batch Logs — Each batch gets a full two-page spread:
+  Left page (Recipe): Date, method, batch name, superfat %,
+  batch size, oil recipe table (oil, percentage, grams,
+  ounces), lye solution details (NaOH, water, concentration,
+  water:lye ratio), additives and scent tracking.
+  Right page (Process): Oil and lye temperatures, ambient
+  temperature, time to trace, trace type checklist (none,
+  thin, medium, thick, emulsion, seized), mold used, cut date,
+  issues/problems, bars yielded, cure tracking table (weeks
+  1/2/4/6 with zap test, pH, hardness/lather/scent), quality
+  ratings (lather, scent, skin feel), and notes.
+
+Reference Section (6 pages):
+  • 14 common soap-making oils with hardness, cleansing,
+    conditioning, bubbly, creamy values, and SAP values
+  • Lye safety guidelines (PPE, equipment, mixing protocol)
+  • Essential oil usage rates and fragrance oil behavior chart
+    (stable, accelerates, rices, seizes, discolors)
+  • Curing timeline with weekly water loss percentages and
+    testing guide (zap test, pH strip, lather, hardness)
+  • 12 common soap problems with causes and solutions
+    (seize, acceleration, ricing, DOS, lye heavy, soda ash,
+    partial gel, cracking, color fade, no scent, soft bars,
+    glycerin rivers)
+
+Management Section:
+  • Recipe library index (36 entries across 3 pages)
+  • Supply inventory (oils, lye, essential oils, colorants)
+  • Gift and sales distribution log
+
+Reflection & Notes:
+  • Year-in-review with best recipes, skills, and milestones
+  • 6 lined notes pages
+
+DETAILS:
+  • 104 pages, large 6" x 9" format
+  • Professional interior design with lavender, herbal green,
+    and honey gold accents
+  • Comprehensive reference data embedded in every section
+  • Cream paper, perfect binding
+  • Suitable for beginner to advanced soap makers
+
+Every batch is progress. Your best soap is the next one.
+========================================================
+
+FILES:
+  Interior:  soap_making_journal_us_V1.0.pdf
+  Cover:     soap_making_journal_cover_V1.0.pdf
+  Location:  ~/more-shine-kdp/soap_making_journal_us/
+
+COMPLIANCE: All 18 KDP checks passed. HTML source scan clean.
+Zero violations. No trademarks, no social media, no external links.

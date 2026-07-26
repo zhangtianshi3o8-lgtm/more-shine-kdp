@@ -1,0 +1,105 @@
+Astronomy Observation Journal
+More Shine Press
+========================================================
+
+KDP LISTING DETAILS
+========================================================
+
+Title:        Astronomy Observation Journal
+Subtitle:     Under the Same Stars, Always Wondering
+Author:       More Shine Press
+Language:     English
+Trim Size:    6" x 9"
+Pages:        102
+Paper:        Cream
+Ink:          Black & White
+Publisher:    More Shine Press
+
+Pricing:
+  Print Cost:   $2.22 (102 pages x $0.012 + $1.00)
+  List Price:   $11.99 (recommended)
+  Royalty:      $4.97 per copy
+
+Categories (KDP):
+  Primary:    Crafts, Hobbies & Home > Science & Math > Astronomy
+  Secondary:  Sports & Outdoors > Outdoor Recreation
+
+Keywords (7):
+  astronomy observation journal
+  stargazing logbook
+  telescope observing record
+  deep sky observing notebook
+  messier object tracker
+  night sky observation diary
+  amateur astronomy field journal
+
+Description:
+========================================================
+Under the Same Stars, Always Wondering
+
+The Astronomy Observation Journal is the essential
+companion for amateur astronomers, backyard stargazers,
+and astrophotographers. From seeing and transparency
+ratings to equipment configurations and field sketches,
+this journal transforms every night under the stars into
+a systematic record of discovery.
+
+WHAT'S INSIDE:
+
+40 Observation Logs — Each session gets a full two-page
+spread:
+  Left page (Conditions): Date, time, observing site with
+  GPS coordinates, weather conditions (temperature,
+  humidity, wind, cloud cover), sky quality ratings
+  (seeing and transparency on 1-5 scale), Bortle class,
+  Moon phase, limiting magnitude, and primary targets
+  table.
+  Right page (Observations): Equipment used (telescope,
+  aperture/focal length, eyepieces, magnification, filters,
+  mount), viewing notes with writing lines, session
+  ratings (conditions and satisfaction on 1-5 scale), and
+  a dot-grid field sketch area.
+
+Reference Section (6 pages):
+  • Stellar magnitude scale explained (16 entries from
+    Sun to Pluto, with naked-eye visibility guide)
+  • Top 20 Messier deep-sky objects with type,
+    constellation, magnitude, and notes
+  • Telescope types comparison (refractor, reflector,
+    Dobsonian, SCT, Mak-Cass, binoculars) with eyepiece
+    magnification guide
+  • Bortle Dark Sky Scale (Classes 1-9) with limiting
+    magnitude and Moon phase impact on observing
+  • Seeing and transparency rating system with quick
+    seeing test and polar alignment quick reference
+
+Planning & Gear:
+  • Observing wishlist (24 entries across 2 pages)
+  • Equipment inventory (telescopes, eyepieces,
+    accessories checklists)
+  • Year-in-review with best sessions, highlights,
+    and goals
+
+Detail Pages:
+  • 2 full-page dot-grid deep sky sketch pads
+  • 4 lined notes pages for observations and research
+
+DETAILS:
+  • 102 pages, large 6" x 9" format
+  • Professional interior design with midnight blue and
+    nebula cyan accents
+  • Comprehensive astronomical reference data embedded
+  • Cream paper, perfect binding
+  • Suitable for beginner to advanced amateur astronomers
+
+The sky is always there. Every clear night is a gift.
+Look up. Wonder. Record.
+========================================================
+
+FILES:
+  Interior:  astronomy_observation_journal_us_V1.0.pdf
+  Cover:     astronomy_observation_journal_cover_V1.0.pdf
+  Location:  ~/more-shine-kdp/astronomy_observation_journal_us/
+
+COMPLIANCE: All 18 KDP checks passed. HTML source scan clean.
+Zero violations. No trademarks, no social media, no external links.

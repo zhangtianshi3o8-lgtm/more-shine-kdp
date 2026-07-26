@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonsai Tree Care Journal — Cover</title>
+  
+<style>
+@page { size: 12.5250in 9.2500in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cover-wrap {
+  width: 12.5250in;
+  height: 9.2500in;
+  position: relative;
+  display: flex;
+}
+
+/* ============ BACK COVER ============ */
+.back-cover {
+  width: 6.1250in;
+  height: 9.2500in;
+  background: linear-gradient(165deg, #161616 0%, #1E1E1E 35%, #1A2018 100%);
+  padding: 0.75in 0.5in 0.45in 0.5in;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+  overflow: hidden;
+}
+
+.back-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(ellipse 26px 16px at 15% 25%, #5A7A4A, transparent),
+    radial-gradient(ellipse 22px 14px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 24px 15px at 70% 70%, #B5704A, transparent),
+    radial-gradient(ellipse 20px 12px at 25% 80%, #5A7A4A, transparent),
+    radial-gradient(ellipse 18px 11px at 50% 50%, #C4A04A, transparent),
+    radial-gradient(ellipse 22px 13px at 10% 60%, #B5704A, transparent);
+}
+
+.back-cover::after {
+  content: '';
+  position: absolute;
+  top: -0.3in; right: -0.3in;
+  width: 1.2in; height: 1.2in;
+  border-radius: 50%;
+  background: rgba(90, 122, 74, 0.08);
+}
+
+.back-text {
+  color: rgba(255,255,255,0.92);
+  font-size: 9pt;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}
+.back-text .blurb {
+  font-style: italic;
+  margin-bottom: 14px;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+.back-text .blurb strong {
+  color: #7A9A6A;
+  font-style: normal;
+}
+
+.back-features {
+  list-style: none;
+  padding: 0;
+}
+.back-features li {
+  font-size: 8pt;
+  color: rgba(255,255,255,0.82);
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.4;
+}
+.back-features li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 5px;
+  height: 5px;
+  background: #5A7A4A;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(90,122,74,0.4);
+}
+
+.back-bottom {
+  padding-bottom: 0.15in;
+  position: relative;
+  z-index: 2;
+}
+
+.barcode-area {
+  width: 2in;
+  height: 1.2in;
+  background: white;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6pt;
+  color: #ccc;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.back-logo {
+  text-align: center;
+  color: #5A7A4A;
+  font-size: 8pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-top: 8px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ============ SPINE ============ */
+.spine {
+  width: 0.2750in;
+  height: 9.2500in;
+  background: linear-gradient(180deg, #161616 0%, #1E1E1E 50%, #161616 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6in 0;
+  position: relative;
+}
+
+.spine::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 10px 6px at 50% 20%, #5A7A4A, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 50%, #C4A04A, transparent),
+    radial-gradient(ellipse 10px 6px at 50% 80%, #B5704A, transparent);
+}
+
+.spine-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: rgba(255,255,255,0.95);
+  font-size: 7.5pt;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.spine-author {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #5A7A4A;
+  font-size: 6pt;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ FRONT COVER ============ */
+.front-cover {
+  width: 6.1250in;
+  height: 9.2500in;
+  background: linear-gradient(165deg, #161616 0%, #1E1E1E 20%, #1A2018 55%, #1E1E1E 85%, #161616 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.125in 0.125in 0.125in 0.125in;
+}
+
+.front-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.06;
+  background-image:
+    radial-gradient(ellipse 38px 23px at 15% 25%, #5A7A4A, transparent),
+    radial-gradient(ellipse 32px 19px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 36px 22px at 70% 70%, #B5704A, transparent),
+    radial-gradient(ellipse 26px 16px at 25% 80%, #5A7A4A, transparent),
+    radial-gradient(ellipse 22px 14px at 50% 50%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 10% 60%, #B5704A, transparent),
+    radial-gradient(ellipse 20px 12px at 90% 45%, #5A7A4A, transparent),
+    radial-gradient(ellipse 18px 11px at 40% 90%, #C4A04A, transparent),
+    radial-gradient(ellipse 16px 10px at 60% 35%, #B5704A, transparent);
+}
+
+/* ============ BONSAI SVG ============ */
+.bonsai-wrap {
+  width: 120px; height: 180px;
+  position: relative;
+  margin: 0 auto 20px;
+  z-index: 5;
+}
+
+/* ============ TITLE ============ */
+.title-block {
+  position: relative;
+  z-index: 5;
+  padding: 0 0.5in;
+}
+
+.main-title {
+  font-family: Georgia, serif;
+  font-size: 28pt;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.12;
+  letter-spacing: 0.5pt;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.55);
+}
+
+.accent-bar {
+  width: 120px; height: 2.5px;
+  background: #5A7A4A;
+  margin: 16px auto;
+}
+
+.subtitle {
+  font-size: 11.5pt;
+  color: #7A9A6A;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.feature-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(90,122,74,0.45);
+  color: #5A7A4A;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.tagline {
+  font-size: 9pt;
+  color: #C8825A;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.publisher {
+  position: absolute;
+  bottom: 0.5in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9.5pt;
+  color: #5A7A4A;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  font-weight: 700;
+  z-index: 5;
+}
+
+@media screen {
+  .cover-wrap { border: 1px solid #ccc; }
+}
+</style>
+
+</head>
+<body>
+<div class="cover-wrap">
+
+  <!-- ============ BACK COVER ============ -->
+  <div class="back-cover">
+    <div class="back-text">
+      <div class="blurb">
+        <strong>Bonsai is the art of patience. This journal is your record of it.</strong>
+        Every tree tells a story measured in seasons and decades.
+        This journal helps you capture each tree's identity, track
+        every pruning and watering session, monitor health, and
+        document your growth as an artist alongside your collection.
+      </div>
+      <div style="margin-bottom: 8px; font-size: 8.5pt; color: #7A9A6A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5pt;">
+        What's Inside
+      </div>
+      <ul class="back-features">
+        <li>40 two-page tree records (profile + care log)</li>
+        <li>15 common bonsai species quick-reference guide</li>
+        <li>Seasonal pruning calendar for all species types</li>
+        <li>Watering fundamentals and troubleshooting</li>
+        <li>Soil mixtures and repotting guide</li>
+        <li>Wiring techniques and removal timing</li>
+        <li>10 classical bonsai styles reference</li>
+        <li>Pest and disease identification chart</li>
+        <li>Seasonal task calendar, supplies inventory, show records</li>
+        <li>Large 6" x 9" format &mdash; easy to write in</li>
+      </ul>
+    </div>
+    <div class="back-bottom">
+      <div class="barcode-area">ISBN Barcode Area</div>
+      <div class="back-logo">More Shine Press</div>
+    </div>
+  </div>
+
+  <!-- ============ SPINE ============ -->
+  <div class="spine">
+    <div class="spine-author">More Shine Press</div>
+    <div class="spine-text">Bonsai Tree Care Journal</div>
+  </div>
+
+  <!-- ============ FRONT COVER ============ -->
+  <div class="front-cover">
+
+    <!-- Bonsai illustration (SVG) -->
+    <div class="bonsai-wrap">
+      <svg viewBox="0 0 120 180" width="120" height="180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="foliage" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7A9A6A" stop-opacity="0.22"/>
+            <stop offset="50%" stop-color="#5A7A4A" stop-opacity="0.16"/>
+            <stop offset="100%" stop-color="#4A6B3E" stop-opacity="0.10"/>
+          </linearGradient>
+          <linearGradient id="trunkGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6B4423" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#4A2E15" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="potGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#B5704A" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#965538" stop-opacity="0.18"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Foliage pads (back layer, faded) -->
+        <ellipse cx="35" cy="55" rx="18" ry="10"
+                 fill="rgba(74,107,62,0.12)"
+                 stroke="rgba(90,122,74,0.20)" stroke-width="1"/>
+        <ellipse cx="85" cy="50" rx="16" ry="9"
+                 fill="rgba(74,107,62,0.10)"
+                 stroke="rgba(90,122,74,0.18)" stroke-width="1"/>
+
+        <!-- Main trunk (S-curve) -->
+        <path d="M 60 130 Q 50 100 58 80 Q 66 55 58 35"
+              fill="none"
+              stroke="url(#trunkGrad)" stroke-width="10"
+              stroke-linecap="round"/>
+
+        <!-- Trunk detail lines -->
+        <path d="M 60 130 Q 50 100 58 80 Q 66 55 58 35"
+              fill="none"
+              stroke="rgba(250,248,244,0.08)" stroke-width="1.5"
+              stroke-linecap="round"/>
+
+        <!-- Side branch (left) -->
+        <path d="M 55 85 Q 40 80 30 65"
+              fill="none"
+              stroke="url(#trunkGrad)" stroke-width="5"
+              stroke-linecap="round"/>
+
+        <!-- Side branch (right) -->
+        <path d="M 62 70 Q 78 65 88 55"
+              fill="none"
+              stroke="url(#trunkGrad)" stroke-width="4"
+              stroke-linecap="round"/>
+
+        <!-- Main foliage pad (top, largest) -->
+        <ellipse cx="58" cy="25" rx="24" ry="12"
+                 fill="url(#foliage)"
+                 stroke="rgba(90,122,74,0.35)" stroke-width="1.5"/>
+
+        <!-- Left foliage pad -->
+        <ellipse cx="28" cy="60" rx="18" ry="10"
+                 fill="url(#foliage)"
+                 stroke="rgba(90,122,74,0.30)" stroke-width="1.2"/>
+
+        <!-- Right foliage pad -->
+        <ellipse cx="90" cy="48" rx="16" ry="9"
+                 fill="url(#foliage)"
+                 stroke="rgba(90,122,74,0.30)" stroke-width="1.2"/>
+
+        <!-- Lower foliage pad -->
+        <ellipse cx="50" cy="72" rx="14" ry="8"
+                 fill="rgba(90,122,74,0.15)"
+                 stroke="rgba(90,122,74,0.22)" stroke-width="1"/>
+
+        <!-- Foliage texture dots -->
+        <circle cx="50" cy="22" r="2" fill="rgba(122,154,106,0.25)"/>
+        <circle cx="65" cy="28" r="1.5" fill="rgba(122,154,106,0.20)"/>
+        <circle cx="22" cy="58" r="1.5" fill="rgba(122,154,106,0.20)"/>
+        <circle cx="33" cy="63" r="1" fill="rgba(122,154,106,0.15)"/>
+        <circle cx="85" cy="50" r="1" fill="rgba(122,154,106,0.15)"/>
+
+        <!-- Soil line -->
+        <ellipse cx="60" cy="128" rx="28" ry="3"
+                 fill="rgba(40,25,10,0.30)"/>
+
+        <!-- Pot rim -->
+        <rect x="30" y="128" width="60" height="5" rx="2"
+              fill="url(#potGrad)"
+              stroke="rgba(181,112,74,0.40)" stroke-width="1.2"/>
+
+        <!-- Pot body -->
+        <path d="M 33 133 L 36 155 L 84 155 L 87 133 Z"
+              fill="url(#potGrad)"
+              stroke="rgba(181,112,74,0.35)" stroke-width="1.2"
+              stroke-linejoin="round"/>
+
+        <!-- Pot feet -->
+        <rect x="38" y="155" width="6" height="5" rx="1"
+              fill="rgba(150,90,60,0.20)"
+              stroke="rgba(181,112,74,0.30)" stroke-width="0.8"/>
+        <rect x="76" y="155" width="6" height="5" rx="1"
+              fill="rgba(150,90,60,0.20)"
+              stroke="rgba(181,112,74,0.30)" stroke-width="0.8"/>
+
+        <!-- Pot texture lines -->
+        <line x1="35" y1="138" x2="85" y2="138"
+              stroke="rgba(150,90,60,0.15)" stroke-width="0.6"/>
+        <line x1="36" y1="145" x2="84" y2="145"
+              stroke="rgba(150,90,60,0.12)" stroke-width="0.5"/>
+
+        <!-- Sparkle accents -->
+        <g opacity="0.6">
+          <circle cx="15" cy="25" r="2" fill="rgba(196,160,74,0.4)"/>
+          <circle cx="15" cy="25" r="0.8" fill="rgba(250,248,244,0.6)"/>
+          <circle cx="103" cy="18" r="1.5" fill="rgba(250,248,244,0.3)"/>
+          <circle cx="105" cy="90" r="1" fill="rgba(122,154,106,0.3)"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Title -->
+    <div class="title-block">
+      <div class="main-title">Bonsai Tree Care<br>Journal</div>
+      <div class="accent-bar"></div>
+      <div class="subtitle">Nurture Every Tree,<br>Track Every Season</div>
+      <div class="features">
+        <span class="feature-badge">40 Tree Logs</span>
+        <span class="feature-badge">Pruning Calendar</span>
+        <span class="feature-badge">Season Care</span>
+        <span class="feature-badge">Growth Tracking</span>
+      </div>
+      <div class="tagline">For Bonsai Enthusiasts &amp; Tree Keepers</div>
+    </div>
+
+    <div class="publisher">More Shine Press</div>
+  </div>
+
+</div>
+</body>
+</html>

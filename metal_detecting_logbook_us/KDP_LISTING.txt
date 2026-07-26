@@ -1,0 +1,95 @@
+Metal Detecting Logbook
+More Shine Press
+========================================================
+
+KDP LISTING DETAILS
+========================================================
+
+Title:        Metal Detecting Logbook
+Subtitle:     Every Signal Tells a Story
+Author:       More Shine Press
+Language:     English
+Trim Size:    6" x 9"
+Pages:        100
+Paper:        Cream
+Ink:          Black & White
+Publisher:    More Shine Press
+
+Pricing:
+  Print Cost:   $2.20 (100 pages x $0.012 + $1.00)
+  List Price:   $11.99 (recommended)
+  Royalty:      $4.99 per copy
+
+Categories (KDP):
+  Primary:    Crafts, Hobbies & Home > Antiques & Collectibles > Coins & Medals
+  Secondary:  Sports & Outdoors > Outdoor Recreation
+
+Keywords (7):
+  metal detecting logbook
+  treasure hunting journal
+  metal detector finds log
+  coin shooting notebook
+  relic hunting record
+  detecting gear tracker
+  metal detecting field journal
+
+Description:
+========================================================
+Every Signal Tells a Story
+
+The Metal Detecting Logbook is the essential companion for
+detectorists, relic hunters, coin shooters, and beach combers.
+From GPS coordinates and detector settings to cleaning methods
+and value estimates, this logbook preserves the details that
+turn random finds into a personal treasure archive.
+
+WHAT'S INSIDE:
+
+40 Find Logs — Each find gets a full two-page spread:
+  Left page (Discovery): Date, time, item name, material,
+  estimated age, location data (site name, GPS coordinates,
+  terrain type, soil condition), detector settings table
+  (model, search mode, sensitivity, discrimination, ground
+  balance, coil type), and signal data (VDI number, depth,
+  tone type, signal strength).
+  Right page (Care & Notes): Cleaning method checklist (none,
+  water soak, soft brush, olive oil, chemical, electrolysis,
+  professional, left as-found), physical details (dimensions,
+  weight, identifying marks, patina/condition), value
+  assessment (estimated value, metal weight, melt value),
+  significance ratings (rarity, condition), photo reference,
+  disposition (kept/returned/sold), and research notes.
+
+Reference Section (5 pages):
+  • 12 common metals identification guide with signal strength,
+    tone character, and identification tips
+  • Cleaning methods for 9 material types with safe/dangerous
+    techniques explained
+  • Land permission and legal reference (private property,
+    public lands, ethical detecting code)
+  • Detector settings guide (sensitivity, discrimination,
+    ground balance, frequency, VDI number chart)
+
+Site Management:
+  • Hunting sites directory (24 entries across 2 pages)
+  • Gear inventory checklist (detectors, coils, digging tools)
+  • Year-in-review with best finds, highlights, and goals
+
+DETAILS:
+  • 100 pages, large 6" x 9" format
+  • Professional interior design with copper and verdigris
+    accents
+  • Comprehensive reference data embedded throughout
+  • Cream paper, perfect binding
+  • Suitable for beginner to experienced detectorists
+
+Every hole tells a story. The best find is still underground.
+========================================================
+
+FILES:
+  Interior:  metal_detecting_logbook_us_V1.0.pdf
+  Cover:     metal_detecting_logbook_cover_V1.0.pdf
+  Location:  ~/more-shine-kdp/metal_detecting_logbook_us/
+
+COMPLIANCE: All 18 KDP checks passed. HTML source scan clean.
+Zero violations. No trademarks, no social media, no external links.

@@ -1,0 +1,94 @@
+Fermentation Journal
+More Shine Press
+========================================================
+
+KDP LISTING DETAILS
+========================================================
+
+Title:        Fermentation Journal
+Subtitle:     Track Every Batch, Every Culture, Every Flavor
+Author:       More Shine Press
+Language:     English
+Trim Size:    6" x 9"
+Pages:        110
+Paper:        Cream
+Ink:          Black & White
+Publisher:    More Shine Press
+
+Pricing:
+  Print Cost:   $2.32 (110 pages × $0.012 + $1.00)
+  List Price:   $10.99 (recommended)
+  Royalty:      $4.27 per copy
+
+Categories (KDP):
+  Primary:    Cookbooks, Food & Wine > Cooking Methods > Canning & Preserving
+  Secondary:  Cookbooks, Food & Wine > Cooking Methods > Professional
+
+Keywords (7):
+  fermentation journal
+  kombucha log book
+  sauerkraut recipe tracker
+  fermentation tracker
+  home fermentation guide
+  cultured food journal
+  pickling and fermentation log
+
+Description:
+========================================================
+Track Every Batch, Every Culture, Every Flavor
+
+The Fermentation Journal is your personal companion for the
+ancient art of living food. Whether you are making tangy
+sauerkraut, fizzy kombucha, fiery hot sauce, or rich miso,
+this journal turns experiments into reproducible recipes
+and transforms trial and error into genuine expertise.
+
+WHAT'S INSIDE:
+
+40 Batch Logs — Each batch gets a full two-page spread:
+  Left page: date, batch name, ferment type, culture/starter
+  source, ingredients with weights (grams), salt percentage,
+  brine ratio, and vessel size.
+  Right page: daily fermentation timeline (day 1-30+ with
+  temp, pH, and observations), sensory ratings (sourness,
+  saltiness, crunch/texture, complexity), overall star
+  rating, outcome checkboxes, tasting notes, and
+  adjustment ideas.
+
+Reference Section:
+  • Salt and brine guide with precise ratios for every type
+  • pH and timeline reference (target pH, duration, temp)
+  • Types of fermentation (6 categories, 40+ ferments listed)
+  • Safety guidelines (mold vs kahm yeast, botulism, hygiene)
+
+Tracking Pages:
+  • Starter culture registry (36 entries: SCOBYs, grains,
+    sourdough starters, koji)
+  • Recipe development worksheets (2 pages for your own
+    signature ferments)
+  • Equipment and gear inventory
+  • Supplier and ingredient source directory (24 entries)
+  • Tasting journal for finished ferments (16 entries)
+  • Year-in-review favorites and personal discoveries
+  • Dot grid sketch pad for recipe mapping
+  • 6 pages of lined notes
+
+DETAILS:
+  • 110 pages, large 6" x 9" format
+  • Professional interior design with copper/amber accents
+  • Easy-to-write-in layout with generous spacing
+  • Cream paper, perfect binding
+  • Suitable for beginners and experienced fermenters alike
+
+Fermentation is both art and science. This journal helps
+you master both, one batch at a time.
+========================================================
+
+FILES:
+  Interior:  fermentation_journal_us_V1.0.pdf
+  Cover:     fermentation_journal_cover_V1.0.pdf
+  Location:  ~/more-shine-kdp/fermentation_journal_us/
+
+COMPLIANCE: All 18 KDP checks passed. HTML source scan clean.
+Note: "Apple Cider Vinegar" is a generic food name, not a
+trademark — safe for KDP.

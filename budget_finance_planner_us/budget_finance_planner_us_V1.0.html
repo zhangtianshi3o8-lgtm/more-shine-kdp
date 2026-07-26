@@ -1,0 +1,3326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Budget & Finance Planner &mdash; More Shine Press</title>
+<style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---- Colors ---- */
+/* Charcoal: #161616, #1E1E1E */
+/* Gold: #C4A04A */
+/* Warm cream: #FAF6F0, #F5EDE3 */
+/* Text: #2A2A2A */
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.45in 0.5in 0.38in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print  { .page { border: none; margin: 0; } }
+
+/* ================ COVER (INTERIOR TITLE PAGE) ================ */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, #161616 0%, #1E1E1E 30%, #161616 65%, #0D0D0D 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cover .glow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.06;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #C4A04A, transparent),
+    radial-gradient(ellipse 26px 16px at 80% 15%, #C4A04A, transparent),
+    radial-gradient(ellipse 28px 17px at 70% 70%, #C4A04A, transparent),
+    radial-gradient(ellipse 22px 14px at 25% 80%, #C4A04A, transparent),
+    radial-gradient(ellipse 20px 12px at 50% 45%, #C4A04A, transparent),
+    radial-gradient(ellipse 24px 15px at 10% 55%, #C4A04A, transparent),
+    radial-gradient(ellipse 18px 11px at 90% 40%, #C4A04A, transparent),
+    radial-gradient(ellipse 16px 10px at 40% 90%, #C4A04A, transparent);
+}
+
+/* Coin / dollar symbol stylized */
+.cover .icon-wrap {
+  width: 120px; height: 120px;
+  position: relative;
+  margin: 0 auto 16px;
+}
+
+.cover .icon-circle {
+  width: 100px; height: 100px;
+  border: 2px solid rgba(196,160,74,0.5);
+  border-radius: 50%;
+  position: absolute;
+  top: 10px; left: 10px;
+  background: transparent;
+}
+
+.cover .icon-circle-inner {
+  width: 80px; height: 80px;
+  border: 1px solid rgba(196,160,74,0.3);
+  border-radius: 50%;
+  position: absolute;
+  top: 20px; left: 20px;
+}
+
+.cover .icon-dollar {
+  position: absolute;
+  top: 30px; left: 0; right: 0;
+  text-align: center;
+  font-size: 42pt;
+  font-weight: 700;
+  color: rgba(196,160,74,0.6);
+  font-family: Georgia, serif;
+}
+
+.cover .icon-arc {
+  position: absolute;
+  top: -5px; left: -5px;
+  width: 130px; height: 130px;
+  border: 1.5px dashed rgba(196,160,74,0.2);
+  border-radius: 50%;
+}
+
+.cover .title-block {
+  position: relative;
+  z-index: 5;
+  padding: 0 0.4in;
+}
+
+.cover .main-title {
+  font-family: Georgia, serif;
+  font-size: 30pt;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: 0.5pt;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.cover .accent-bar {
+  width: 110px; height: 2.5px;
+  background: #C4A04A;
+  margin: 14px auto;
+}
+
+.cover .subtitle {
+  font-size: 11pt;
+  color: #D4B896;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.cover .features {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cover .feature-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(196,160,74,0.4);
+  color: #C4A04A;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.cover .tagline {
+  font-size: 8.5pt;
+  color: #D4B896;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.cover .publisher {
+  position: absolute;
+  bottom: 0.4in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #C4A04A;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ================ SECTION DIVIDER ================ */
+.divider {
+  width: 6in; height: 9in;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(165deg, #161616 0%, #1E1E1E 50%, #161616 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.divider .div-glow {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #C4A04A, transparent),
+    radial-gradient(ellipse 25px 15px at 80% 30%, #C4A04A, transparent),
+    radial-gradient(ellipse 22px 13px at 70% 75%, #C4A04A, transparent),
+    radial-gradient(ellipse 18px 11px at 25% 85%, #C4A04A, transparent);
+}
+
+.divider .div-num {
+  font-size: 60pt;
+  color: rgba(196,160,74,0.12);
+  font-weight: 700;
+  position: absolute;
+  top: 1in;
+}
+
+.divider .div-label {
+  font-size: 10pt;
+  color: #C4A04A;
+  letter-spacing: 3pt;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.divider .div-title {
+  font-size: 24pt;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1.2;
+  position: relative;
+  padding: 0 0.6in;
+}
+
+.divider .div-sub {
+  font-size: 11pt;
+  color: #D4B896;
+  font-style: italic;
+  margin-top: 14px;
+  position: relative;
+}
+
+/* ================ CONTENT PAGES ================ */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7.5pt;
+  color: #999;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #C4A04A;
+  margin-bottom: 14px;
+}
+.section-header .sh-left {
+  font-weight: 700;
+  letter-spacing: 0.8pt;
+  color: #161616;
+  text-transform: uppercase;
+}
+.section-header .sh-right {
+  color: #aaa;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0.22in;
+  left: 0.5in; right: 0.5in;
+  font-size: 6.5pt;
+  color: #bbb;
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.5px solid #eee;
+  padding-top: 3px;
+}
+
+.page-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #161616;
+  margin-bottom: 3px;
+}
+
+.page-subtitle {
+  font-size: 8pt;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+/* ---- Writing Lines ---- */
+.wline {
+  border-bottom: 0.5px solid #ccc;
+  height: 22px;
+  margin-bottom: 2px;
+}
+.wline-sm {
+  border-bottom: 0.5px solid #ddd;
+  height: 18px;
+  margin-bottom: 1px;
+}
+
+/* ---- Data Tables ---- */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+}
+table.data-table th {
+  background: #C4A04A;
+  color: white;
+  font-weight: 700;
+  text-align: left;
+  padding: 4px 5px;
+  font-size: 7pt;
+  letter-spacing: 0.3pt;
+  text-transform: uppercase;
+}
+table.data-table td {
+  padding: 4px 5px;
+  border-bottom: 0.5px solid #ddd;
+  vertical-align: top;
+}
+table.data-table tr:nth-child(even) td {
+  background: #FAF6F0;
+}
+
+/* ---- Money table (income/expense) ---- */
+table.money-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+}
+table.money-table th {
+  background: #161616;
+  color: #C4A04A;
+  font-weight: 700;
+  text-align: left;
+  padding: 5px 6px;
+  font-size: 7pt;
+  letter-spacing: 0.3pt;
+  text-transform: uppercase;
+}
+table.money-table th.amt {
+  text-align: right;
+}
+table.money-table td {
+  padding: 4px 6px;
+  border-bottom: 0.5px solid #ddd;
+  vertical-align: top;
+}
+table.money-table td.amt {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+  font-size: 8.5pt;
+}
+table.money-table tr:nth-child(even) td {
+  background: #FAF6F0;
+}
+table.money-table .total-row td {
+  background: #F0E6D0;
+  font-weight: 700;
+  border-top: 1.5px solid #C4A04A;
+  border-bottom: 1.5px solid #C4A04A;
+}
+table.money-table .total-row td.amt {
+  font-size: 9.5pt;
+  color: #161616;
+}
+
+/* ---- Field Grid ---- */
+.field-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.field-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: #161616;
+  text-transform: uppercase;
+  letter-spacing: 0.4pt;
+  white-space: nowrap;
+  min-width: 60px;
+}
+.field-line {
+  flex: 1;
+  border-bottom: 0.5px solid #bbb;
+  height: 16px;
+}
+
+/* ---- Checkbox Row ---- */
+.check-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  font-size: 8pt;
+  color: #555;
+  align-items: center;
+}
+.check-row .check-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.check-box {
+  width: 10px; height: 10px;
+  border: 1px solid #888;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* ---- Info Box ---- */
+.info-box {
+  background: #FAF6F0;
+  border-left: 3px solid #C4A04A;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-size: 8pt;
+  color: #333;
+  line-height: 1.5;
+}
+.info-box .info-title {
+  font-weight: 700;
+  color: #161616;
+  font-size: 8.5pt;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+}
+
+/* ---- Summary Card ---- */
+.summary-card {
+  background: #FAF6F0;
+  border: 1px solid #E8DCC8;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+.summary-card .sc-label {
+  font-size: 7pt;
+  font-weight: 700;
+  color: #C4A04A;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+}
+.summary-card .sc-value {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #161616;
+  font-family: 'Courier New', monospace;
+}
+
+/* ---- Progress Bar ---- */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.progress-label {
+  font-size: 7pt;
+  font-weight: 700;
+  color: #161616;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+  min-width: 80px;
+}
+.progress-track {
+  flex: 1;
+  height: 12px;
+  background: #F0E6D0;
+  border-radius: 2px;
+  border: 0.5px solid #D4B896;
+  position: relative;
+}
+.progress-fill-prompt {
+  font-size: 6.5pt;
+  color: #aaa;
+  font-style: italic;
+}
+.progress-amt {
+  font-size: 7pt;
+  font-weight: 700;
+  color: #161616;
+  font-family: 'Courier New', monospace;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ---- Debt Snowball Item ---- */
+.debt-item {
+  border: 1px solid #E8DCC8;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #FCFAF7;
+}
+.debt-item .di-name {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #161616;
+  margin-bottom: 5px;
+}
+</style>
+</head>
+<body>
+
+<!-- Page 1: Cover -->
+<div class="cover">
+  <div class="glow-bg"></div>
+  <div class="icon-wrap">
+    <div class="icon-arc"></div>
+    <div class="icon-circle"></div>
+    <div class="icon-circle-inner"></div>
+    <div class="icon-dollar">$</div>
+  </div>
+  <div class="title-block">
+    <div class="main-title">Budget & Finance Planner</div>
+    <div class="accent-bar"></div>
+    <div class="subtitle">Take Control of Your Money, One Month at a Time</div>
+    <div class="features">
+      <span class="feature-badge">12 Monthly Budgets</span>
+      <span class="feature-badge">Expense Tracker</span>
+      <span class="feature-badge">Debt Payoff</span>
+      <span class="feature-badge">Savings Goals</span>
+    </div>
+    <div class="tagline">For Individuals, Couples &amp; Families</div>
+  </div>
+  <div class="publisher">More Shine Press</div>
+</div>
+
+
+<!-- Page 2: Owner -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">This Book Belongs To</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div style="height: 2.5in;"></div>
+
+  <div style="text-align: center; margin-bottom: 30px;">
+    <div style="font-size: 16pt; font-weight: 700; color: #161616; margin-bottom: 6px;">This Planner Belongs To</div>
+    <div style="width: 3.5in; border-bottom: 1.5px solid #161616; height: 24px; margin: 0 auto 16px;"></div>
+  </div>
+
+  <div style="width: 3.5in; margin: 0 auto;">
+    <div style="margin-bottom: 14px;">
+      <div style="font-size: 8pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Budgeting Period</div>
+      <div style="border-bottom: 0.5px solid #bbb; height: 18px;"></div>
+    </div>
+    <div style="margin-bottom: 14px;">
+      <div style="font-size: 8pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Primary Financial Goal</div>
+      <div style="border-bottom: 0.5px solid #bbb; height: 18px;"></div>
+    </div>
+    <div style="margin-bottom: 14px;">
+      <div style="font-size: 8pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">Target Savings This Year</div>
+      <div style="border-bottom: 0.5px solid #bbb; height: 18px;"></div>
+    </div>
+    <div style="margin-bottom: 14px;">
+      <div style="font-size: 8pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.5pt; margin-bottom: 3px;">My Money Motto</div>
+      <div style="border-bottom: 0.5px solid #bbb; height: 18px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>2</span>
+  </div>
+</div>
+
+
+<!-- Page 3: How to Use -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Getting Started</span>
+    <span class="sh-right">More Shine Press</span>
+  </div>
+
+  <div class="page-title">How to Use This Planner</div>
+  <div class="page-subtitle">Your roadmap to financial peace of mind</div>
+
+  <div class="info-box">
+    <div class="info-title">Why Budget?</div>
+    A budget is not about restriction &mdash; it is about intention. When you tell your money where to go instead of wondering where it went, you gain control, reduce stress, and accelerate toward the things that matter most to you. This planner gives you the tools to do exactly that.
+  </div>
+
+  <div style="font-size: 9pt; line-height: 1.7; color: #333;">
+    <div style="font-weight: 700; color: #161616; font-size: 10pt; margin-bottom: 6px;">Six Steps to Financial Control</div>
+
+    <div style="margin-bottom: 10px;">
+      <strong>1. Set your goals.</strong> Before the numbers, know your &quot;why.&quot; Write down your short-term, mid-term, and long-term financial goals. They will guide every budgeting decision.
+    </div>
+    <div style="margin-bottom: 10px;">
+      <strong>2. Track your income.</strong> List every source of income &mdash; salary, side hustles, investments, and anything else. Knowing your total inflow is the foundation of every budget.
+    </div>
+    <div style="margin-bottom: 10px;">
+      <strong>3. List your expenses.</strong> Start with fixed costs (rent, insurance, debt payments), then estimate variable costs (groceries, dining, entertainment). Track daily for the first month to get real numbers.
+    </div>
+    <div style="margin-bottom: 10px;">
+      <strong>4. Build your budget.</strong> Allocate every dollar. Prioritize needs first, then savings, then wants. The goal is to spend less than you earn &mdash; every month.
+    </div>
+    <div style="margin-bottom: 10px;">
+      <strong>5. Track and adjust.</strong> Record actual spending against your plan weekly. Adjust as needed. A budget that does not bend will break &mdash; flexibility is part of the process.
+    </div>
+    <div style="margin-bottom: 10px;">
+      <strong>6. Review and celebrate.</strong> At month-end, review what worked. Celebrate wins, learn from misses, and refine your plan. Every month gets easier.
+    </div>
+  </div>
+
+  <div style="margin-top: 14px; padding: 8px 10px; background: #FAF6E8; border: 1px solid #E8D5A0; border-radius: 3px; font-size: 8pt; color: #666; font-style: italic;">
+    <strong style="color: #8B6914;">The 50/30/20 Rule:</strong> A popular starting point &mdash; allocate roughly 50% to needs, 30% to wants, and 20% to savings and debt repayment. Adjust based on your situation.
+  </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>3</span>
+  </div>
+</div>
+
+
+<!-- Page 4: Budgeting Methods -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Reference</span>
+    <span class="sh-right">Budgeting Methods</span>
+  </div>
+
+  <div class="page-title">Budgeting Methods</div>
+  <div class="page-subtitle">Find the approach that works for you</div>
+
+  
+      <div style="border: 1px solid #E8DCC8; border-radius: 3px; padding: 7px 9px; margin-bottom: 6px; background: #FCFAF7;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+          <div style="font-size: 9.5pt; font-weight: 700; color: #161616;">50/30/20 Rule</div>
+          <div style="font-size: 6.5pt; color: #C4A04A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3pt;">Best for: Beginners</div>
+        </div>
+        <div style="font-size: 8pt; color: #555; line-height: 1.5;">The simplest framework. 50% of income goes to needs (housing, food, insurance, minimum debt payments). 30% to wants (dining, entertainment, hobbies). 20% to savings and extra debt payments. Best for beginners who want a quick, flexible guideline.</div>
+      </div>
+      <div style="border: 1px solid #E8DCC8; border-radius: 3px; padding: 7px 9px; margin-bottom: 6px; background: #FCFAF7;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+          <div style="font-size: 9.5pt; font-weight: 700; color: #161616;">Zero-Based Budget</div>
+          <div style="font-size: 6.5pt; color: #C4A04A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3pt;">Best for: Detail-oriented planners</div>
+        </div>
+        <div style="font-size: 8pt; color: #555; line-height: 1.5;">Every dollar is assigned a job before the month begins. Income minus expenses equals exactly zero. Forces you to be intentional with every dollar. More work but maximum control.</div>
+      </div>
+      <div style="border: 1px solid #E8DCC8; border-radius: 3px; padding: 7px 9px; margin-bottom: 6px; background: #FCFAF7;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+          <div style="font-size: 9.5pt; font-weight: 700; color: #161616;">Envelope System</div>
+          <div style="font-size: 6.5pt; color: #C4A04A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3pt;">Best for: Overspenders</div>
+        </div>
+        <div style="font-size: 8pt; color: #555; line-height: 1.5;">Allocate cash into labeled envelopes for each spending category. When an envelope is empty, that category is done for the month. Prevents overspending. Can be adapted digitally.</div>
+      </div>
+      <div style="border: 1px solid #E8DCC8; border-radius: 3px; padding: 7px 9px; margin-bottom: 6px; background: #FCFAF7;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+          <div style="font-size: 9.5pt; font-weight: 700; color: #161616;">Pay Yourself First</div>
+          <div style="font-size: 6.5pt; color: #C4A04A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3pt;">Best for: Savers who struggle to save</div>
+        </div>
+        <div style="font-size: 8pt; color: #555; line-height: 1.5;">Automatically route savings off the top, then budget with what remains. Treats savings as a non-negotiable expense rather than an afterthought.</div>
+      </div>
+      <div style="border: 1px solid #E8DCC8; border-radius: 3px; padding: 7px 9px; margin-bottom: 6px; background: #FCFAF7;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+          <div style="font-size: 9.5pt; font-weight: 700; color: #161616;">Incremental Budget</div>
+          <div style="font-size: 6.5pt; color: #C4A04A; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3pt;">Best for: Steady income earners</div>
+        </div>
+        <div style="font-size: 8pt; color: #555; line-height: 1.5;">Start with last month's actual spending and adjust up or down. Easy to maintain once you have a few months of data. Works well for stable income.</div>
+      </div>
+
+  <div style="margin-top: 8px; padding: 6px 8px; background: #FAF6F0; border-radius: 3px; font-size: 7pt; color: #888; font-style: italic;">
+    There is no single &quot;right&quot; way to budget. The best method is the one you will actually stick with.
+  </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>4</span>
+  </div>
+</div>
+
+
+<!-- Page 5: Expense Categories -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Reference</span>
+    <span class="sh-right">Expense Categories</span>
+  </div>
+
+  <div class="page-title">Expense Category Guide</div>
+  <div class="page-subtitle">Organize your spending for clarity</div>
+
+  
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Housing</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Rent/Mortgage &bull; Property Tax &bull; Home Insurance &bull; HOA &bull; Repairs &bull; Utilities (gas, electric, water, trash)</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Transportation</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Car Payment &bull; Auto Insurance &bull; Fuel &bull; Maintenance &bull; Registration &bull; Public Transit &bull; Parking &bull; Rideshare</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Food &amp; Groceries</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Groceries &bull; Dining Out &bull; Coffee &bull; Work Lunches &bull; Snacks &bull; Delivery &bull; Alcohol</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Insurance &amp; Health</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Health Insurance &bull; Life Insurance &bull; Dental &bull; Vision &bull; Co-pays &bull; Prescriptions &bull; Gym &bull; Therapy</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Debt Payments</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Credit Cards &bull; Student Loans &bull; Personal Loans &bull; Medical Debt &bull; IRS/ Tax Debt &bull; Buy-Now-Pay-Later</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Subscriptions</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Streaming &bull; Phone &bull; Internet &bull; Software &bull; Memberships &bull; Magazines &bull; Cloud Storage &bull; Apps</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Personal &amp; Lifestyle</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Clothing &bull; Haircut/Beauty &bull; Personal Care &bull; Education &bull; Hobbies &bull; Gifts &bull; Kids Activities</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Entertainment</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Movies &bull; Concerts &bull; Events &bull; Hobbies &bull; Books &bull; Games &bull; Sports &bull; Travel &bull; Nights Out</div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-bottom: 5px; padding: 5px 8px; border-left: 2.5px solid #C4A04A; background: #FAF6F0; border-radius: 0 3px 3px 0;">
+        <div style="min-width: 100px; font-size: 8pt; font-weight: 700; color: #161616;">Savings &amp; Investments</div>
+        <div style="font-size: 7pt; color: #555; line-height: 1.4; flex: 1;">Emergency Fund &bull; Retirement (401k/IRA) &bull; Brokerage &bull; College Fund &bull; Sinking Funds &bull; Vacation Fund</div>
+      </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>5</span>
+  </div>
+</div>
+
+
+<!-- Page 6: Financial Goals -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Goal Setting</span>
+    <span class="sh-right">Define Your &quot;Why&quot;</span>
+  </div>
+
+  <div class="page-title">Financial Goals</div>
+  <div class="page-subtitle">Clear goals make every dollar purposeful</div>
+
+  <div class="info-box">
+    <div class="info-title">SMART Goals</div>
+    Specific &bull; Measurable &bull; Achievable &bull; Relevant &bull; Time-bound. &quot;Save more&quot; is a wish. &quot;Save $5,000 for an emergency fund by December&quot; is a goal.
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 6px;">Short-Term (This Year)</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">Mid-Term (1&ndash;5 Years)</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">Long-Term (5+ Years)</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">My #1 Priority This Year</div>
+  <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px;">
+    <span style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; min-width: 50px;">Goal</span>
+    <div style="flex:1; border-bottom: 0.5px solid #bbb; height: 16px;"></div>
+  </div>
+  <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px;">
+    <span style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; min-width: 50px;">Amount</span>
+    <div style="flex:1; border-bottom: 0.5px solid #bbb; height: 16px;"></div>
+  </div>
+  <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px;">
+    <span style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; min-width: 50px;">By When</span>
+    <div style="flex:1; border-bottom: 0.5px solid #bbb; height: 16px;"></div>
+  </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>6</span>
+  </div>
+</div>
+
+
+<!-- Page 7: Annual Overview -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Annual Overview</span>
+    <span class="sh-right">The Year at a Glance</span>
+  </div>
+
+  <div class="page-title">Annual Financial Overview</div>
+  <div class="page-subtitle">Your roadmap for the year ahead</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th>Month</th>
+      <th class="amt">Income</th>
+      <th class="amt">Expenses</th>
+      <th class="amt">Saved</th>
+      <th class="amt">Net</th>
+    </tr>
+    <tr><td>January</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>February</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>March</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>April</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>May</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>June</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>July</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>August</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>September</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>October</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>November</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>December</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>TOTAL</td><td class="amt"></td><td class="amt"></td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <div style="margin-top: 14px;">
+    <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 6px;">Year's Focus</div>
+    <div class="wline-sm"></div>
+    <div class="wline-sm"></div>
+    <div class="wline-sm"></div>
+  </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>7</span>
+  </div>
+</div>
+
+
+<!-- Page 8: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">01</div>
+  <div class="div-label">Part One</div>
+  <div class="div-title">Monthly Budgets</div>
+  <div class="div-sub">12 months &mdash; plan, track, and adjust</div>
+</div>
+
+
+<!-- Page 9: January Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">January &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">January Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>January &mdash; Budget Plan</span>
+    <span>9</span>
+  </div>
+</div>
+
+
+<!-- Page 10: January Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">January &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">January Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>January &mdash; Tracker &amp; Summary</span>
+    <span>10</span>
+  </div>
+</div>
+
+
+<!-- Page 11: February Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">February &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">February Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>February &mdash; Budget Plan</span>
+    <span>11</span>
+  </div>
+</div>
+
+
+<!-- Page 12: February Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">February &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">February Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>February &mdash; Tracker &amp; Summary</span>
+    <span>12</span>
+  </div>
+</div>
+
+
+<!-- Page 13: March Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">March &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">March Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>March &mdash; Budget Plan</span>
+    <span>13</span>
+  </div>
+</div>
+
+
+<!-- Page 14: March Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">March &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">March Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>March &mdash; Tracker &amp; Summary</span>
+    <span>14</span>
+  </div>
+</div>
+
+
+<!-- Page 15: April Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">April &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">April Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>April &mdash; Budget Plan</span>
+    <span>15</span>
+  </div>
+</div>
+
+
+<!-- Page 16: April Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">April &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">April Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>April &mdash; Tracker &amp; Summary</span>
+    <span>16</span>
+  </div>
+</div>
+
+
+<!-- Page 17: May Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">May &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">May Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>May &mdash; Budget Plan</span>
+    <span>17</span>
+  </div>
+</div>
+
+
+<!-- Page 18: May Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">May &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">May Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>May &mdash; Tracker &amp; Summary</span>
+    <span>18</span>
+  </div>
+</div>
+
+
+<!-- Page 19: June Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">June &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">June Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>June &mdash; Budget Plan</span>
+    <span>19</span>
+  </div>
+</div>
+
+
+<!-- Page 20: June Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">June &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">June Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>June &mdash; Tracker &amp; Summary</span>
+    <span>20</span>
+  </div>
+</div>
+
+
+<!-- Page 21: July Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">July &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">July Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>July &mdash; Budget Plan</span>
+    <span>21</span>
+  </div>
+</div>
+
+
+<!-- Page 22: July Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">July &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">July Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>July &mdash; Tracker &amp; Summary</span>
+    <span>22</span>
+  </div>
+</div>
+
+
+<!-- Page 23: August Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">August &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">August Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>August &mdash; Budget Plan</span>
+    <span>23</span>
+  </div>
+</div>
+
+
+<!-- Page 24: August Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">August &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">August Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>August &mdash; Tracker &amp; Summary</span>
+    <span>24</span>
+  </div>
+</div>
+
+
+<!-- Page 25: September Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">September &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">September Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>September &mdash; Budget Plan</span>
+    <span>25</span>
+  </div>
+</div>
+
+
+<!-- Page 26: September Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">September &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">September Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>September &mdash; Tracker &amp; Summary</span>
+    <span>26</span>
+  </div>
+</div>
+
+
+<!-- Page 27: October Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">October &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">October Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>October &mdash; Budget Plan</span>
+    <span>27</span>
+  </div>
+</div>
+
+
+<!-- Page 28: October Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">October &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">October Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>October &mdash; Tracker &amp; Summary</span>
+    <span>28</span>
+  </div>
+</div>
+
+
+<!-- Page 29: November Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">November &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">November Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>November &mdash; Budget Plan</span>
+    <span>29</span>
+  </div>
+</div>
+
+
+<!-- Page 30: November Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">November &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">November Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>November &mdash; Tracker &amp; Summary</span>
+    <span>30</span>
+  </div>
+</div>
+
+
+<!-- Page 31: December Budget Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">December &mdash; Income &amp; Planned Budget</span>
+    <span class="sh-right">Budget &amp; Finance Planner</span>
+  </div>
+
+  <div class="page-title">December Budget</div>
+  <div class="page-subtitle">Plan your income and allocate your spending</div>
+
+  <!-- Income Section -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Income</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Source</th>
+      <th class="amt">Planned ($)</th>
+      <th class="amt">Actual ($)</th>
+    </tr>
+    <tr><td>Primary Salary</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Secondary / Side</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Freelance / Bonus</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Investment / Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Income</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Planned Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Planned Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Planned ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Expenses</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>December &mdash; Budget Plan</span>
+    <span>31</span>
+  </div>
+</div>
+
+
+<!-- Page 32: December Budget Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">December &mdash; Tracker &amp; Summary</span>
+    <span class="sh-right">Monthly Review</span>
+  </div>
+
+  <div class="page-title">December Tracker</div>
+  <div class="page-subtitle">Record actual spending and review your month</div>
+
+  <!-- Actual Expenses -->
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Actual Expenses</div>
+  <table class="money-table" style="font-size: 7pt;">
+    <tr>
+      <th>Category</th>
+      <th class="amt">Actual ($)</th>
+      <th class="amt">Diff ($)</th>
+    </tr>
+    <tr><td>Housing / Rent</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Utilities</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Groceries</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Dining Out</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Transportation</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Insurance</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Debt Payments</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Subscriptions</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Personal / Lifestyle</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Entertainment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Savings / Investment</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr><td>Other</td><td class="amt"></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Actual</td><td class="amt"></td><td class="amt"></td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <div class="summary-card">
+      <div class="sc-label">Income</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Expenses</div>
+      <div class="sc-value"></div>
+    </div>
+    <div class="summary-card">
+      <div class="sc-label">Remaining</div>
+      <div class="sc-value"></div>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 4px;">Month Reflection</div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-bottom: 3px;">What went well?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div style="font-size: 6.5pt; color: #aaa; font-style: italic; margin-top: 6px; margin-bottom: 3px;">What to improve next month?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>December &mdash; Tracker &amp; Summary</span>
+    <span>32</span>
+  </div>
+</div>
+
+
+<!-- Page 33: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">02</div>
+  <div class="div-label">Part Two</div>
+  <div class="div-title">Weekly Expense Tracking</div>
+  <div class="div-sub">Log every purchase</div>
+</div>
+
+
+<!-- Page 34: Weekly Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Weekly Expense Tracker</span>
+    <span class="sh-right">Page 1 of 6</span>
+  </div>
+
+  <div class="page-title">Weekly Expense Tracker</div>
+  <div class="page-subtitle">Log every purchase to see where your money goes</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:62px;">Day</th>
+      <th>Description</th>
+      <th style="width:58px;">Category</th>
+      <th class="amt" style="width:50px;">Amount</th>
+    </tr>
+    
+    <tr><td style="font-weight:700;color:#161616;">Monday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Tuesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Wednesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Thursday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Friday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Saturday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Sunday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total</td><td></td><td></td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>34</span>
+  </div>
+</div>
+
+
+<!-- Page 35: Weekly Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Weekly Expense Tracker</span>
+    <span class="sh-right">Page 2 of 6</span>
+  </div>
+
+  <div class="page-title">Weekly Expense Tracker</div>
+  <div class="page-subtitle">Log every purchase to see where your money goes</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:62px;">Day</th>
+      <th>Description</th>
+      <th style="width:58px;">Category</th>
+      <th class="amt" style="width:50px;">Amount</th>
+    </tr>
+    
+    <tr><td style="font-weight:700;color:#161616;">Monday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Tuesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Wednesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Thursday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Friday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Saturday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Sunday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total</td><td></td><td></td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>35</span>
+  </div>
+</div>
+
+
+<!-- Page 36: Weekly Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Weekly Expense Tracker</span>
+    <span class="sh-right">Page 3 of 6</span>
+  </div>
+
+  <div class="page-title">Weekly Expense Tracker</div>
+  <div class="page-subtitle">Log every purchase to see where your money goes</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:62px;">Day</th>
+      <th>Description</th>
+      <th style="width:58px;">Category</th>
+      <th class="amt" style="width:50px;">Amount</th>
+    </tr>
+    
+    <tr><td style="font-weight:700;color:#161616;">Monday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Tuesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Wednesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Thursday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Friday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Saturday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Sunday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total</td><td></td><td></td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>36</span>
+  </div>
+</div>
+
+
+<!-- Page 37: Weekly Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Weekly Expense Tracker</span>
+    <span class="sh-right">Page 4 of 6</span>
+  </div>
+
+  <div class="page-title">Weekly Expense Tracker</div>
+  <div class="page-subtitle">Log every purchase to see where your money goes</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:62px;">Day</th>
+      <th>Description</th>
+      <th style="width:58px;">Category</th>
+      <th class="amt" style="width:50px;">Amount</th>
+    </tr>
+    
+    <tr><td style="font-weight:700;color:#161616;">Monday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Tuesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Wednesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Thursday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Friday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Saturday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Sunday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total</td><td></td><td></td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>37</span>
+  </div>
+</div>
+
+
+<!-- Page 38: Weekly Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Weekly Expense Tracker</span>
+    <span class="sh-right">Page 5 of 6</span>
+  </div>
+
+  <div class="page-title">Weekly Expense Tracker</div>
+  <div class="page-subtitle">Log every purchase to see where your money goes</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:62px;">Day</th>
+      <th>Description</th>
+      <th style="width:58px;">Category</th>
+      <th class="amt" style="width:50px;">Amount</th>
+    </tr>
+    
+    <tr><td style="font-weight:700;color:#161616;">Monday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Tuesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Wednesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Thursday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Friday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Saturday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Sunday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total</td><td></td><td></td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>38</span>
+  </div>
+</div>
+
+
+<!-- Page 39: Weekly Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Weekly Expense Tracker</span>
+    <span class="sh-right">Page 6 of 6</span>
+  </div>
+
+  <div class="page-title">Weekly Expense Tracker</div>
+  <div class="page-subtitle">Log every purchase to see where your money goes</div>
+
+  <table class="money-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:62px;">Day</th>
+      <th>Description</th>
+      <th style="width:58px;">Category</th>
+      <th class="amt" style="width:50px;">Amount</th>
+    </tr>
+    
+    <tr><td style="font-weight:700;color:#161616;">Monday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Tuesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Wednesday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Thursday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Friday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Saturday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-weight:700;color:#161616;">Sunday</td><td></td><td></td><td class="amt"></td></tr>
+    <tr><td style="font-size:6pt;color:#ccc;">&nbsp;</td><td></td><td></td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total</td><td></td><td></td><td class="amt"></td></tr>
+  </table>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>39</span>
+  </div>
+</div>
+
+
+<!-- Page 40: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">03</div>
+  <div class="div-label">Part Three</div>
+  <div class="div-title">Savings Goals</div>
+  <div class="div-sub">Watch your progress grow</div>
+</div>
+
+
+<!-- Page 41: Savings Goals -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Savings Goals</span>
+    <span class="sh-right">Track Your Progress</span>
+  </div>
+
+  <div class="page-title">Savings Goals Tracker</div>
+  <div class="page-subtitle">Visualize your path to each milestone</div>
+
+  
+      <div class="debt-item">
+        <div class="di-name">Emergency Fund (3&ndash;6 months expenses)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Vacation / Travel Fund</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Home Down Payment</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Vehicle / Car Fund</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Home Repair / Improvement</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Christmas / Holiday Gifts</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Education / Course Fund</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div class="di-name">Retirement Supplement</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 10px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Target</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Saved</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">By Date</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>41</span>
+  </div>
+</div>
+
+
+<!-- Page 42: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">04</div>
+  <div class="div-label">Part Four</div>
+  <div class="div-title">Debt Payoff</div>
+  <div class="div-sub">Snowball your way to freedom</div>
+</div>
+
+
+<!-- Page 43: Debt Payoff -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Debt Payoff Tracker</span>
+    <span class="sh-right">Snowball Method</span>
+  </div>
+
+  <div class="page-title">Debt Payoff Tracker</div>
+  <div class="page-subtitle">List debts smallest to largest. Pay minimums on all, attack the smallest with everything extra.</div>
+
+  
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #1</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #2</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #3</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #4</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #5</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #6</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #7</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+      <div class="debt-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <div class="di-name">Debt #8</div>
+          <div style="font-size:6pt;color:#C4A04A;font-weight:700;text-transform:uppercase;">Paid &#10063;</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px 8px; margin-bottom: 5px;">
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Creditor</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Balance</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Rate %</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:3px;">
+            <span style="font-size:6pt;font-weight:700;color:#C4A04A;text-transform:uppercase;">Min Pay</span>
+            <div style="flex:1;border-bottom:0.5px solid #ddd;height:12px;"></div>
+          </div>
+        </div>
+        <div class="progress-row">
+          <span class="progress-label">Payoff Progress</span>
+          <div class="progress-track"></div>
+          <span class="progress-amt"></span>
+        </div>
+      </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>43</span>
+  </div>
+</div>
+
+
+<!-- Page 44: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">05</div>
+  <div class="div-label">Part Five</div>
+  <div class="div-title">Bills &amp; Net Worth</div>
+  <div class="div-sub">Stay on top of recurring payments</div>
+</div>
+
+
+<!-- Page 45: Bills Tracker -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Bills &amp; Subscriptions</span>
+    <span class="sh-right">Recurring Payments</span>
+  </div>
+
+  <div class="page-title">Bills &amp; Subscription Tracker</div>
+  <div class="page-subtitle">Never miss a payment or forget a subscription</div>
+
+  <table class="data-table" style="font-size: 7.5pt;">
+    <tr>
+      <th style="width:18px;">#</th>
+      <th>Bill / Subscription</th>
+      <th style="width:42px;">Due Day</th>
+      <th style="width:40px;">Amount</th>
+      <th style="width:40px;">Freq.</th>
+      <th style="width:30px;">Auto?</th>
+      <th style="width:28px;">&#10003;</th>
+    </tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">1</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">2</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">3</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">4</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">5</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">6</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">7</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">8</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">9</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">10</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">11</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">12</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">13</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">14</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">15</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">16</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">17</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+    <tr><td style="text-align:center;font-weight:700;color:#C4A04A;">18</td><td></td><td></td><td></td><td></td><td style="text-align:center;"></td><td style="text-align:center;"></td></tr>
+  </table>
+
+  <div style="font-size: 6pt; color: #aaa; margin-top: 3px;">Freq: M=Monthly, Q=Quarterly, A=Annually, W=Weekly | Auto: Y/N</div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>45</span>
+  </div>
+</div>
+
+
+<!-- Page 46: Net Worth -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Net Worth Tracker</span>
+    <span class="sh-right">Assets &minus; Liabilities</span>
+  </div>
+
+  <div class="page-title">Net Worth Statement</div>
+  <div class="page-subtitle">Your financial snapshot</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Assets (What You Own)</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Asset</th>
+      <th class="amt">Amount ($)</th>
+    </tr>
+    <tr><td>Cash / Checking</td><td class="amt"></td></tr>
+    <tr><td>Savings Account</td><td class="amt"></td></tr>
+    <tr><td>Investment / Brokerage</td><td class="amt"></td></tr>
+    <tr><td>Retirement (401k / IRA)</td><td class="amt"></td></tr>
+    <tr><td>Home Value</td><td class="amt"></td></tr>
+    <tr><td>Vehicle(s)</td><td class="amt"></td></tr>
+    <tr><td>Other Assets</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Assets</td><td class="amt"></td></tr>
+  </table>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #C4A04A; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">Liabilities (What You Owe)</div>
+  <table class="money-table" style="font-size: 7.5pt; margin-bottom: 8px;">
+    <tr>
+      <th>Liability</th>
+      <th class="amt">Amount ($)</th>
+    </tr>
+    <tr><td>Mortgage</td><td class="amt"></td></tr>
+    <tr><td>Auto Loan</td><td class="amt"></td></tr>
+    <tr><td>Credit Card Debt</td><td class="amt"></td></tr>
+    <tr><td>Student Loans</td><td class="amt"></td></tr>
+    <tr><td>Personal Loans</td><td class="amt"></td></tr>
+    <tr><td>Medical Debt</td><td class="amt"></td></tr>
+    <tr><td>Other Debt</td><td class="amt"></td></tr>
+    <tr class="total-row"><td>Total Liabilities</td><td class="amt"></td></tr>
+  </table>
+
+  <div class="summary-card" style="display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <div class="sc-label">Net Worth (Assets &minus; Liabilities)</div>
+    </div>
+    <div class="sc-value" style="font-size: 14pt;">$</div>
+  </div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>46</span>
+  </div>
+</div>
+
+
+<!-- Page 47: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">06</div>
+  <div class="div-label">Part Six</div>
+  <div class="div-title">Year-End Review</div>
+  <div class="div-sub">Reflect and plan ahead</div>
+</div>
+
+
+<!-- Page 48: Year Review -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Year-End Review</span>
+    <span class="sh-right">Reflect &amp; Plan Ahead</span>
+  </div>
+
+  <div class="page-title">Year-End Financial Review</div>
+  <div class="page-subtitle">Celebrate progress and plan the year ahead</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+    <div class="summary-card" style="text-align:center;">
+      <div class="sc-label">Total Saved</div>
+      <div class="sc-value" style="font-size: 16pt;"></div>
+    </div>
+    <div class="summary-card" style="text-align:center;">
+      <div class="sc-label">Debt Paid Off</div>
+      <div class="sc-value" style="font-size: 16pt;"></div>
+    </div>
+    <div class="summary-card" style="text-align:center;">
+      <div class="sc-label">Net Worth Change</div>
+      <div class="sc-value" style="font-size: 16pt;"></div>
+    </div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 6px;">Biggest Financial Win This Year</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">Biggest Lesson Learned</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #161616; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">Goals for Next Year</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>48</span>
+  </div>
+</div>
+
+
+<!-- Page 49: Divider -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">07</div>
+  <div class="div-label">Part Seven</div>
+  <div class="div-title">Notes</div>
+  <div class="div-sub">Ideas, reminders, and planning</div>
+</div>
+
+
+<!-- Page 50: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Financial Notes</div>
+  <div class="page-subtitle">Ideas, reminders, and planning</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>50</span>
+  </div>
+</div>
+
+
+<!-- Page 51: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Financial Notes</div>
+  <div class="page-subtitle">Ideas, reminders, and planning</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>51</span>
+  </div>
+</div>
+
+
+<!-- Page 52: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Financial Notes</div>
+  <div class="page-subtitle">Ideas, reminders, and planning</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>52</span>
+  </div>
+</div>
+
+
+<!-- Page 53: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Financial Notes</div>
+  <div class="page-subtitle">Ideas, reminders, and planning</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>Budget &amp; Finance Planner</span>
+    <span>53</span>
+  </div>
+</div>
+
+</body>
+</html>

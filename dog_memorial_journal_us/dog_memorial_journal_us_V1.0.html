@@ -1,0 +1,2847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>In Loving Memory of My Dog &mdash; More Shine Press</title>
+<style>
+@page { size: 6in 9in; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: Georgia, "Iowan Old Style", "Palatino", serif;
+  color: #2A2A2A;
+  background: white;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---- Colors ---- */
+/* Charcoal-warm: #1E1612, #2B2018 */
+/* Deep brown-charcoal: #3A2A1E */
+/* Gold accent: #B87333 */
+/* Warm cream: #FAF4EE, #F2E8DC */
+/* Soft mauve: #A08070 */
+/* Text: #2A2A2A */
+
+.page {
+  width: 6in; height: 9in;
+  padding: 0.45in 0.5in 0.38in 0.5in;
+  page-break-after: always;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; }
+
+@media screen { .page { border: 1px dashed #ccc; margin: 8px auto; } }
+@media print  { .page { border: none; margin: 0; } }
+
+/* ================ COVER (INTERIOR TITLE PAGE) ================ */
+.cover {
+  width: 6in; height: 9in;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, #1E1612 0%, #2B2018 30%, #1E1612 65%, #0E0806 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Gold glow background */
+.cover .glow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.06;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #B87333, transparent),
+    radial-gradient(ellipse 26px 16px at 80% 15%, #B87333, transparent),
+    radial-gradient(ellipse 28px 17px at 70% 70%, #A08070, transparent),
+    radial-gradient(ellipse 22px 14px at 25% 80%, #B87333, transparent),
+    radial-gradient(ellipse 20px 12px at 50% 45%, #A08070, transparent),
+    radial-gradient(ellipse 24px 15px at 10% 55%, #B87333, transparent),
+    radial-gradient(ellipse 18px 11px at 90% 40%, #A08070, transparent),
+    radial-gradient(ellipse 16px 10px at 40% 90%, #B87333, transparent);
+}
+
+/* ===== CSS Dog Silhouette ===== */
+.cover .dog-wrap {
+  width: 140px; height: 120px;
+  position: relative;
+  margin: 0 auto 24px;
+}
+
+/* Dog head — circle */
+.cover .dog-head {
+  width: 72px; height: 72px;
+  position: absolute;
+  top: 30px; left: 34px;
+  background: linear-gradient(160deg,
+    rgba(250,246,240,0.08) 0%,
+    rgba(250,246,240,0.03) 40%,
+    rgba(196,160,74,0.04) 80%,
+    rgba(15,15,15,0.06) 100%);
+  border-radius: 50%;
+  border: 1.5px solid rgba(196,160,74,0.35);
+}
+
+/* Left ear — triangle */
+.cover .dog-ear-l {
+  width: 0; height: 0;
+  position: absolute;
+  top: 18px; left: 36px;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 24px solid transparent;
+  /* Use pseudo approach instead */
+}
+
+/* Left ear using clip-path */
+.cover .dog-ear-left {
+  width: 22px; height: 26px;
+  position: absolute;
+  top: 14px; left: 32px;
+  background: linear-gradient(160deg,
+    rgba(250,246,240,0.06) 0%,
+    rgba(250,246,240,0.02) 100%);
+  border-left: 1.5px solid rgba(196,160,74,0.35);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Right ear using clip-path */
+.cover .dog-ear-right {
+  width: 22px; height: 26px;
+  position: absolute;
+  top: 14px; left: 86px;
+  background: linear-gradient(160deg,
+    rgba(250,246,240,0.06) 0%,
+    rgba(250,246,240,0.02) 100%);
+  border-right: 1.5px solid rgba(196,160,74,0.35);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Whisker lines (left) */
+.cover .whisker-ll {
+  width: 20px; height: 1px;
+  position: absolute;
+  top: 62px; left: 14px;
+  background: rgba(196,160,74,0.3);
+}
+.cover .whisker-l2 {
+  width: 20px; height: 1px;
+  position: absolute;
+  top: 67px; left: 14px;
+  background: rgba(196,160,74,0.25);
+}
+
+/* Whisker lines (right) */
+.cover .whisker-rl {
+  width: 20px; height: 1px;
+  position: absolute;
+  top: 62px; left: 106px;
+  background: rgba(196,160,74,0.3);
+}
+.cover .whisker-r2 {
+  width: 20px; height: 1px;
+  position: absolute;
+  top: 67px; left: 106px;
+  background: rgba(196,160,74,0.25);
+}
+
+/* Heart above dog */
+.cover .heart {
+  width: 16px; height: 15px;
+  position: absolute;
+  top: 0px; left: 62px;
+  background: rgba(196,160,74,0.25);
+  transform: rotate(-45deg);
+  border-radius: 0 0 50% 50%;
+}
+.cover .heart::before,
+.cover .heart::after {
+  content: '';
+  width: 16px; height: 16px;
+  background: rgba(196,160,74,0.25);
+  border-radius: 50%;
+  position: absolute;
+}
+.cover .heart::before {
+  top: -8px; left: 0;
+}
+.cover .heart::after {
+  top: 0; left: 8px;
+}
+
+/* Star/sparkle above */
+.cover .sparkle {
+  width: 4px; height: 4px;
+  position: absolute;
+  top: 10px; left: 30px;
+  background: rgba(196,160,74,0.4);
+  border-radius: 50%;
+  box-shadow: 80px 8px 0 rgba(196,160,74,0.3),
+              90px 0px 0 rgba(196,160,74,0.2),
+              20px 14px 0 rgba(196,160,74,0.2);
+}
+
+.cover .title-block {
+  position: relative;
+  z-index: 5;
+  padding: 0 0.4in;
+}
+
+.cover .main-title {
+  font-family: Georgia, serif;
+  font-size: 26pt;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: 0.5pt;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.cover .accent-bar {
+  width: 100px; height: 2px;
+  background: #B87333;
+  margin: 14px auto;
+}
+
+.cover .subtitle {
+  font-size: 11pt;
+  color: #D4A882;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.cover .features {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cover .feature-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(196,160,74,0.4);
+  color: #B87333;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 0.5pt;
+  padding: 4px 9px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.cover .tagline {
+  font-size: 8.5pt;
+  color: #D4A882;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.cover .publisher {
+  position: absolute;
+  bottom: 0.4in;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 9pt;
+  color: #B87333;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ================ SECTION DIVIDER ================ */
+.divider {
+  width: 6in; height: 9in;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(165deg, #1E1612 0%, #2B2018 50%, #1E1612 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.divider .div-glow {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 30px 18px at 15% 20%, #B87333, transparent),
+    radial-gradient(ellipse 25px 15px at 80% 30%, #B87333, transparent),
+    radial-gradient(ellipse 22px 13px at 70% 75%, #A08070, transparent),
+    radial-gradient(ellipse 18px 11px at 25% 85%, #B87333, transparent);
+}
+
+.divider .div-num {
+  font-size: 60pt;
+  color: rgba(196,160,74,0.10);
+  font-weight: 700;
+  position: absolute;
+  top: 1in;
+}
+
+.divider .div-paw {
+  font-size: 20pt;
+  color: rgba(196,160,74,0.15);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.divider .div-label {
+  font-size: 10pt;
+  color: #B87333;
+  letter-spacing: 3pt;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.divider .div-title {
+  font-size: 22pt;
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 1.2;
+  position: relative;
+  padding: 0 0.6in;
+}
+
+.divider .div-sub {
+  font-size: 11pt;
+  color: #D4A882;
+  font-style: italic;
+  margin-top: 14px;
+  position: relative;
+}
+
+/* ================ CONTENT PAGES ================ */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 7.5pt;
+  color: #999;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #B87333;
+  margin-bottom: 14px;
+}
+.section-header .sh-left {
+  font-weight: 700;
+  letter-spacing: 0.8pt;
+  color: #1E1612;
+  text-transform: uppercase;
+}
+.section-header .sh-right {
+  color: #aaa;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0.22in;
+  left: 0.5in; right: 0.5in;
+  font-size: 6.5pt;
+  color: #bbb;
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.5px solid #eee;
+  padding-top: 3px;
+}
+
+.page-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #1E1612;
+  margin-bottom: 3px;
+}
+
+.page-subtitle {
+  font-size: 8pt;
+  color: #888;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+/* ---- Writing Lines ---- */
+.wline {
+  border-bottom: 0.5px solid #ccc;
+  height: 24px;
+  margin-bottom: 2px;
+}
+.wline-sm {
+  border-bottom: 0.5px solid #ddd;
+  height: 20px;
+  margin-bottom: 1px;
+}
+.wline-lg {
+  border-bottom: 0.5px solid #ccc;
+  height: 30px;
+  margin-bottom: 3px;
+}
+
+/* ---- Data Tables ---- */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+}
+table.data-table th {
+  background: #1E1612;
+  color: white;
+  font-weight: 700;
+  text-align: left;
+  padding: 4px 5px;
+  font-size: 7pt;
+  letter-spacing: 0.3pt;
+  text-transform: uppercase;
+}
+table.data-table td {
+  padding: 4px 5px;
+  border-bottom: 0.5px solid #ddd;
+  vertical-align: top;
+}
+table.data-table tr:nth-child(even) td {
+  background: #FAF4EE;
+}
+
+/* ---- Field Grid ---- */
+.field-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.field-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: #1E1612;
+  text-transform: uppercase;
+  letter-spacing: 0.4pt;
+  white-space: nowrap;
+  min-width: 70px;
+}
+.field-line {
+  flex: 1;
+  border-bottom: 0.5px solid #bbb;
+  height: 16px;
+}
+
+/* ---- Checkbox Row ---- */
+.check-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  font-size: 8pt;
+  color: #555;
+  align-items: center;
+}
+.check-row .check-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.check-box {
+  width: 10px; height: 10px;
+  border: 1px solid #888;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* ---- Star Rating ---- */
+.stars {
+  font-size: 13pt;
+  color: #ccc;
+  letter-spacing: 2pt;
+}
+
+/* ---- Info / Quote Box ---- */
+.info-box {
+  background: #FAF4EE;
+  border-left: 3px solid #B87333;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 8.5pt;
+  color: #333;
+  line-height: 1.6;
+}
+.info-box .info-title {
+  font-weight: 700;
+  color: #1E1612;
+  font-size: 8.5pt;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+}
+
+/* ---- Prompt Box ---- */
+.prompt-box {
+  background: #F2E8DC;
+  border: 1px solid #E0D0C2;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.prompt-box .prompt-label {
+  font-size: 7pt;
+  font-weight: 700;
+  color: #B87333;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  margin-bottom: 4px;
+}
+.prompt-box .prompt-text {
+  font-size: 9pt;
+  color: #444;
+  font-style: italic;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* ---- Rating Bars (1-5 scale) ---- */
+.rating-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+.rating-bar-label {
+  font-size: 7pt;
+  font-weight: 700;
+  color: #1E1612;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+  min-width: 70px;
+}
+.rating-bar-circles {
+  display: flex;
+  gap: 4px;
+}
+.rating-circle {
+  width: 14px; height: 14px;
+  border: 1.5px solid #B87333;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ---- Stat Card ---- */
+.stat-card {
+  text-align: center;
+  padding: 8px 4px;
+  background: #FAF4EE;
+  border-radius: 4px;
+  border: 1px solid #D8C8BC;
+}
+.stat-card .stat-label {
+  font-size: 6.5pt;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+  margin-bottom: 2px;
+}
+.stat-card .stat-value {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #1E1612;
+}
+
+/* ---- Photo Frame ---- */
+.photo-frame {
+  border: 2px solid #B87333;
+  border-radius: 4px;
+  width: 100%;
+  height: 2.6in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  font-size: 8pt;
+  font-style: italic;
+  background: #FAF4EE;
+}
+
+.photo-frame-sq {
+  border: 2px solid #B87333;
+  border-radius: 4px;
+  width: 2in; height: 2in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  font-size: 8pt;
+  font-style: italic;
+  background: #FAF4EE;
+  margin: 0 auto;
+}
+
+.photo-frame-sm {
+  border: 1.5px solid #B87333;
+  border-radius: 3px;
+  width: 100%;
+  height: 1.8in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  font-size: 7pt;
+  font-style: italic;
+  background: #FAF4EE;
+}
+
+/* ---- Dot Grid ---- */
+.dot-grid {
+  background-image: radial-gradient(circle, #ddd 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* ---- Paw Print Accent ---- */
+.paw-accent {
+  text-align: center;
+  color: #B87333;
+  font-size: 14pt;
+  opacity: 0.3;
+  letter-spacing: 12pt;
+  margin: 10px 0;
+}
+</style>
+</head>
+<body>
+
+<!-- Page 1: Cover -->
+<div class="cover">
+  <div class="glow-bg"></div>
+
+  <div style="margin: 0 auto 30px; z-index: 5; position: relative;">
+    <svg viewBox="0 0 590.99219 597.52197" width="78" height="79" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 252.28906,597.12549 C 249.77344,596.09229 247.10742,593.39502 246.16602,590.93408 C 244.30811,586.07471 252.40576,574.19385 261.82861,567.95166 C 267.58154,564.14111 269.47705,561.60791 271.69629,554.77002 C 274.43945,546.31689 275.8584,523.83838 274.15869,515.77002 C 273.34863,511.92822 272.78906,503.13916 272.78906,494.27002 C 272.78906,475.89502 269.91064,441.78174 267.22021,428.27002 C 266.125,422.77002 264.31543,413.3208 263.19873,407.27002 C 261.11133,395.96338 258.14648,386.17236 255.47656,381.77002 C 247.92969,369.32861 241.59668,361.34229 232.28906,352.52979 C 221.9917,342.78174 218.13721,340.12744 216.10303,341.38525 C 212.40723,343.66846 211.05371,357.64307 213.85107,364.6333 C 215.26611,368.17041 215.2666,368.854 213.85303,371.90283 C 212.99512,373.75439 211.50439,376.43994 210.54102,377.87158 C 205.771,384.95166 204.58154,386.60205 201.24023,390.77002 C 197.95898,394.86377 190.28906,407.21729 190.28906,408.40674 C 190.28906,409.27588 180.18994,426.03369 177.69434,429.30518 C 176.37158,431.03955 175.28906,432.83838 175.28906,433.29932 C 175.28906,433.76221 174.46777,435.0708 173.46387,436.20557 C 172.45996,437.34033 169.51514,441.64502 166.91943,445.77002 C 164.32373,449.89502 160.39453,455.74463 158.18848,458.77002 C 155.98193,461.79541 153.2417,466.0708 152.09863,468.27002 C 150.95557,470.46924 148.26855,474.37158 146.12793,476.93994 C 141.38379,482.6333 134.42041,495.65088 132.84521,501.77002 C 132.2085,504.24463 131.96143,507.61963 132.29639,509.27002 C 133.48145,515.10791 130.41113,519.77002 125.38037,519.77002 C 122.8418,519.77002 121.0625,523.09814 117.31348,534.85791 C 115.53223,540.4458 113.3291,545.1001 111.45264,547.23682 C 109.17334,549.83252 108.27441,552.06299 107.73389,556.46533 C 107.3418,559.65869 106.63037,563.31494 106.15234,564.59229 C 104.87793,567.99854 88.836914,587.18799 83.84082,591.28174 C 77.778809,596.24854 72.520508,596.41064 65.412109,591.84814 C 52.977051,583.86963 54.61084,574.4165 70.789063,560.73096 C 85.280762,548.47119 93.135254,536.46338 96.376465,521.61182 C 98.398926,512.34619 103.01123,496.92627 104.25586,495.27002 C 104.66943,494.71924 105.84375,492.02002 106.86572,489.27002 C 107.8877,486.52002 109.75098,482.74463 111.00635,480.88135 C 112.26172,479.01611 113.28906,476.95166 113.28906,476.2915 C 113.28906,475.12744 118.3667,464.94971 129.26367,444.27002 C 135.1665,433.06885 139.1792,423.23682 146.8125,401.27002 C 149.6792,393.02002 153.25684,382.91455 154.7627,378.81494 C 157.36914,371.71729 157.48047,370.68604 157.07471,357.31494 C 156.65381,343.4458 156.59033,343.11963 152.01562,331.27002 C 140.85254,302.35254 139.33008,295.46094 138.41406,269.6875 L 137.78906,252.10547 L 133.85352,245.6875 C 131.68945,242.1582 127.9502,236.83301 125.54395,233.85547 C 118.88916,225.61719 117.96875,223.33496 118.68799,216.85547 C 119.26074,211.69922 119.03857,210.82422 115.79834,205.46973 C 113.86816,202.28027 112.28906,199.26562 112.28906,198.77051 C 112.28906,196.37109 99.179199,188.7832 92.499023,187.31641 C 88.429199,186.42187 84.435059,188.56152 76.329102,195.97852 C 72.776367,199.22949 66.592285,203.93164 62.587402,206.42773 C 56.035156,210.51172 54.493164,211.03613 47.202148,211.66309 C 37.358887,212.50879 34.920898,211.59473 34.467285,206.8877 C 34.069824,202.76367 36.811035,199.53711 42.074707,197.93262 C 49.703125,195.60742 54.955566,190.71582 53.61377,187.18457 C 53.350098,186.49023 49.166992,186.11426 41.995117,186.14062 C 31.644531,186.17773 30.234863,185.94434 23.530762,183.08105 C 11.165039,177.80078 -0.165039,166.80566 0.0014649,160.24805 C 0.0434571,158.58594 1.1381837,155.45508 2.4335938,153.29102 C 4.928711,149.12207 20.866699,132.63574 28.079102,126.7627 C 30.438965,124.8418 33.09668,121.91992 33.98584,120.26953 C 36.366211,115.85156 38.266113,103.60254 37.261719,99.148437 C 35.769043,92.53125 41.005859,85.270508 55.072266,74.455078 C 74.533203,59.491211 86.072754,54.051758 101.23291,52.696289 C 124.91846,50.577148 128.7417,51.537109 143.78906,63.374023 C 150.51562,68.666016 153.57178,69.769531 161.49219,69.769531 C 185.06738,69.769531 203.97803,85.868164 196.77197,99.802734 C 195.93799,101.41602 194.98828,104.68262 194.6626,107.06152 C 194.08301,111.28906 194.23486,111.58105 201.31348,119.8291 C 205.29785,124.47168 209.05957,128.54687 209.67334,128.88574 C 211.43994,129.8623 232.23877,131.00293 250.78906,131.14258 C 260.13867,131.21289 272.62305,131.92285 278.53125,132.72168 C 291.72949,134.50488 296.08398,133.77148 314.78613,126.61133 C 321.9375,123.87402 330.03906,121.21387 332.78906,120.7002 C 335.53906,120.18652 342.51367,118.22168 348.28906,116.33496 C 376.78906,107.02246 419.07227,101.30664 454.52344,101.97266 C 466.39551,102.19629 482.26367,105.5752 485.28906,106.78711 C 488.31348,107.99902 493.26367,110.12598 496.28906,111.51367 C 501.81836,114.05078 504.84082,115.02246 513.46094,117.04004 C 517.59375,118.00684 518.84668,117.85254 524.31934,115.70117 C 537.52832,110.51074 543.625,99.188965 548.94922,91.055664 C 561.97168,71.158203 549.0752,41.584961 534.28906,32.440429 C 526.22754,27.456054 513.60352,25.96582 506.78906,29.196289 C 500.5459,32.154297 497.28906,34.941406 497.28906,37.323242 C 497.28906,40.095703 500.64551,44.385742 504.29004,46.270508 C 507.54688,47.955078 514.28906,61.037109 514.28906,65.672851 C 514.28906,69.689453 510.79102,73.769531 507.34863,73.769531 C 501.74805,73.769531 482.69727,62.40039 476.84082,55.5625 C 472.7373,50.771484 470.28906,43.738281 470.28906,40.161133 C 470.28906,38.866211 471.08496,33.919922 473.2793,29.168945 C 481.27148,11.871094 497.18457,1.2578124 516.93262,0.0546874 C 527.8418,-0.6103517 543.21191,4.9638671 549.94727,9.142578 C 563.61621,17.625 575.27246,31.021484 580.51074,44.269531 C 591.30469,71.566894 579.48145,101.58203 574.36426,109.26953 C 572.90039,111.46973 561.74805,129.38574 551.6416,139.54004 C 547.11523,144.08789 543.13867,148.66797 542.80566,149.7168 C 541.85547,152.71191 544.57715,157.65918 551.54492,165.60254 C 558.30273,173.30664 560.13574,177.25488 564.2627,193.00195 C 568.44238,208.95215 566.46094,233.7998 557.38086,279.26953 C 556.28223,284.76953 554.87695,293.76953 554.25781,299.26953 C 553.63867,304.76953 552.7168,311.71484 552.20996,314.70361 C 550.47852,324.91846 551.77344,338.19385 555.90625,352.58643 C 556.74609,355.51025 558.05664,360.29736 558.81836,363.22314 C 561.85547,374.8833 574.45996,396.62549 584.00977,406.67822 C 590.83301,413.86182 591.97461,416.71533 590.31836,422.45557 C 588.52051,428.68604 586.86523,505.73291 588.34082,514.479 C 589.5332,521.54346 589.14746,528.16846 587.3457,531.56299 C 586.84766,532.50244 585.88184,535.46338 585.2002,538.14307 C 584.35156,541.47705 582.58887,544.46924 579.62402,547.60596 C 577.24023,550.13135 575.28906,552.69189 575.28906,553.29541 C 575.28906,553.90088 573.95508,555.67432 572.32422,557.23682 C 570.04297,559.42236 568.34961,560.09814 564.97852,560.17432 C 559.0166,560.30518 557.28906,558.64111 557.28906,552.77002 C 557.28906,550.15478 556.5752,546.30713 555.7041,544.22119 C 554.19238,540.604 554.25977,539.79346 557.14453,526.84814 C 568.0166,478.06299 566.3457,459.12353 547.73828,420.27002 C 541.53516,407.31689 539.40332,404.01807 532.1582,396.16455 C 529.56836,393.35596 525.89063,388.62353 523.98633,385.64502 C 517.48242,375.479 512.28125,371.4458 512.29297,376.57861 C 512.29492,377.5083 513.66211,381.86963 515.33203,386.27002 C 517.00195,390.67041 519.69629,398.09424 521.32129,402.77002 C 522.94531,407.4458 526.75195,416.10596 529.78125,422.01611 C 535.53613,433.24463 536.2832,436.86768 534.27148,443.77588 C 531.52539,453.20947 529.03027,468.60791 528.2793,480.77002 C 527.66113,490.76611 526.79785,496.22119 524.95215,501.78955 C 523.58105,505.92627 521.97461,512.67627 521.38281,516.78955 C 520.79004,520.90478 519.64648,526.0708 518.84082,528.27002 C 518.03613,530.46924 517.35645,534.42627 517.33301,537.05908 C 517.27832,543.04736 514.22266,549.23486 510.3291,551.25049 C 506.28027,553.34228 486.37598,553.3833 482.36035,551.30713 C 477.93262,549.01807 477.70605,546.94775 480.74609,536.53955 C 482.63379,530.07471 482.68848,530.02002 490.17285,527.25635 C 495.23926,525.38525 495.86426,524.78369 498.99902,518.75635 C 502.34863,512.31689 502.37695,512.14697 502.93848,495.27002 C 503.52441,477.65674 503.39746,476.36572 498.30762,448.27002 C 497.21191,442.21924 496.30957,435.59814 496.30176,433.55518 C 496.27734,426.61768 490.73828,413.68213 482.04297,400.26025 C 473.52832,387.11377 465.32812,368.79346 461.86328,355.16846 C 461.00977,351.81299 459.57324,347.31299 458.6709,345.16846 C 457.76953,343.02393 454.55957,334.29541 451.53906,325.77002 C 448.51855,317.24463 444.91992,307.12012 443.54297,303.26953 C 439.98926,293.33789 439.5,283.78809 442.18457,276.76953 C 443.34082,273.74512 444.28809,270.32715 444.28809,269.1748 C 444.28906,266.02246 440.88574,263.40332 437.79492,264.17871 C 435.21777,264.82617 434.62598,265.80371 432.2959,273.26953 C 430.48633,279.06934 426.67285,283.76953 423.77734,283.76953 C 421.10449,283.76953 418.04199,280.95605 416.31348,276.91504 C 414.57617,272.85059 408.58301,268.76758 404.37793,268.7832 C 397.33887,268.80859 382.72754,272.57324 374.78906,276.40527 C 366.63281,280.34277 361.40234,284.87109 354.00684,294.39844 C 344.21973,307.00781 340.05762,311.72559 333.67676,317.44385 C 326.47168,323.90283 307.91211,337.77002 306.47168,337.77002 C 304.92383,337.77002 301.28906,342.3833 301.28906,344.3501 C 301.28906,345.42236 302.18848,347.979 303.28906,350.03174 C 305.96777,355.02978 305.82324,358.18799 302.26758,372.28955 L 299.24609,384.27002 L 300.27051,424.27002 C 301.63184,477.47119 302.91211,495.56885 306.37402,510.55908 C 308.87207,521.37158 308.82422,522.20361 305.29687,529.43408 C 300.63574,538.98682 298.79492,549.45361 297.36621,574.5376 C 296.38477,591.77197 295.57129,593.98486 289.54883,595.81103 C 285.47021,597.04736 254.73877,598.13135 252.28906,597.12549 z M 203.08887,323.5708 C 205.62939,321.02979 204.46191,317.02197 200.17725,313.57666 C 197.91602,311.75781 192.93066,307.45703 189.09863,304.01953 C 185.24609,300.56445 181.1958,297.76953 180.03906,297.76953 C 174.50684,297.76953 172.20801,305.92578 176.46338,310.45508 C 177.65918,311.72852 179.02734,312.77002 179.50391,312.77002 C 180.39111,312.77002 182.87939,314.44775 191.7373,321.01611 C 196.87305,324.82275 200.92383,325.73486 203.08887,323.5708 z" fill="rgba(184,115,51,0.18)" stroke="rgba(184,115,51,0.50)" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div class="title-block">
+    <div class="main-title">In Loving Memory<br>of My Dog</div>
+    <div class="accent-bar"></div>
+    <div class="subtitle">A Memorial Journal and Keepsake</div>
+
+    <div class="features">
+      <span class="feature-badge">Photo Pages</span>
+      <span class="feature-badge">Memory Prompts</span>
+      <span class="feature-badge">Tribute Letters</span>
+    </div>
+
+    <div class="tagline">Cherish Every Memory &middot; Honor Every Moment</div>
+  </div>
+
+  <div class="publisher">More Shine Press</div>
+</div>
+
+
+<!-- Page 2: Owner / Dedication -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">In Loving Memory</span>
+    <span class="sh-right">A Keepsake Journal</span>
+  </div>
+
+  <div style="text-align: center; margin-top: 1in;">
+    <div style="font-size: 10pt; color: #B87333; letter-spacing: 3pt; text-transform: uppercase; margin-bottom: 20px;">This Memorial Journal Belongs To</div>
+    <div style="border-bottom: 1.5px solid #B87333; width: 4in; height: 28px; margin: 0 auto 40px;"></div>
+
+    <div style="font-size: 10pt; color: #B87333; letter-spacing: 3pt; text-transform: uppercase; margin-bottom: 20px;">In Memory Of</div>
+    <div style="border-bottom: 1.5px solid #B87333; width: 4in; height: 28px; margin: 0 auto 8px;"></div>
+    <div style="font-size: 8pt; color: #999; font-style: italic;">My Beloved Dog</div>
+
+    <div style="margin-top: 50px;">
+      <div style="font-size: 10pt; color: #B87333; letter-spacing: 3pt; text-transform: uppercase; margin-bottom: 12px;">Years Together</div>
+      <div style="display: flex; justify-content: center; gap: 30px; font-size: 8pt; color: #888;">
+        <span>From: <span style="display:inline-block; border-bottom:0.5px solid #bbb; width: 80px; height: 16px;"></span></span>
+        <span>To: <span style="display:inline-block; border-bottom:0.5px solid #bbb; width: 80px; height: 16px;"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>2</span>
+  </div>
+</div>
+
+
+<!-- Page 3: How to Use -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Introduction</span>
+    <span class="sh-right">How to Use This Journal</span>
+  </div>
+
+  <div class="page-title">How to Use This Journal</div>
+  <div class="page-subtitle">There is no right or wrong way to grieve</div>
+
+  <div class="info-box">
+    <div class="info-title">A Gentle Reminder</div>
+    This journal is your private space to remember, reflect, and heal.
+    Write as much or as little as you wish. Skip pages that do not feel
+    right and return to them when you are ready. There is no timeline
+    for grief &mdash; only the journey of honoring the love you shared.
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Section 1 &mdash; My Dog's Story</div>
+    <div class="prompt-text">Record the story of your dog's life: how you met, their
+    personality, habits, and the home you shared together.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Section 2 &mdash; Favorite Memories</div>
+    <div class="prompt-text">Capture the moments that made you smile, laugh, and love
+    deeply. Each spread gives you space for a photo and a treasured memory.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Section 3 &mdash; Photo Gallery</div>
+    <div class="prompt-text">Frame your favorite photographs alongside captions that
+    tell the story behind each image.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Section 4 &mdash; Letters &amp; Reflections</div>
+    <div class="prompt-text">Write letters to your dog and reflect on what they meant
+    to you. Let your heart speak freely.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Section 5 &mdash; The Final Goodbye</div>
+    <div class="prompt-text">Honor the farewell, the legacy of love, and the ways your
+    dog will always be part of your life.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Section 6 &mdash; Notes</div>
+    <div class="prompt-text">Open space for anything else you wish to write &mdash;
+    poems, quotes, drawings, or thoughts.</div>
+  </div>
+
+  <div class="paw-accent">✧✧✧</div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>3</span>
+  </div>
+</div>
+
+
+<!-- Page 4: Divider — Section 1 -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">1</div>
+  <div class="div-paw">✧</div>
+  <div class="div-label">Section One</div>
+  <div class="div-title">My Dog's Story</div>
+  <div class="div-sub">Who they were, in every detail</div>
+</div>
+
+
+<!-- Page 5: Dog's Story — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">My Dog's Story</span>
+    <span class="sh-right">Profile</span>
+  </div>
+
+  <div class="page-title">All About My Dog</div>
+  <div class="page-subtitle">Who they were, in their own special way</div>
+
+  <div class="field-row">
+    <span class="field-label">Name</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Breed / Mix</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Color(s)</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Eye Color</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Sex</span>
+    <span class="field-line" style="max-width: 80px;"></span>
+    <span class="field-label" style="min-width: 50px;">Weight</span>
+    <span class="field-line" style="max-width: 60px;"></span>
+    <span class="field-label" style="min-width: 30px;">lbs</span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Born</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Adopted</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Passed</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Age</span>
+    <span class="field-line" style="max-width: 120px;"></span>
+    <span class="field-label" style="min-width: 50px;">Years Together</span>
+    <span class="field-line" style="max-width: 100px;"></span>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 14px; margin-bottom: 6px;">Personality in Three Words</div>
+  <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 14px;">
+    <span style="border-bottom: 1px solid #B87333; width: 90px; height: 22px; text-align: center;"></span>
+    <span style="border-bottom: 1px solid #B87333; width: 90px; height: 22px; text-align: center;"></span>
+    <span style="border-bottom: 1px solid #B87333; width: 90px; height: 22px; text-align: center;"></span>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">Nicknames</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>5</span>
+  </div>
+</div>
+
+
+<!-- Page 6: Dog's Story — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">My Dog's Story</span>
+    <span class="sh-right">Portrait</span>
+  </div>
+
+  <div style="display: flex; gap: 14px;">
+    <div style="flex: 0 0 2in;">
+      <div class="photo-frame-sq">Photo</div>
+    </div>
+    <div style="flex: 1;">
+      <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 4px;">How We Met</div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+
+      <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 8px; margin-bottom: 4px;">First Impression</div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+      <div class="wline-sm"></div>
+    </div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 16px; margin-bottom: 6px;">A Day in Their Life</div>
+  <div class="info-box" style="font-size: 7.5pt;">
+    Morning ritual, favorite napping spot, mealtime habits, evening routine &mdash;
+    describe a typical day with your dog.
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">Favorite Things</div>
+  <div class="field-row">
+    <span class="field-label" style="min-width: 80px;">Food / Treat</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label" style="min-width: 80px;">Toy</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label" style="min-width: 80px;">Napping Spot</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label" style="min-width: 80px;">Activity</span>
+    <span class="field-line"></span>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>6</span>
+  </div>
+</div>
+
+
+<!-- Page 7: Personality Traits -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">My Dog's Story</span>
+    <span class="sh-right">Personality</span>
+  </div>
+
+  <div class="page-title">Personality Traits</div>
+  <div class="page-subtitle">Fill in the circle that best describes your dog</div>
+
+  <div style="font-size: 7pt; color: #888; margin-bottom: 12px; display: flex; justify-content: flex-end; gap: 22px; padding-right: 8px;">
+    <span>Rarely</span>
+    <span>Sometimes</span>
+    <span>Always</span>
+  </div>
+
+  
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Affectionate</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Independent</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Playful</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Curious</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Talkative</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Quiet</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Brave</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Cautious</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Social</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Shy</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Energetic</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+    <div class="rating-bar-row">
+      <span class="rating-bar-label">Mellow</span>
+      <div class="rating-bar-circles"><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span><span class="rating-circle"></span></div>
+    </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 16px; margin-bottom: 6px;">Quirks &amp; Habits</div>
+  <div class="info-box" style="font-size: 7.5pt;">
+    What made your dog truly one of a kind? The little oddities, the funny
+    behaviors, the things only you understood.
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>7</span>
+  </div>
+</div>
+
+
+<!-- Page 8: Habits & Moments -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">My Dog's Story</span>
+    <span class="sh-right">Habits &amp; Moments</span>
+  </div>
+
+  <div class="page-title">Little Habits &amp; Big Moments</div>
+  <div class="page-subtitle">The small things that made them who they were</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-bottom: 6px;">The Sound of Their Voice</div>
+  <div class="prompt-box">
+    <div class="prompt-text">Barks, whimpers, happy whines, howls &mdash;
+    what did your dog sound like? When did they get vocal?</div>
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">Funniest Thing They Did</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">Naughtiest Moment</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">Smartest Thing They Did</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">The Look They Gave Me</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>8</span>
+  </div>
+</div>
+
+
+<!-- Page 9: Divider — Section 2 -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">2</div>
+  <div class="div-paw">✧</div>
+  <div class="div-label">Section Two</div>
+  <div class="div-title">Favorite Memories</div>
+  <div class="div-sub">The moments that stay forever</div>
+</div>
+
+
+<!-- Page 10: Memory 1 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #1</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>10</span>
+  </div>
+</div>
+
+
+<!-- Page 11: Memory 1 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #1</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>11</span>
+  </div>
+</div>
+
+
+<!-- Page 12: Memory 2 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #2</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>12</span>
+  </div>
+</div>
+
+
+<!-- Page 13: Memory 2 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #2</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>13</span>
+  </div>
+</div>
+
+
+<!-- Page 14: Memory 3 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #3</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>14</span>
+  </div>
+</div>
+
+
+<!-- Page 15: Memory 3 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #3</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>15</span>
+  </div>
+</div>
+
+
+<!-- Page 16: Memory 4 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #4</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>16</span>
+  </div>
+</div>
+
+
+<!-- Page 17: Memory 4 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #4</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>17</span>
+  </div>
+</div>
+
+
+<!-- Page 18: Memory 5 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #5</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>18</span>
+  </div>
+</div>
+
+
+<!-- Page 19: Memory 5 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #5</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>19</span>
+  </div>
+</div>
+
+
+<!-- Page 20: Memory 6 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #6</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>20</span>
+  </div>
+</div>
+
+
+<!-- Page 21: Memory 6 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #6</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>21</span>
+  </div>
+</div>
+
+
+<!-- Page 22: Memory 7 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #7</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>22</span>
+  </div>
+</div>
+
+
+<!-- Page 23: Memory 7 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #7</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>23</span>
+  </div>
+</div>
+
+
+<!-- Page 24: Memory 8 — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #8</span>
+  </div>
+
+  <div class="page-title">A Treasured Memory</div>
+  <div class="page-subtitle">A moment I never want to forget</div>
+
+  <div class="photo-frame">Favorite Photo</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 4px;">Caption</div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">What Happened</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">How It Made Me Feel</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>24</span>
+  </div>
+</div>
+
+
+<!-- Page 25: Memory 8 — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Favorite Memories</span>
+    <span class="sh-right">Memory #8</span>
+  </div>
+
+  <div class="page-title">More About This Memory</div>
+  <div class="page-subtitle">The details, the feelings, the story behind it</div>
+
+  <div class="photo-frame-sm">Another Photo (optional)</div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 10px; margin-bottom: 6px;">The Full Story</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>25</span>
+  </div>
+</div>
+
+
+<!-- Page 26: Divider — Section 3 -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">3</div>
+  <div class="div-paw">✧</div>
+  <div class="div-label">Section Three</div>
+  <div class="div-title">Photo Gallery</div>
+  <div class="div-sub">Every picture tells their story</div>
+</div>
+
+
+<!-- Page 27: Photo Gallery 1 -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Photo Gallery</span>
+    <span class="sh-right">Page 1</span>
+  </div>
+
+  <div class="page-title">Photo Gallery</div>
+  <div class="page-subtitle">Capture every side of their personality</div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 12px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>27</span>
+  </div>
+</div>
+
+<!-- Page 28: Photo Gallery 2 -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Photo Gallery</span>
+    <span class="sh-right">Page 2</span>
+  </div>
+
+  <div class="page-title">Photo Gallery</div>
+  <div class="page-subtitle">Capture every side of their personality</div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 12px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>28</span>
+  </div>
+</div>
+
+<!-- Page 29: Photo Gallery 3 -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Photo Gallery</span>
+    <span class="sh-right">Page 3</span>
+  </div>
+
+  <div class="page-title">Photo Gallery</div>
+  <div class="page-subtitle">Capture every side of their personality</div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 12px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>29</span>
+  </div>
+</div>
+
+<!-- Page 30: Photo Gallery 4 -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Photo Gallery</span>
+    <span class="sh-right">Page 4</span>
+  </div>
+
+  <div class="page-title">Photo Gallery</div>
+  <div class="page-subtitle">Capture every side of their personality</div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 12px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>30</span>
+  </div>
+</div>
+
+<!-- Page 31: Photo Gallery 5 -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Photo Gallery</span>
+    <span class="sh-right">Page 5</span>
+  </div>
+
+  <div class="page-title">Photo Gallery</div>
+  <div class="page-subtitle">Capture every side of their personality</div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 12px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>31</span>
+  </div>
+</div>
+
+<!-- Page 32: Photo Gallery 6 -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Photo Gallery</span>
+    <span class="sh-right">Page 6</span>
+  </div>
+
+  <div class="page-title">Photo Gallery</div>
+  <div class="page-subtitle">Capture every side of their personality</div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 12px;">
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+    <div style="flex: 1;">
+      <div class="photo-frame-sm">Photo</div>
+      <div class="wline-sm" style="margin-top: 4px;"></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>32</span>
+  </div>
+</div>
+
+
+<!-- Page 33: Divider — Section 4 -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">4</div>
+  <div class="div-paw">✧</div>
+  <div class="div-label">Section Four</div>
+  <div class="div-title">Letters &amp; Reflections</div>
+  <div class="div-sub">Words from the heart</div>
+</div>
+
+
+<!-- Page 34: Letter to My Dog -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Letters &amp; Reflections</span>
+    <span class="sh-right">Letter</span>
+  </div>
+
+  <div class="page-title">Dear...</div>
+  <div class="page-subtitle">Write a letter to your dog</div>
+
+  <div class="info-box" style="font-size: 8pt;">
+    Speak from the heart. Tell them what you miss, what you wish you
+    had said more often, and how much they meant to you. This is your
+    private conversation &mdash; say everything.
+  </div>
+
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>34</span>
+  </div>
+</div>
+
+
+<!-- Page 35: Letter to My Dog -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Letters &amp; Reflections</span>
+    <span class="sh-right">Letter</span>
+  </div>
+
+  <div class="page-title">Dear...</div>
+  <div class="page-subtitle">Write a letter to your dog</div>
+
+  <div class="info-box" style="font-size: 8pt;">
+    Speak from the heart. Tell them what you miss, what you wish you
+    had said more often, and how much they meant to you. This is your
+    private conversation &mdash; say everything.
+  </div>
+
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+  <div class="wline"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>35</span>
+  </div>
+</div>
+
+
+<!-- Page 36: What They Taught Me -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Letters &amp; Reflections</span>
+    <span class="sh-right">What They Taught Me</span>
+  </div>
+
+  <div class="page-title">Lessons From My Dog</div>
+  <div class="page-subtitle">The wisdom they shared without saying a word</div>
+
+  
+  <div style="font-size: 8.5pt; font-weight: 700; color: #1E1612; margin-top: 10px; margin-bottom: 4px;">What My Dog Taught Me About Love</div>
+  <div style="font-size: 7.5pt; color: #999; font-style: italic; margin-bottom: 4px;">How did loving your dog change you?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 8.5pt; font-weight: 700; color: #1E1612; margin-top: 10px; margin-bottom: 4px;">What My Dog Taught Me About Patience</div>
+  <div style="font-size: 7.5pt; color: #999; font-style: italic; margin-bottom: 4px;">When did they test you, and what did you learn?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 8.5pt; font-weight: 700; color: #1E1612; margin-top: 10px; margin-bottom: 4px;">What My Dog Taught Me About Joy</div>
+  <div style="font-size: 7.5pt; color: #999; font-style: italic; margin-bottom: 4px;">What small moments brought you the most happiness?</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+
+  <div style="font-size: 8.5pt; font-weight: 700; color: #1E1612; margin-top: 14px; margin-bottom: 4px;">How My Life Is Better Because of Them</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>36</span>
+  </div>
+</div>
+
+
+<!-- Page 37: Quotes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Letters &amp; Reflections</span>
+    <span class="sh-right">Words of Comfort</span>
+  </div>
+
+  <div class="page-title">Words of Comfort</div>
+  <div class="page-subtitle">Quotes and poems that bring peace</div>
+
+  <div class="info-box" style="margin-top: 8px;">
+    <div style="font-size: 9pt; font-style: italic; color: #444; line-height: 1.6;">
+      "The world would be a nicer place if everyone had the ability to love as unconditionally as a dog."
+    </div>
+    <div style="font-size: 7pt; color: #B87333; margin-top: 4px; text-align: right; letter-spacing: 1pt;">&mdash; M.K. CLINTON</div>
+  </div>
+
+  <div class="info-box">
+    <div style="font-size: 9pt; font-style: italic; color: #444; line-height: 1.6;">
+      "Dogs do speak, but only to those who know how to listen."
+    </div>
+    <div style="font-size: 7pt; color: #B87333; margin-top: 4px; text-align: right; letter-spacing: 1pt;">&mdash; ISMAIL KADARE</div>
+  </div>
+
+  <div class="info-box">
+    <div style="font-size: 9pt; font-style: italic; color: #444; line-height: 1.6;">
+      "A dog is the only thing on earth that loves you more than he loves himself."
+    </div>
+    <div style="font-size: 7pt; color: #B87333; margin-top: 4px; text-align: right; letter-spacing: 1pt;">&mdash; JOSH BILLINGS</div>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 16px; margin-bottom: 6px;">My Favorite Quotes &amp; Poems</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>37</span>
+  </div>
+</div>
+
+
+<!-- Page 38: Divider — Section 5 -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">5</div>
+  <div class="div-paw">✧</div>
+  <div class="div-label">Section Five</div>
+  <div class="div-title">The Final Goodbye</div>
+  <div class="div-sub">Honoring the farewell</div>
+</div>
+
+
+<!-- Page 39: Final Goodbye — Left -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">The Final Goodbye</span>
+    <span class="sh-right">Farewell</span>
+  </div>
+
+  <div class="page-title">The Final Goodbye</div>
+  <div class="page-subtitle">Honoring the farewell with love</div>
+
+  <div class="field-row">
+    <span class="field-label">Date</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Location</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label">Who Was There</span>
+    <span class="field-line"></span>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 14px; margin-bottom: 6px;">My Last Moments Together</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">What I Want to Remember About That Day</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">How I Knew It Was Time</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>39</span>
+  </div>
+</div>
+
+
+<!-- Page 40: Final Goodbye — Right -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">The Final Goodbye</span>
+    <span class="sh-right">Reflection</span>
+  </div>
+
+  <div class="page-title">Saying Goodbye</div>
+  <div class="page-subtitle">The hardest act of love</div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">A Promise to My Dog</div>
+    <div class="prompt-text">What do you promise to carry with you? How will you
+    honor their memory in the days and years ahead?</div>
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 12px; margin-bottom: 6px;">Resting Place / Memorial</div>
+  <div class="field-row">
+    <span class="field-label" style="min-width: 60px;">Type</span>
+    <span class="field-line"></span>
+  </div>
+  <div class="field-row">
+    <span class="field-label" style="min-width: 60px;">Location</span>
+    <span class="field-line"></span>
+  </div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 14px; margin-bottom: 6px;">Ways I Honor Their Memory</div>
+  <div class="info-box" style="font-size: 7.5pt;">
+    A special ornament at the holidays, a framed photo on the desk,
+    a donation in their name, a garden stone, a keepsake box &mdash;
+    the ways we remember are as unique as the cats we loved.
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="paw-accent" style="margin-top: 16px;">✧</div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>40</span>
+  </div>
+</div>
+
+
+<!-- Page 41: Paw Print Memorial -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">The Final Goodbye</span>
+    <span class="sh-right">Paw Print Keepsake</span>
+  </div>
+
+  <div class="page-title">Paw Print Keepsake</div>
+  <div class="page-subtitle">A lasting impression of their little paw</div>
+
+  <div style="display: flex; justify-content: center; align-items: center; height: 4.5in; margin-top: 10px;">
+    <div style="width: 3.5in; height: 4in; border: 2px dashed #B87333; border-radius: 12px; display: flex; justify-content: center; align-items: center; text-align: center; background: #FAF4EE;">
+      <div>
+        <div style="font-size: 9pt; color: #B87333; letter-spacing: 2pt; text-transform: uppercase; margin-bottom: 8px;">Place Paw Print Here</div>
+        <div style="font-size: 7.5pt; color: #aaa; font-style: italic; padding: 0 0.4in; line-height: 1.5;">
+          Ink your dog's paw and press gently in this space.<br>
+          A treasured keepsake for years to come.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 16px;">
+    <div class="field-row" style="justify-content: center;">
+      <span class="field-label" style="min-width: 40px;">Date</span>
+      <span class="field-line" style="max-width: 150px;"></span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>41</span>
+  </div>
+</div>
+
+
+<!-- Page 42: Legacy -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">The Final Goodbye</span>
+    <span class="sh-right">Legacy</span>
+  </div>
+
+  <div class="page-title">Their Legacy</div>
+  <div class="page-subtitle">How my dog changed my life forever</div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">How They Changed Me</div>
+    <div class="prompt-text">In what ways are you different because of your dog?
+    What did they bring to your life that no one else could?</div>
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">What I Will Never Forget</div>
+    <div class="prompt-text">If you could only keep one memory, what would it be?</div>
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">What I Want Others to Know About My Dog</div>
+    <div class="prompt-text">If someone asked you to describe your dog, what would
+    you want them to know?</div>
+  </div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div style="font-size: 7pt; font-weight: 700; color: #1E1612; text-transform: uppercase; letter-spacing: 0.4pt; margin-top: 14px; margin-bottom: 6px;">If My Dog Could See Me Now, I Would Want Them to Know...</div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+  <div class="wline-sm"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>42</span>
+  </div>
+</div>
+
+
+<!-- Page 43: Divider — Section 6 -->
+<div class="divider">
+  <div class="div-glow"></div>
+  <div class="div-num">6</div>
+  <div class="div-paw">✧</div>
+  <div class="div-label">Section Six</div>
+  <div class="div-title">Notes</div>
+  <div class="div-sub">Open space for thoughts and memories</div>
+</div>
+
+
+<!-- Page 44: Sketch -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right">Sketches &amp; Drawings</span>
+  </div>
+
+  <div class="page-title">Sketch Pad</div>
+  <div class="page-subtitle">Draw your dog, trace their paw, or doodle freely</div>
+
+  <div class="dot-grid" style="width: 100%; height: 6.5in; border-radius: 4px;"></div>
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>44</span>
+  </div>
+</div>
+
+
+<!-- Page 45: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>45</span>
+  </div>
+</div>
+
+
+<!-- Page 46: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>46</span>
+  </div>
+</div>
+
+
+<!-- Page 47: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>47</span>
+  </div>
+</div>
+
+
+<!-- Page 48: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>48</span>
+  </div>
+</div>
+
+
+<!-- Page 49: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>49</span>
+  </div>
+</div>
+
+
+<!-- Page 50: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>50</span>
+  </div>
+</div>
+
+
+<!-- Page 51: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>51</span>
+  </div>
+</div>
+
+
+<!-- Page 52: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>52</span>
+  </div>
+</div>
+
+
+<!-- Page 53: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>53</span>
+  </div>
+</div>
+
+
+<!-- Page 54: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>54</span>
+  </div>
+</div>
+
+
+<!-- Page 55: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>55</span>
+  </div>
+</div>
+
+
+<!-- Page 56: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>56</span>
+  </div>
+</div>
+
+
+<!-- Page 57: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>57</span>
+  </div>
+</div>
+
+
+<!-- Page 58: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>58</span>
+  </div>
+</div>
+
+
+<!-- Page 59: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>59</span>
+  </div>
+</div>
+
+
+<!-- Page 60: Notes -->
+<div class="page">
+  <div class="section-header">
+    <span class="sh-left">Notes</span>
+    <span class="sh-right"></span>
+  </div>
+
+  <div class="page-title">Notes</div>
+  <div class="page-subtitle">Thoughts, poems, and reflections</div>
+
+  <div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+<div class="wline"></div>
+
+
+  <div class="page-footer">
+    <span>In Loving Memory of My Dog</span>
+    <span>60</span>
+  </div>
+</div>
+
+</body>
+</html>
